@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ATSFY Employee Command Center</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+body{background:#F7F6F2;color:#1C301F;font-family:Inter,system-ui,sans-serif}
+.glass{background:rgba(255,255,255,.88);backdrop-filter:blur(14px);border:1px solid rgba(40,80,64,.1)}
+::-webkit-scrollbar{width:7px}::-webkit-scrollbar-thumb{background:#657253;border-radius:8px}
+.progress{height:8px;border-radius:99px;background:#ebe9e1;overflow:hidden}.progress>span{display:block;height:100%;background:#D9A43B;border-radius:99px}
+.nav-active{background:#1C301F;color:white}
+</style>
+</head>
+<body>
+<div class="min-h-screen flex">
+<aside class="hidden lg:flex w-64 bg-[#1C301F] text-white p-5 flex-col fixed inset-y-0">
+  <div class="flex items-center gap-3 mb-8"><div class="w-11 h-11 rounded-xl bg-[#D9A43B] text-[#1C301F] flex items-center justify-center font-black text-xl">A</div><div><b>ATSFY</b><div class="text-xs text-gray-300">Employee Command Center</div></div></div>
+  <nav id="nav" class="space-y-2">
+    <button data-tab="dashboard" class="nav w-full text-left px-4 py-3 rounded-xl nav-active">▦ Dashboard</button>
+    <button data-tab="tasks" class="nav w-full text-left px-4 py-3 rounded-xl hover:bg-white/10">✓ Tasks</button>
+    <button data-tab="targets" class="nav w-full text-left px-4 py-3 rounded-xl hover:bg-white/10">◎ Monthly Targets</button>
+    <button data-tab="sales" class="nav w-full text-left px-4 py-3 rounded-xl hover:bg-white/10">₹ Sales & Revenue</button>
+    <button data-tab="employees" class="nav w-full text-left px-4 py-3 rounded-xl hover:bg-white/10">♙ Employees</button>
+    <button data-tab="products" class="nav w-full text-left px-4 py-3 rounded-xl hover:bg-white/10">◈ Products & Services</button>
+    <button data-tab="reports" class="nav w-full text-left px-4 py-3 rounded-xl hover:bg-white/10">▤ Reports</button>
+  </nav>
+  <div class="mt-auto text-xs text-gray-400">Internal ATSFY management system<br>Built for employee-wise accountability.</div>
+</aside>
+<main class="flex-1 lg:ml-64">
+<header class="sticky top-0 z-20 glass px-5 md:px-8 py-4 flex items-center justify-between">
+ <div><div class="text-xs uppercase tracking-widest text-[#657253]">ATSFY Technologies</div><h1 id="pageTitle" class="text-xl md:text-2xl font-bold">Employee Command Center</h1></div>
+ <div class="flex items-center gap-3"><select id="month" class="border rounded-xl px-3 py-2 bg-white text-sm"></select><button id="reset" class="text-xs px-3 py-2 rounded-xl border bg-white">Reset Demo</button></div>
+</header>
+<section class="p-5 md:p-8 max-w-[1500px] mx-auto">
+ <div id="mobileNav" class="lg:hidden flex gap-2 overflow-auto mb-5"></div>
+ <div id="app"></div>
+</section>
+</main>
+</div>
+
+<div id="modal" class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50 p-4"><div class="bg-white rounded-2xl p-6 w-full max-w-lg shadow-2xl"><div id="modalBody"></div></div></div>
+
+<script>
+const KEY='atsfy_employee_cc_v1';
+const seed={
+ employees:[
+  {id:'e1',name:'Employee 1',role:'Sales & Business Development',active:true},
+  {id:'e2',name:'Employee 2',role:'Digital Solutions',active:true},
+  {id:'e3',name:'Employee 3',role:'Product Sales',active:true}
+ ],
+ products:[
+  {id:'p1',name:'GYMOS',type:'SaaS',unitPrice:15000},
+  {id:'p2',name:'SavorOS',type:'SaaS',unitPrice:15000},
+  {id:'p3',name:'ClinicoOS',type:'SaaS',unitPrice:20000},
+  {id:'p4',name:'ATSFY Hotel PMS',type:'SaaS',unitPrice:35000},
+  {id:'p5',name:'ORDERHUB',type:'SaaS',unitPrice:12000},
+  {id:'p6',name:'Student ERP',type:'SaaS',unitPrice:25000},
+  {id:'p7',name:'Core Career Intelligence',type:'AI Product',unitPrice:1499},
+  {id:'p8',name:'EasyReport',type:'Software',unitPrice:15000},
+  {id:'p9',name:'Website Development',type:'Service',unitPrice:12000},
+  {id:'p10',name:'Custom SaaS Development',type:'Service',unitPrice:35000},
+  {id:'p11',name:'Digital Marketing',type:'Service',unitPrice:7500},
+  {id:'p12',name:'AI / Automation Solutions',type:'Service',unitPrice:15000}
+ ],
+ targets:[],
+ tasks:[],
+ sales:[]
+};
+let db=JSON.parse(localStorage.getItem(KEY)||'null')||seed;
+let activeTab='dashboard';
+const monthKey=()=>document.getElementById('month').value;
+function save(){localStorage.setItem(KEY,JSON.stringify(db))}
+function money(n){return '₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:0})}
+function pct(a,b){return b?Math.min(100,Math.round(a/b*100)):0}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function emp(id){return db.employees.find(x=>x.id===id)?.name||'Unassigned'}
+function prod(id){return db.products.find(x=>x.id===id)?.name||'Unknown'}
+function salesFor(m){return db.sales.filter(x=>x.month===m)}
+function targetsFor(m){return db.targets.filter(x=>x.month===m)}
+function tasksFor(m){return db.tasks.filter(x=>x.month===m)}
+function initMonths(){
+ const s=document.getElementById('month'), now=new Date();
+ for(let i=-2;i<10;i++){let d=new Date(now.getFullYear(),now.getMonth()+i,1),k=d.toISOString().slice(0,7),o=document.createElement('option');o.value=k;o.textContent=d.toLocaleDateString('en-IN',{month:'long',year:'numeric'});s.appendChild(o)}
+ s.value=now.toISOString().slice(0,7);s.onchange=render;
+}
+function card(label,value,sub,icon){return '<div class="glass rounded-2xl p-5"><div class="flex justify-between"><div class="text-sm text-gray-500">'+label+'</div><div class="text-[#D9A43B]">'+icon+'</div></div><div class="text-2xl font-bold mt-2">'+value+'</div><div class="text-xs text-gray-500 mt-1">'+sub+'</div></div>'}
+function table(headers,rows,empty='No records yet.'){return '<div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="text-left border-b">'+headers.map(h=>'<th class="py-3 px-3">'+h+'</th>').join('')+'</tr></thead><tbody>'+ (rows.length?rows.join(''):'<tr><td colspan="'+headers.length+'" class="py-10 text-center text-gray-400">'+empty+'</td></tr>')+'</tbody></table></div>'}
+function btn(label,fn,cls='bg-[#1C301F] text-white'){return '<button onclick="'+fn+'" class="px-4 py-2 rounded-xl text-sm '+cls+'">'+label+'</button>'}
+
+function dashboard(){
+ const m=monthKey(), ss=salesFor(m), ts=targetsFor(m), tk=tasksFor(m), revenue=ss.reduce((a,x)=>a+Number(x.amount),0), target=ts.reduce((a,x)=>a+Number(x.revenueTarget||0),0);
+ let rows=db.employees.map(e=>{
+  let er=ss.filter(x=>x.employeeId===e.id).reduce((a,x)=>a+Number(x.amount),0), et=ts.filter(x=>x.employeeId===e.id).reduce((a,x)=>a+Number(x.revenueTarget||0),0), done=tk.filter(x=>x.employeeId===e.id&&x.status==='Completed').length, all=tk.filter(x=>x.employeeId===e.id).length;
+  return '<tr class="border-b"><td class="py-4 px-3 font-semibold">'+esc(e.name)+'</td><td class="px-3">'+money(et)+'</td><td class="px-3 font-semibold">'+money(er)+'</td><td class="px-3">'+pct(er,et)+'%</td><td class="px-3">'+done+'/'+all+'</td><td class="px-3"><div class="progress w-28"><span style="width:'+pct(er,et)+'%"></span></div></td></tr>'
+ });
+ return '<div class="mb-6"><div class="text-sm text-gray-500">Monthly performance overview</div><h2 class="text-2xl font-bold mt-1">Revenue + Task Accountability</h2></div><div class="grid md:grid-cols-2 xl:grid-cols-4 gap-4">'+card('Revenue Generated',money(revenue),'Actual sales recorded','₹')+card('Monthly Revenue Target',money(target),'Across all employees','◎')+card('Target Achievement',pct(revenue,target)+'%','Revenue vs target','↗')+card('Tasks Completed',tk.filter(x=>x.status==='Completed').length,tk.length+' total tasks this month','✓')+'</div><div class="glass rounded-2xl mt-6 p-5"><div class="flex items-center justify-between mb-4"><h3 class="font-bold">Employee-wise monthly performance</h3>'+btn('+ Add Sale',"openSale()")+'</div>'+table(['Employee','Target','Revenue','Achievement','Tasks','Progress'],rows)+'</div><div class="grid xl:grid-cols-2 gap-6 mt-6"><div class="glass rounded-2xl p-5"><h3 class="font-bold mb-4">Revenue by product</h3>'+productRevenue(m)+'</div><div class="glass rounded-2xl p-5"><h3 class="font-bold mb-4">Action queue</h3>'+actionQueue(m)+'</div></div>';
+}
+function productRevenue(m){
+ let ss=salesFor(m), map={};ss.forEach(s=>map[s.productId]=(map[s.productId]||0)+Number(s.amount));
+ let arr=Object.entries(map).sort((a,b)=>b[1]-a[1]);
+ return arr.length?arr.map(([id,v])=>'<div class="mb-4"><div class="flex justify-between text-sm"><span>'+esc(prod(id))+'</span><b>'+money(v)+'</b></div><div class="progress mt-2"><span style="width:'+Math.min(100,v/Math.max(...arr.map(x=>x[1]))*100)+'%"></span></div></div>').join(''):'<div class="text-gray-400 text-sm py-8 text-center">No sales recorded for this month.</div>';
+}
+function actionQueue(m){
+ let tk=tasksFor(m).filter(x=>x.status!=='Completed').slice(0,8);
+ return tk.length?tk.map(t=>'<div class="flex justify-between items-center border-b py-3"><div><b>'+esc(t.title)+'</b><div class="text-xs text-gray-500">'+esc(emp(t.employeeId))+' · '+esc(t.priority)+'</div></div><button onclick="completeTask(\''+t.id+'\')" class="text-xs px-3 py-1 rounded-lg border">Complete</button></div>').join(''):'<div class="text-gray-400 text-sm py-8 text-center">No pending tasks.</div>';
+}
+function tasks(){
+ const m=monthKey(), rows=tasksFor(m).map(t=>'<tr class="border-b"><td class="py-3 px-3"><b>'+esc(t.title)+'</b><div class="text-xs text-gray-500">'+esc(t.description||'')+'</div></td><td class="px-3">'+esc(emp(t.employeeId))+'</td><td class="px-3">'+esc(t.productId?prod(t.productId):'General')+'</td><td class="px-3">'+esc(t.priority)+'</td><td class="px-3"><span class="px-2 py-1 rounded-full text-xs '+(t.status==='Completed'?'bg-green-100 text-green-700':'bg-yellow-100 text-yellow-700')+'">'+t.status+'</span></td><td class="px-3">'+(t.status!=='Completed'?btn('Complete',"completeTask('"+t.id+"')",'border text-[#1C301F] bg-white'):'—')+'</td></tr>');
+ return pageHead('Tasks','Assign monthly activity targets and track execution.',btn('+ New Task','openTask()'))+'<div class="glass rounded-2xl p-5">'+table(['Task','Employee','Product / Service','Priority','Status',''],rows)+'</div>';
+}
+function targets(){
+ const m=monthKey(), rows=targetsFor(m).map(t=>'<tr class="border-b"><td class="py-3 px-3">'+esc(emp(t.employeeId))+'</td><td class="px-3">'+esc(prod(t.productId))+'</td><td class="px-3">'+t.unitTarget+'</td><td class="px-3">'+money(t.revenueTarget)+'</td><td class="px-3">'+money(salesFor(m).filter(s=>s.employeeId===t.employeeId&&s.productId===t.productId).reduce((a,s)=>a+Number(s.amount),0))+'</td><td class="px-3">'+btn('Delete',"deleteItem('targets','"+t.id+"')",'border bg-white text-red-600')+'</td></tr>');
+ return pageHead('Monthly Targets','Set employee-wise product/service sales targets.',btn('+ Add Target','openTarget()'))+'<div class="glass rounded-2xl p-5">'+table(['Employee','Product / Service','Units','Revenue Target','Actual Revenue',''],rows)+'</div>';
+}
+function sales(){
+ const m=monthKey(), ss=salesFor(m), rows=ss.map(s=>'<tr class="border-b"><td class="py-3 px-3">'+s.date+'</td><td class="px-3">'+esc(emp(s.employeeId))+'</td><td class="px-3">'+esc(prod(s.productId))+'</td><td class="px-3">'+s.units+'</td><td class="px-3 font-semibold">'+money(s.amount)+'</td><td class="px-3">'+esc(s.client||'—')+'</td><td class="px-3">'+btn('Delete',"deleteItem('sales','"+s.id+"')",'border bg-white text-red-600')+'</td></tr>');
+ return pageHead('Sales & Revenue','Every closed sale contributes to the employee and product revenue totals.',btn('+ Record Sale','openSale()'))+'<div class="glass rounded-2xl p-5 mb-5"><div class="grid md:grid-cols-3 gap-4"><div><span class="text-xs text-gray-500">Total sales</span><b class="block text-xl">'+ss.length+'</b></div><div><span class="text-xs text-gray-500">Revenue</span><b class="block text-xl">'+money(ss.reduce((a,s)=>a+Number(s.amount),0))+'</b></div><div><span class="text-xs text-gray-500">Average sale</span><b class="block text-xl">'+money(ss.length?ss.reduce((a,s)=>a+Number(s.amount),0)/ss.length:0)+'</b></div></div></div><div class="glass rounded-2xl p-5">'+table(['Date','Employee','Product / Service','Units','Amount','Client',''],rows)+'</div>';
+}
+function employees(){
+ const rows=db.employees.map(e=>'<tr class="border-b"><td class="py-3 px-3 font-semibold">'+esc(e.name)+'</td><td class="px-3">'+esc(e.role)+'</td><td class="px-3">'+(e.active?'Active':'Inactive')+'</td><td class="px-3">'+btn('Delete',"deleteItem('employees','"+e.id+"')",'border bg-white text-red-600')+'</td></tr>');
+ return pageHead('Employees','Manage the people who own tasks, targets and revenue.',btn('+ Add Employee','openEmployee()'))+'<div class="glass rounded-2xl p-5">'+table(['Employee','Role','Status',''],rows)+'</div>';
+}
+function products(){
+ const rows=db.products.map(p=>'<tr class="border-b"><td class="py-3 px-3 font-semibold">'+esc(p.name)+'</td><td class="px-3">'+esc(p.type)+'</td><td class="px-3">'+money(p.unitPrice)+'</td><td class="px-3">'+btn('Delete',"deleteItem('products','"+p.id+"')",'border bg-white text-red-600')+'</td></tr>');
+ return pageHead('Products & Services','Master catalogue used for targets and revenue attribution.',btn('+ Add Product / Service','openProduct()'))+'<div class="glass rounded-2xl p-5">'+table(['Name','Type','Default Price',''],rows)+'</div>';
+}
+function reports(){
+ const m=monthKey(), ss=salesFor(m), rev=ss.reduce((a,s)=>a+Number(s.amount),0), ts=targetsFor(m), target=ts.reduce((a,t)=>a+Number(t.revenueTarget),0);
+ return pageHead('Reports','Management view for monthly review and employee accountability.',btn('Export CSV','exportCSV()'))+'<div class="grid md:grid-cols-3 gap-4 mb-6">'+card('Actual Revenue',money(rev),'Selected month','₹')+card('Target Revenue',money(target),'Selected month','◎')+card('Achievement',pct(rev,target)+'%','Actual / target','↗')+'</div><div class="glass rounded-2xl p-5"><h3 class="font-bold mb-4">Employee revenue report</h3>'+table(['Employee','Revenue','Target','Achievement','Sales'],db.employees.map(e=>{let r=ss.filter(s=>s.employeeId===e.id).reduce((a,s)=>a+Number(s.amount),0),t=ts.filter(x=>x.employeeId===e.id).reduce((a,x)=>a+Number(x.revenueTarget),0),c=ss.filter(s=>s.employeeId===e.id).length;return '<tr class="border-b"><td class="py-3 px-3">'+esc(e.name)+'</td><td class="px-3">'+money(r)+'</td><td class="px-3">'+money(t)+'</td><td class="px-3">'+pct(r,t)+'%</td><td class="px-3">'+c+'</td></tr>'}))+'</div>';
+}
+function pageHead(title,sub,action){return '<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6"><div><h2 class="text-2xl font-bold">'+title+'</h2><p class="text-sm text-gray-500 mt-1">'+sub+'</p></div>'+action+'</div>'}
+function form(title,fields,onSave){document.getElementById('modalBody').innerHTML='<div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">'+title+'</h3><button onclick="closeModal()">✕</button></div><form id="f" class="space-y-4">'+fields.map(f=>'<label class="block text-sm"><span class="text-gray-600">'+f.label+'</span>'+f.html+'</label>').join('')+'<div class="flex justify-end gap-2 pt-3"><button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl border">Cancel</button><button class="px-4 py-2 rounded-xl bg-[#1C301F] text-white">Save</button></div></form>';document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').classList.add('flex');document.getElementById('f').onsubmit=e=>{e.preventDefault();onSave(new FormData(e.target));closeModal();save();render()}}
+const sel=(arr,placeholder)=>'<select name="v" required class="w-full mt-1 border rounded-xl px-3 py-2 bg-white">'+(placeholder?'<option value="">'+placeholder+'</option>':'')+arr.map(x=>'<option value="'+x.id+'">'+esc(x.name)+'</option>').join('')+'</select>';
+function openEmployee(){form('Add Employee',[{label:'Name',html:'<input name="name" required class="w-full mt-1 border rounded-xl px-3 py-2">'},{label:'Role',html:'<input name="role" required class="w-full mt-1 border rounded-xl px-3 py-2">'}],d=>db.employees.push({id:'e'+Date.now(),name:d.get('name'),role:d.get('role'),active:true}))}
+function openProduct(){form('Add Product / Service',[{label:'Name',html:'<input name="name" required class="w-full mt-1 border rounded-xl px-3 py-2">'},{label:'Type',html:'<select name="type" class="w-full mt-1 border rounded-xl px-3 py-2"><option>SaaS</option><option>AI Product</option><option>Software</option><option>Service</option></select>'},{label:'Default Price',html:'<input name="price" type="number" min="0" required class="w-full mt-1 border rounded-xl px-3 py-2">'}],d=>db.products.push({id:'p'+Date.now(),name:d.get('name'),type:d.get('type'),unitPrice:Number(d.get('price'))}))}
+function openTarget(){form('Set Monthly Target',[{label:'Employee',html:sel(db.employees,'Select employee').replace('name="v"','name="employeeId"')},{label:'Product / Service',html:sel(db.products,'Select product').replace('name="v"','name="productId"')},{label:'Units Target',html:'<input name="units" type="number" min="0" value="1" class="w-full mt-1 border rounded-xl px-3 py-2">'},{label:'Revenue Target (₹)',html:'<input name="revenue" type="number" min="0" required class="w-full mt-1 border rounded-xl px-3 py-2">'}],d=>db.targets.push({id:'t'+Date.now(),month:monthKey(),employeeId:d.get('employeeId'),productId:d.get('productId'),unitTarget:Number(d.get('units')),revenueTarget:Number(d.get('revenue'))}))}
+function openSale(){form('Record Sale',[{label:'Employee',html:sel(db.employees,'Select employee').replace('name="v"','name="employeeId"')},{label:'Product / Service',html:sel(db.products,'Select product').replace('name="v"','name="productId"')},{label:'Client',html:'<input name="client" class="w-full mt-1 border rounded-xl px-3 py-2">'},{label:'Units',html:'<input name="units" type="number" min="1" value="1" class="w-full mt-1 border rounded-xl px-3 py-2">'},{label:'Sale Amount (₹)',html:'<input name="amount" type="number" min="0" required class="w-full mt-1 border rounded-xl px-3 py-2">'}],d=>db.sales.push({id:'s'+Date.now(),month:monthKey(),date:new Date().toISOString().slice(0,10),employeeId:d.get('employeeId'),productId:d.get('productId'),client:d.get('client'),units:Number(d.get('units')),amount:Number(d.get('amount'))}))}
+function openTask(){form('Create Task',[{label:'Title',html:'<input name="title" required class="w-full mt-1 border rounded-xl px-3 py-2">'},{label:'Employee',html:sel(db.employees,'Select employee').replace('name="v"','name="employeeId"')},{label:'Product / Service',html:sel([{id:'',name:'General'}].concat(db.products),'General / Select product').replace('name="v"','name="productId"')},{label:'Priority',html:'<select name="priority" class="w-full mt-1 border rounded-xl px-3 py-2"><option>High</option><option>Medium</option><option>Low</option></select>'},{label:'Description',html:'<textarea name="description" class="w-full mt-1 border rounded-xl px-3 py-2"></textarea>'}],d=>db.tasks.push({id:'k'+Date.now(),month:monthKey(),title:d.get('title'),employeeId:d.get('employeeId'),productId:d.get('productId'),priority:d.get('priority'),description:d.get('description'),status:'Pending'}))}
+function completeTask(id){let t=db.tasks.find(x=>x.id===id);if(t)t.status='Completed';save();render()}
+function deleteItem(type,id){if(confirm('Delete this record?')){db[type]=db[type].filter(x=>x.id!==id);save();render()}}
+function closeModal(){document.getElementById('modal').classList.add('hidden');document.getElementById('modal').classList.remove('flex')}
+function exportCSV(){const m=monthKey(),ss=salesFor(m);let csv='Date,Employee,Product,Units,Amount,Client\n'+ss.map(s=>[s.date,emp(s.employeeId),prod(s.productId),s.units,s.amount,s.client||''].map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='atsfy-revenue-'+m+'.csv';a.click()}
+function render(){
+ const map={dashboard:['Employee Command Center',dashboard],tasks:['Tasks',tasks],targets:['Monthly Targets',targets],sales:['Sales & Revenue',sales],employees:['Employees',employees],products:['Products & Services',products],reports:['Reports',reports]};
+ document.getElementById('pageTitle').textContent=map[activeTab][0];document.getElementById('app').innerHTML=map[activeTab][1]();
+ document.querySelectorAll('.nav').forEach(x=>{x.classList.toggle('nav-active',x.dataset.tab===activeTab)});document.querySelectorAll('.nav').forEach(x=>x.onclick=()=>{activeTab=x.dataset.tab;render()});
+ document.getElementById('mobileNav').innerHTML=Object.keys(map).map(k=>'<button onclick="activeTab=\''+k+'\';render()" class="px-3 py-2 rounded-xl whitespace-nowrap text-xs '+(k===activeTab?'bg-[#1C301F] text-white':'bg-white border')+'">'+map[k][0]+'</button>').join('');
+}
+document.getElementById('reset').onclick=()=>{if(confirm('Reset all dashboard data to demo data?')){db=JSON.parse(JSON.stringify(seed));save();render()}};
+initMonths();render();
+</script>
+</body>
+</html>
