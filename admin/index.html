@@ -1,36 +1,5 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ATSFY Admin — Employee Revenue OS</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>body{background:#F7F6F2;color:#1C301F;font-family:Inter,system-ui,sans-serif}.glass{background:#fff;border:1px solid rgba(40,80,64,.1);box-shadow:0 10px 30px rgba(28,48,31,.05)}</style></head>
-<body class="min-h-screen">
-<div id="login" class="min-h-screen flex items-center justify-center p-5"><div class="glass rounded-3xl p-8 w-full max-w-md"><div class="w-12 h-12 rounded-xl bg-[#1C301F] text-[#D9A43B] flex items-center justify-center font-black text-xl mb-5">A</div><h1 class="text-2xl font-bold">ATSFY Admin</h1><p class="text-sm text-gray-500 mt-2">Employee Revenue OS is restricted to authorized administrators.</p><form id="loginForm" class="space-y-4 mt-6"><input id="email" type="email" required placeholder="Admin email" class="w-full border rounded-xl px-4 py-3"><input id="password" type="password" required placeholder="Password" class="w-full border rounded-xl px-4 py-3"><button class="w-full rounded-xl bg-[#1C301F] text-white py-3 font-semibold">Sign in as Admin</button><p id="error" class="text-sm text-red-600"></p></form></div></div>
-<div id="app" class="hidden"></div>
-<script>
-/*
- SECURITY MODEL:
- 1. This page must use Supabase Auth.
- 2. The admin role MUST live in app_metadata/custom claims, never user_metadata.
- 3. Database tables must have RLS policies that allow SELECT/INSERT/UPDATE/DELETE only to the admin role.
- 4. Do not put a service_role/secret key in this file.
- Replace these two public values with the selected ATSFY Supabase project's publishable configuration.
-*/
-const SUPABASE_URL='https://ogkhaomdfrmyqxmhutkd.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY='sb_publishable_UlT0jgbh9PtA4wLfRN1yWA_t4yngpmk';
-const supabaseConfigured=!SUPABASE_URL.includes('__')&&!SUPABASE_PUBLISHABLE_KEY.includes('__');
-let supabaseClient=supabaseConfigured?window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY):null;
-
-function showError(x){document.getElementById('error').textContent=x}
-async function requireAdmin(){
- if(!supabaseClient){showError('Supabase is not configured yet. Connect the ATSFY Supabase project before using this private dashboard.');return false}
- const {data:{user}}=await supabaseClient.auth.getUser();
- if(!user){document.getElementById('login').classList.remove('hidden');return false}
- const role=user.app_metadata?.role;
- if(role!=='admin'){await supabaseClient.auth.signOut();showError('Access denied. This area is for administrators only.');return false}
- document.getElementById('login').classList.add('hidden');document.getElementById('app').classList.remove('hidden');renderAdmin(user);return true
-}
-document.getElementById('loginForm').onsubmit=async e=>{e.preventDefault();showError('');if(!supabaseClient){showError('Supabase is not configured yet.');return}const {error}=await supabaseClient.auth.signInWithPassword({email:email.value,password:password.value});if(error){showError(error.message);return}await requireAdmin()}
-function renderAdmin(user){document.getElementById('app').innerHTML='<header class="sticky top-0 bg-white/90 backdrop-blur border-b p-5 flex justify-between items-center"><div><div class="text-xs uppercase tracking-widest text-[#657253]">Private Administration</div><h1 class="text-2xl font-bold">Employee Revenue OS</h1></div><button onclick="logout()" class="px-4 py-2 rounded-xl border">Sign out</button></header><main class="max-w-7xl mx-auto p-5 md:p-8"><div class="bg-[#1C301F] text-white rounded-3xl p-6 mb-6"><h2 class="text-xl font-bold">Admin-only control center</h2><p class="text-sm text-gray-300 mt-2">Targets, revenue, tasks, employee performance, product sales and management reports belong here. Employees do not receive access to this data.</p></div><div class="grid md:grid-cols-3 gap-4"><div class="glass rounded-2xl p-5"><b>Employee Targets</b><p class="text-sm text-gray-500 mt-2">Set monthly units, revenue and activity targets.</p></div><div class="glass rounded-2xl p-5"><b>Revenue Tracking</b><p class="text-sm text-gray-500 mt-2">Record sales and attribute revenue to employee + product.</p></div><div class="glass rounded-2xl p-5"><b>Performance</b><p class="text-sm text-gray-500 mt-2">Review achievement, tasks, sales and monthly reports.</p></div></div><div class="glass rounded-2xl p-6 mt-6"><h3 class="font-bold">Next database layer</h3><p class="text-sm text-gray-600 mt-2">Supabase is connected. Database RLS restricts these tables to authenticated users whose app_metadata role is admin. The browser uses only the publishable key; no service-role key is exposed.</p><code class="block bg-gray-100 rounded-xl p-4 mt-4 text-xs">admin → employees → products → monthly_targets → tasks → sales → revenue_reports</code></div></main>'}
-async function logout(){if(supabaseClient)await supabaseClient.auth.signOut();location.reload()}
-requireAdmin();
-</script></body></html>
+<script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>body{font-family:Inter,system-ui,sans-serif}button,input,select,textarea{outline:none}button:focus,input:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px rgba(217,164,59,.25)}</style></head>
+<body class="min-h-screen bg-[#F7F6F2]"><div id="login" class="min-h-screen flex items-center justify-center p-5"><div class="bg-white border rounded-3xl p-8 w-full max-w-md shadow-sm"><div class="w-12 h-12 rounded-xl bg-[#1C301F] text-[#D9A43B] flex items-center justify-center font-black text-xl mb-5">A</div><h1 class="text-2xl font-bold text-[#1C301F]">ATSFY Admin</h1><p class="text-sm text-gray-500 mt-2">Private Employee Revenue OS. Only accounts with the admin role can access the data.</p><form id="loginForm" class="space-y-4 mt-6"><input id="email" type="email" required placeholder="Admin email" autocomplete="username" class="w-full border rounded-xl px-4 py-3"><input id="password" type="password" required placeholder="Password" autocomplete="current-password" class="w-full border rounded-xl px-4 py-3"><button class="w-full rounded-xl bg-[#1C301F] text-white py-3 font-semibold">Sign in as Admin</button><p id="error" class="text-sm text-red-600 min-h-5"></p></form></div></div><div id="app" class="hidden"></div><script src="/admin/app.js"></script></body></html>
