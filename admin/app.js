@@ -102,8 +102,41 @@ function reportsView(){
 }
 function exportReport(){const rows=state.employees.map(e=>{const t=state.targets.filter(x=>x.month_start===monthStart(state.month)&&x.employee_id===e.id).reduce((a,x)=>a+Number(x.target_revenue||0),0);const s=state.sales.filter(x=>inMonth(x.sale_date,state.month)&&x.employee_id===e.id&&x.payment_status!=='cancelled').reduce((a,x)=>a+Number(x.total_amount||0),0);const r=state.revenue.filter(x=>inMonth(x.entry_date,state.month)&&x.employee_id===e.id).reduce((a,x)=>a+Number(x.amount||0),0);const tc=state.tasks.filter(x=>inMonth(x.due_date,state.month)&&x.employee_id===e.id&&x.status==='completed').length;return [e.full_name,e.email,state.month,t,s,r,s+r,t?((s+r)/t*100).toFixed(2):0,tc]});const csv=[['Employee','Email','Month','Target Revenue','Sales','Other Revenue','Tracked Revenue','Achievement %','Completed Tasks'],...rows].map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='atsfy-employee-report-'+state.month+'.csv';a.click();URL.revokeObjectURL(a.href)}
 
+async function requestPasswordReset(){
+ const email=document.getElementById('email').value.trim();
+ const error=document.getElementById('error');
+ if(!email){error.textContent='Enter the admin email first.';return}
+ error.textContent='Sending password reset email…';
+ const {error:resetError}=await db.auth.resetPasswordForEmail(email,{redirectTo:location.origin+'/admin'});
+ error.textContent=resetError?resetError.message:'Password reset email sent. Check your inbox and follow the link.';
+}
+async function showPasswordReset(){
+ document.getElementById('login').classList.add('hidden');
+ document.getElementById('app').classList.add('hidden');
+ document.getElementById('reset').classList.remove('hidden');
+ document.getElementById('resetForm').addEventListener('submit',async e=>{
+   e.preventDefault();
+   const error=document.getElementById('resetError');
+   const password=document.getElementById('newPassword').value;
+   const confirm=document.getElementById('confirmPassword').value;
+   if(password.length<8){error.textContent='Password must be at least 8 characters.';return}
+   if(password!==confirm){error.textContent='Passwords do not match.';return}
+   error.textContent='Updating password…';
+   const {error:updateError}=await db.auth.updateUser({password});
+   if(updateError){error.textContent=updateError.message;return}
+   history.replaceState({},document.title,location.pathname+location.search);
+   error.className='text-sm text-green-700 min-h-5';
+   error.textContent='Password updated successfully. Redirecting to sign in…';
+   await db.auth.signOut();
+   setTimeout(()=>location.reload(),1000);
+ });
+}
 async function logout(){await db.auth.signOut();location.reload()}
 async function boot(){
+ if(location.hash.includes('type=recovery')){
+   await showPasswordReset();
+   return;
+ }
  const {data:{user}}=await db.auth.getUser();
  if(!user){document.getElementById('login').classList.remove('hidden');return}
  if(user.app_metadata?.role!=='admin'){await db.auth.signOut();document.getElementById('login').classList.remove('hidden');document.getElementById('error').textContent='Access denied. Your account is authenticated but is not assigned the admin role.';return}
