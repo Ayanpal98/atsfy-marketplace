@@ -338,6 +338,45 @@ body.cin-hover .cin-cursor{width:54px;height:54px;background:rgba(217,164,59,.08
 @keyframes cinMarquee{to{transform:translateX(-50%)}}
 @media(max-width:768px){.cin-cursor,.cin-cursor-dot{display:none}.cin-scroll-cue{bottom:20px}.cinematic-section.reveal-cin{transform:translateY(25px)}}
 @media(prefers-reduced-motion:reduce){.hero-orbit,.system-ring,.cin-scanline,.cin-marquee-track{animation:none!important}.cinematic-section.reveal-cin{opacity:1;transform:none;transition:none}}
+\n
+/* PHASE 3 — TRUE CINEMATIC STORYTELLING */
+.deep-system-story{background:#070908;border-top:1px solid var(--cin-line);min-height:100vh}
+.deep-story-sticky{padding:clamp(5rem,9vw,9rem) 0}
+.deep-story-head{display:flex;justify-content:space-between;align-items:flex-end;gap:3rem;margin:22px 0 70px}
+.deep-story-head .section-title span{color:#76877b}
+.deep-story-status{display:flex;flex-direction:column;align-items:flex-end;gap:7px;font-size:9px;letter-spacing:.16em;color:#68736c}
+.deep-story-status i{width:7px;height:7px;border-radius:50%;background:var(--cin-gold);box-shadow:0 0 16px rgba(217,164,59,.8);animation:pulseGold 2s infinite}
+.deep-story-status b{font-weight:500;color:#b8c1bb}
+@keyframes pulseGold{50%{opacity:.35;transform:scale(.7)}}
+.system-story-grid{display:grid;grid-template-columns:1.2fr .8fr;min-height:560px;border-top:1px solid var(--cin-line);border-bottom:1px solid var(--cin-line)}
+.system-story-visual{position:relative;min-height:560px;overflow:hidden;background:radial-gradient(circle at 50% 50%,rgba(40,80,64,.19),transparent 45%)}
+.story-orbit{position:absolute;border:1px solid rgba(247,246,242,.1);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);animation:spinSlow 22s linear infinite}
+.so1{width:430px;height:430px}.so2{width:300px;height:300px;border-color:rgba(217,164,59,.2);animation-duration:16s;animation-direction:reverse}.so3{width:160px;height:160px;border-color:rgba(40,80,64,.8);animation-duration:10s}
+.story-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:105px;height:105px;border-radius:50%;border:1px solid rgba(217,164,59,.55);background:#285040;box-shadow:0 0 90px rgba(40,80,64,.5);display:flex;align-items:center;justify-content:center;color:#f7f6f2;font-size:2rem;font-weight:700;z-index:3}
+.story-core span{font-size:.5rem;color:#d9a43b;letter-spacing:.2em;position:absolute;bottom:19px}
+.story-node{position:absolute;padding:9px 12px;border:1px solid rgba(247,246,242,.15);background:rgba(7,9,8,.82);font-size:8px;letter-spacing:.16em;color:#bec8c1;z-index:4}
+.sn1{left:12%;top:27%}.sn2{right:10%;top:20%}.sn3{left:18%;bottom:22%}.sn4{right:14%;bottom:28%}
+.story-line{position:absolute;height:1px;background:linear-gradient(90deg,transparent,rgba(217,164,59,.5),transparent);transform-origin:left center;z-index:2}
+.sl1{width:30%;left:28%;top:39%;transform:rotate(10deg)}.sl2{width:28%;left:49%;top:38%;transform:rotate(-23deg)}.sl3{width:31%;left:30%;top:61%;transform:rotate(-18deg)}
+.system-story-copy{border-left:1px solid var(--cin-line);display:flex;flex-direction:column}
+.story-step{padding:34px 34px 38px;border-bottom:1px solid var(--cin-line);min-height:140px;opacity:.38;transition:opacity .5s,background .5s,padding .5s}
+.story-step.is-active{opacity:1;background:rgba(40,80,64,.12);padding-left:45px}
+.story-step small{color:var(--cin-gold);font-size:9px;letter-spacing:.16em}.story-step h3{font-size:1.25rem;letter-spacing:.02em;margin-top:16px}.story-step p{font-size:.8rem;color:#7f8b83;line-height:1.65;max-width:430px;margin-top:7px}
+.product-spotlight{background:#f0f1eb;color:#102017}
+.product-spotlight .section-index{color:#52705d}
+.spotlight-shell{margin-top:45px;background:#0a0d0b;color:#f7f6f2;min-height:570px;padding:28px clamp(1.5rem,5vw,4.5rem);position:relative;overflow:hidden}
+.spotlight-shell:before{content:"";position:absolute;width:65vw;height:65vw;right:-30vw;top:-35vw;border:1px solid rgba(217,164,59,.16);border-radius:50%}
+.spotlight-meta{display:flex;justify-content:space-between;border-bottom:1px solid rgba(247,246,242,.12);padding-bottom:18px;font-size:9px;letter-spacing:.18em;color:#68736c}
+.spotlight-content{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4rem;min-height:475px}
+.spotlight-kicker{font-size:10px;letter-spacing:.18em;color:#d9a43b}.spotlight-content h2{font-size:clamp(4rem,8vw,8rem);line-height:.8;letter-spacing:-.07em;margin:18px 0}.spotlight-content h2 em{font-style:normal;color:transparent;-webkit-text-stroke:1px rgba(247,246,242,.7)}
+.spotlight-content p{max-width:430px;color:#8e9991;line-height:1.65;font-size:.9rem;margin-bottom:28px}
+.spotlight-visual{display:flex;justify-content:center}
+.visual-frame{width:min(34vw,420px);height:min(34vw,420px);min-width:270px;min-height:270px;border:1px solid rgba(247,246,242,.13);position:relative;background:radial-gradient(circle,rgba(40,80,64,.28),transparent 55%);overflow:hidden}
+.frame-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:35px 35px}
+.frame-ring{position:absolute;width:65%;height:65%;left:17.5%;top:17.5%;border:1px solid rgba(217,164,59,.45);border-radius:50%;animation:spinSlow 14s linear infinite}
+.frame-label{position:absolute;top:15px;left:15px;font-size:8px;letter-spacing:.18em;color:#68736c}
+.frame-metric{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}.frame-metric b{font-size:5rem;letter-spacing:-.08em}.frame-metric span{font-size:8px;letter-spacing:.2em;color:#d9a43b}
+@media(max-width:768px){.deep-story-head{align-items:flex-start;flex-direction:column;margin-bottom:45px}.deep-story-status{align-items:flex-start}.system-story-grid{grid-template-columns:1fr}.system-story-visual{min-height:430px}.system-story-copy{border-left:0}.story-orbit.so1{width:320px;height:320px}.story-orbit.so2{width:225px;height:225px}.story-step.is-active{padding-left:30px}.spotlight-content{grid-template-columns:1fr;gap:2rem;padding:30px 0}.spotlight-shell{min-height:760px}.visual-frame{width:280px;height:280px}.spotlight-content h2{font-size:4.5rem}}
 \n</style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-atsfy-gold selection:text-atsfy-dark">
@@ -1171,6 +1210,48 @@ body.cin-hover .cin-cursor{width:54px;height:54px;background:rgba(217,164,59,.08
                         </div>
                     </section>
 
+                    <section class="deep-system-story cinematic-section">
+                        <div class="deep-story-sticky">
+                            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                                <div class="section-index">03 — THE INTELLIGENCE LAYER</div>
+                                <div class="deep-story-head">
+                                    <div>
+                                        <h2 class="section-title">One ecosystem.<br><span>Many systems.</span></h2>
+                                        <p class="section-copy">ATSFY connects products, services and ventures into a growing technology layer built for real-world workflows.</p>
+                                    </div>
+                                    <div class="deep-story-status"><i></i><span>SYSTEM STATUS</span><b>ACTIVE / BUILDING</b></div>
+                                </div>
+                                <div class="system-story-grid">
+                                    <div class="system-story-visual">
+                                        <div class="story-orbit so1"></div><div class="story-orbit so2"></div><div class="story-orbit so3"></div>
+                                        <div class="story-core">A<span>AI</span></div>
+                                        <div class="story-line sl1"></div><div class="story-line sl2"></div><div class="story-line sl3"></div>
+                                        <span class="story-node sn1">CAREER</span><span class="story-node sn2">HEALTH</span><span class="story-node sn3">EDUCATION</span><span class="story-node sn4">BUSINESS</span>
+                                    </div>
+                                    <div class="system-story-copy">
+                                        <article class="story-step is-active"><small>01</small><h3>INTELLIGENCE</h3><p>AI sits at the core of the products ATSFY designs, helping people and organizations make faster, smarter decisions.</p></article>
+                                        <article class="story-step"><small>02</small><h3>INFRASTRUCTURE</h3><p>Reusable digital systems turn complex workflows into accessible, deployable tools.</p></article>
+                                        <article class="story-step"><small>03</small><h3>VENTURES</h3><p>Validated ideas become independent ventures across high-impact sectors.</p></article>
+                                        <article class="story-step"><small>04</small><h3>IMPACT</h3><p>Built from Tripura, designed to move beyond geography and serve markets everywhere.</p></article>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="product-spotlight cinematic-section">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="section-index">04 — PRODUCTS IN MOTION</div>
+                            <div class="spotlight-shell">
+                                <div class="spotlight-meta"><span>LIVE ECOSYSTEM</span><span>01 / 04</span></div>
+                                <div class="spotlight-content">
+                                    <div><div class="spotlight-kicker">CAREER INTELLIGENCE</div><h2>ATSFY<br><em>CORE</em></h2><p>Career readiness, ATS analysis, job matching and recruitment intelligence in one intelligent platform.</p><button onclick="router.navigate('product-detail',{slug:'atsfy-core-career-intelligence'})" class="cinematic-btn cinematic-btn-primary">Explore Product <i data-lucide="arrow-up-right"></i></button></div>
+                                    <div class="spotlight-visual"><div class="visual-frame"><div class="frame-grid"></div><div class="frame-ring"></div><div class="frame-label">CORE / 001</div><div class="frame-metric"><b>AI</b><span>CAREER INTELLIGENCE</span></div></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
                     <section class="products-cinematic cinematic-section">
                         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                             <div class="section-index">03 — ECOSYSTEM SPOTLIGHT</div>
@@ -1914,6 +1995,29 @@ body.cin-hover .cin-cursor{width:54px;height:54px;background:rgba(217,164,59,.08
   }
   window.premiumPass=premiumPass;
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',premiumPass); else premiumPass();
+})();
+</script>\n
+<script>
+(function(){
+ function initStorytelling(){
+   const root=document.querySelector('.cinematic-home'); if(!root) return;
+   const steps=[...root.querySelectorAll('.story-step')], visual=root.querySelector('.system-story-visual');
+   if(!steps.length) return;
+   const io=new IntersectionObserver(entries=>entries.forEach(e=>{
+      if(e.isIntersecting){
+        const idx=steps.indexOf(e.target);
+        steps.forEach((x,i)=>x.classList.toggle('is-active',i===idx));
+        if(visual) visual.dataset.active=idx;
+      }
+   }),{rootMargin:'-35% 0px -35% 0px',threshold:.01});
+   steps.forEach(s=>io.observe(s));
+   if(window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      gsap.fromTo('.spotlight-shell',{clipPath:'inset(0 0 100% 0)'},{clipPath:'inset(0 0 0% 0)',duration:1.3,ease:'power4.inOut',scrollTrigger:undefined});
+   }
+   if(window.lucide) lucide.createIcons();
+ }
+ window.initStorytelling=initStorytelling;
+ setTimeout(initStorytelling,120);
 })();
 </script>\n</body>
 </html>
