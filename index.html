@@ -2077,5 +2077,35 @@ body.cin-hover .cin-cursor{width:54px;height:54px;background:rgba(217,164,59,.08
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initEco);else initEco();
 })();
 </script>
+<style>
+/* PHASE 5 — PRODUCT WORLDS */
+.product-worlds{background:#0a0d0b;color:#f7f6f2;padding:clamp(6rem,10vw,11rem) clamp(1rem,5vw,5rem);border-top:1px solid rgba(247,246,242,.12);overflow:hidden}
+.pw-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:50px}.pw-kicker{font-size:.65rem;letter-spacing:.18em;color:#d9a43b;font-weight:700}.pw-title{font-size:clamp(3rem,7vw,7.5rem);line-height:.86;letter-spacing:-.065em;font-weight:600;margin-top:14px;max-width:1000px}.pw-title span{color:#748177}.pw-note{font-size:.62rem;letter-spacing:.15em;color:#69756d;white-space:nowrap}
+.pw-track{display:grid;grid-template-columns:repeat(6,minmax(290px,1fr));gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:18px;scrollbar-width:thin}.pw-card{min-height:570px;scroll-snap-align:start;border:1px solid rgba(247,246,242,.13);background:#0e1310;position:relative;padding:25px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;transition:.45s}.pw-card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 25%,rgba(40,80,64,.35),transparent 42%);opacity:.8}.pw-card:hover{border-color:rgba(217,164,59,.55);transform:translateY(-7px)}.pw-top,.pw-bottom{position:relative;z-index:2}.pw-num{font-size:.55rem;color:#d9a43b;letter-spacing:.16em}.pw-status{float:right;font-size:.5rem;letter-spacing:.13em;color:#89948c;border:1px solid rgba(247,246,242,.16);padding:5px 7px}.pw-visual{height:230px;position:relative;display:flex;align-items:center;justify-content:center}.pw-ring{position:absolute;width:190px;height:190px;border:1px solid rgba(247,246,242,.12);border-radius:50%;animation:pwspin 20s linear infinite}.pw-ring:after{content:"";position:absolute;inset:25px;border:1px dashed rgba(217,164,59,.3);border-radius:50%}.pw-core{width:74px;height:74px;border-radius:50%;background:#285040;border:1px solid rgba(217,164,59,.6);display:flex;align-items:center;justify-content:center;font-weight:800;letter-spacing:-.06em;box-shadow:0 0 55px rgba(40,80,64,.45);z-index:1}.pw-grid{position:absolute;inset:10%;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:25px 25px;mask-image:radial-gradient(circle,black,transparent 72%)}.pw-category{font-size:.55rem;color:#7f8a82;letter-spacing:.14em;text-transform:uppercase}.pw-name{font-size:1.8rem;line-height:.95;letter-spacing:-.045em;margin-top:10px}.pw-desc{font-size:.72rem;color:#87928b;line-height:1.55;margin-top:10px}.pw-action{margin-top:20px;display:inline-flex;align-items:center;gap:8px;font-size:.65rem;font-weight:700;color:#f7f6f2;border-bottom:1px solid #d9a43b;padding-bottom:7px}.pw-action:hover{color:#d9a43b}.pw-footer{display:flex;justify-content:space-between;margin-top:28px;border-top:1px solid rgba(247,246,242,.12);padding-top:18px;color:#69756d;font-size:.52rem;letter-spacing:.1em}
+.pw-rail{display:flex;justify-content:space-between;align-items:center;margin-top:25px;color:#68746c;font-size:.57rem;letter-spacing:.14em;text-transform:uppercase}.pw-rail strong{color:#d9a43b}@keyframes pwspin{to{transform:rotate(360deg)}}@media(max-width:800px){.pw-head{display:block}.pw-note{margin-top:18px}.pw-track{grid-template-columns:repeat(6,minmax(255px,82vw))}.pw-card{min-height:520px}}
+@media(prefers-reduced-motion:reduce){.pw-ring{animation:none}.pw-card{transition:none}}
+</style>
+<script>
+(function(){
+ const products=[
+  {num:'001',cat:'Career Intelligence',name:'ATSFY CORE',desc:'Explainable career readiness, matching and action intelligence for job seekers.',status:'LIVE / BETA',code:'CAREER / AI',slug:'atsfy-core-career-intelligence'},
+  {num:'002',cat:'Business Systems',name:'GYMOS',desc:'Digital operations for gyms, memberships, attendance, payments and daily management.',status:'LIVE',code:'FITNESS / SaaS',slug:''},
+  {num:'003',cat:'Hospitality Technology',name:'SavorOS',desc:'Restaurant operations with digital menus, ordering, kitchen workflows and service visibility.',status:'LIVE / BUILDING',code:'HOSPITALITY / SaaS',slug:''},
+  {num:'004',cat:'Health Technology',name:'Clinova',desc:'Human-centred digital health infrastructure designed for access, workflows and assisted care.',status:'PROTOTYPE / PILOT',code:'HEALTH / AI',slug:''},
+  {num:'005',cat:'Education Technology',name:'Anirudh Learner OS',desc:'A scalable learner and examination operating system for papers, scoring, XP and analytics.',status:'BUILDING',code:'EDTECH / OS',slug:''},
+  {num:'006',cat:'Business Intelligence',name:'EasyReport',desc:'Configurable reporting infrastructure for turning operational data into usable business views.',status:'LIVE',code:'DATA / REPORTING',slug:''}
+ ];
+ function initPW(){
+  const root=document.querySelector('.cinematic-home');if(!root||root.querySelector('.product-worlds'))return;
+  const section=document.createElement('section');section.className='product-worlds';
+  section.innerHTML='<div class="pw-head"><div><div class="pw-kicker">06 — PRODUCTS IN THE REAL WORLD</div><h2 class="pw-title">Built as <span>systems.</span><br>Deployed as products.</h2></div><div class="pw-note">PRODUCT WORLDS / 001—006</div></div><div class="pw-track">'+products.map(p=>'<article class="pw-card"><div class="pw-top"><span class="pw-num">'+p.num+' /</span><span class="pw-status">'+p.status+'</span><div class="pw-visual"><div class="pw-grid"></div><div class="pw-ring"></div><div class="pw-core">'+p.num+'</div></div></div><div class="pw-bottom"><div class="pw-category">'+p.cat+'</div><h3 class="pw-name">'+p.name+'</h3><p class="pw-desc">'+p.desc+'</p><a class="pw-action" href="'+(p.slug?'#product-detail/'+p.slug:'#home')+'">Explore system ↗</a><div class="pw-footer"><span>'+p.code+'</span><span>TRIPURA → WORLD</span></div></div></article>').join('')+'</div><div class="pw-rail"><span><strong>SCROLL</strong> horizontally to explore the stack</span><span>ATSFY / PRODUCT SYSTEMS</span></div>';
+  const anchor=root.querySelector('.products-cinematic');anchor?root.insertBefore(section,anchor):root.appendChild(section);
+  section.querySelectorAll('.pw-action').forEach((a,i)=>{if(products[i].slug){a.addEventListener('click',e=>{e.preventDefault();if(window.router)router.navigate('product-detail',{slug:products[i].slug})})}});
+  if(window.lucide)lucide.createIcons();
+ }
+ function watch(){setTimeout(initPW,100)}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',watch);else watch();
+})();
+</script>
 </body>
 </html>
