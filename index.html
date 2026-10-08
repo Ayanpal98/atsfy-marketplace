@@ -2197,7 +2197,7 @@ footer{background:#1c301f!important}
       <div class="net-brand"><div class="net-brand-mark">A</div><div>ATSFY Marketplace <span style="font-weight:500;color:#718077">/ Network</span></div></div>
       <div class="net-actions">
         <button class="net-btn optional" onclick="atsfyNetworkScroll('services')">Find Services</button>
-        <button class="net-btn optional" onclick="atsfyNetworkScroll('clients')">Find Clients</button>
+        <button class="net-btn optional" onclick="atsfyOpenPhase3('requirements')">Find Clients</button>
         <button class="net-btn primary" onclick="atsfyOpenAuth()">Create Profile</button>
         <button class="net-btn net-close" onclick="atsfyNetworkClose()" aria-label="Close">×</button>
       </div>
@@ -2226,7 +2226,7 @@ footer{background:#1c301f!important}
       <div class="net-cards">
         <article class="net-card"><div class="ico">⌕</div><h3>Find Services</h3><p>Discover developers, designers, marketers, AI specialists, agencies, consultants and business service providers.</p><button class="net-btn primary" onclick="atsfyNetworkToast('Service discovery is ready for provider listings.')">Browse Providers</button></article>
         <article class="net-card"><div class="ico">↗</div><h3>Find Clients</h3><p>Providers can discover active requirements, submit proposals and turn relevant opportunities into paid work.</p><button class="net-btn primary" onclick="atsfyNetworkScroll('clients')">View Opportunities</button></article>
-        <article class="net-card"><div class="ico">＋</div><h3>Post a Requirement</h3><p>Tell the marketplace what you need, your budget, location, deadline and preferred engagement model.</p><button class="net-btn primary" onclick="atsfyNetworkToggleProfile();atsfyNetworkToast('Requirement posting is the next production workflow.')">Post Requirement</button></article>
+        <article class="net-card"><div class="ico">＋</div><h3>Post a Requirement</h3><p>Tell the marketplace what you need, your budget, location, deadline and preferred engagement model.</p><button class="net-btn primary" onclick="atsfyOpenPhase3('post')">Post Requirement</button></article>
       </div>
     </section>
 
@@ -2359,6 +2359,126 @@ footer{background:#1c301f!important}
   const oldHydrate=window.atsfyNetworkHydrate; window.atsfyNetworkHydrate=function(){oldHydrate();const u=current();const bar=document.getElementById('net-userbar');if(!bar)return;if(u){bar.classList.add('is-on');document.getElementById('net-user-name').textContent=u.name;document.getElementById('net-user-avatar').textContent=u.name.slice(0,1).toUpperCase();}else{bar.classList.remove('is-on');}};
   window.atsfyShowUserDatabase=function(){const users=db();atsfyNetworkToast(users.length+' local user'+(users.length===1?'':'s')+' stored on this browser.');console.table(users.map(({password,...x})=>x));};
   window.addEventListener('load',()=>setTimeout(()=>{const nav=document.querySelector('.net-actions');if(nav&&!document.getElementById('net-userbar')){const d=document.createElement('div');d.id='net-userbar';d.className='net-userbar';d.innerHTML='<span id="net-user-avatar" class="net-avatar">U</span><span id="net-user-name" style="font-size:11px;font-weight:800"></span><button class="net-btn" onclick="atsfyLogout()">Sign out</button>';nav.prepend(d);}atsfyNetworkHydrate();},300));
+})();
+</script>
+<!-- =========================================================
+     PHASE 3 — OPPORTUNITY LAYER
+     Local prototype: requirements, proposals, provider discovery
+========================================================= -->
+<style>
+#net-phase3{margin-top:18px;background:#eef1eb;color:#142018;border:1px solid rgba(28,48,31,.1);border-radius:22px;padding:26px}
+.p3-head{display:flex;justify-content:space-between;gap:18px;align-items:end;border-bottom:1px solid rgba(28,48,31,.1);padding-bottom:18px}
+.p3-kicker{font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:#9a6c16}
+.p3-head h2{font-size:32px;letter-spacing:-.04em;margin-top:6px}
+.p3-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.p3-tab{border:1px solid rgba(28,48,31,.14);background:#fff;border-radius:999px;padding:9px 13px;font-size:11px;font-weight:800;cursor:pointer}
+.p3-tab.active{background:#1c301f;color:#fff;border-color:#1c301f}
+.p3-panel{display:none}.p3-panel.active{display:block}
+.p3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.p3-card{background:#fff;border:1px solid rgba(28,48,31,.1);border-radius:16px;padding:17px}
+.p3-card h3{font-size:17px;margin:8px 0 6px}.p3-card p{font-size:12px;color:#66736b;line-height:1.55}
+.p3-meta{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.p3-chip{background:#eef2ed;color:#536258;border-radius:999px;padding:5px 8px;font-size:9px;font-weight:800}
+.p3-empty{padding:28px;text-align:center;background:#fff;border:1px dashed rgba(28,48,31,.18);border-radius:16px;color:#68756d;font-size:12px}
+.p3-form{background:#fff;border:1px solid rgba(28,48,31,.1);border-radius:16px;padding:18px}
+.p3-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.p3-full{grid-column:1/-1}
+.p3-field label{display:block;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#65736a;margin-bottom:5px}
+.p3-field input,.p3-field select,.p3-field textarea{width:100%;border:1px solid rgba(28,48,31,.14);background:#fafbf8;border-radius:10px;padding:10px;font:inherit;font-size:12px;color:#1c301f}
+.p3-field textarea{min-height:90px;resize:vertical}.p3-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:13px}
+.p3-small{font-size:10px;color:#7a857e;margin-top:8px}
+@media(max-width:800px){.p3-grid{grid-template-columns:1fr 1fr}}@media(max-width:620px){.p3-head{align-items:flex-start;flex-direction:column}.p3-grid,.p3-form-grid{grid-template-columns:1fr}.p3-full{grid-column:auto}}
+</style>
+
+<section id="net-phase3">
+  <div class="p3-head">
+    <div><div class="p3-kicker">PHASE 3 · OPPORTUNITY LAYER</div><h2>Turn profiles into opportunities.</h2></div>
+    <div class="net-muted">Requirements ↔ Proposals ↔ Leads</div>
+  </div>
+  <div class="p3-tabs">
+    <button class="p3-tab active" data-p3-tab="requirements">Browse Requirements</button>
+    <button class="p3-tab" data-p3-tab="post">Post Requirement</button>
+    <button class="p3-tab" data-p3-tab="proposals">My Proposals</button>
+    <button class="p3-tab" data-p3-tab="leads">My Leads</button>
+  </div>
+
+  <div class="p3-panel active" data-p3-panel="requirements">
+    <div id="p3-requirement-list" class="p3-grid"></div>
+  </div>
+
+  <div class="p3-panel" data-p3-panel="post">
+    <div class="p3-form">
+      <div class="p3-kicker">CLIENT WORKSPACE</div>
+      <h3 style="font-size:22px;margin:7px 0 15px">Post a new requirement</h3>
+      <div class="p3-form-grid">
+        <div class="p3-field"><label>Project Title</label><input id="p3-title" placeholder="e.g. Build a restaurant website"></div>
+        <div class="p3-field"><label>Category</label><select id="p3-category"><option>Software & SaaS</option><option>Web Development</option><option>AI & Automation</option><option>Design & Branding</option><option>Marketing & Growth</option><option>Business Consulting</option><option>Other</option></select></div>
+        <div class="p3-field"><label>Budget</label><input id="p3-budget" placeholder="e.g. ₹25,000"></div>
+        <div class="p3-field"><label>Location / Engagement</label><input id="p3-location" placeholder="Agartala / Remote"></div>
+        <div class="p3-field p3-full"><label>What do you need?</label><textarea id="p3-description" placeholder="Describe the outcome, scope, preferred skills and important details."></textarea></div>
+        <div class="p3-field"><label>Deadline</label><input id="p3-deadline" type="date"></div>
+        <div class="p3-field"><label>Engagement</label><select id="p3-engagement"><option>Remote</option><option>On-site</option><option>Hybrid</option></select></div>
+      </div>
+      <div class="p3-actions"><button class="net-btn primary" onclick="atsfyPostRequirement()">Publish Requirement</button></div>
+      <div class="p3-small">Prototype data is stored locally in this browser. Production backend comes in the next infrastructure phase.</div>
+    </div>
+  </div>
+
+  <div class="p3-panel" data-p3-panel="proposals"><div id="p3-proposal-list"></div></div>
+  <div class="p3-panel" data-p3-panel="leads"><div id="p3-lead-list"></div></div>
+</section>
+
+<script>
+(function(){
+  const RKEY='atsfy_marketplace_requirements_v1', PKEY='atsfy_marketplace_proposals_v1';
+  const read=(k)=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}};
+  const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+  const id=()=> 'opp_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7);
+  const esc=(v)=>String(v||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+  function currentUser(){try{return JSON.parse(localStorage.getItem('atsfy_marketplace_current_user_v1')||'null')}catch(e){return null}}
+  function toast(m){window.atsfyNetworkToast?atsfyNetworkToast(m):alert(m)}
+  window.atsfyOpenPhase3=function(tab){document.getElementById('net-phase3')?.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>select(tab||'requirements'),180)};
+  function select(tab){
+    document.querySelectorAll('.p3-tab').forEach(b=>b.classList.toggle('active',b.dataset.p3Tab===tab));
+    document.querySelectorAll('.p3-panel').forEach(p=>p.classList.toggle('active',p.dataset.p3Panel===tab));
+    if(tab==='requirements')renderRequirements(); if(tab==='proposals')renderProposals(); if(tab==='leads')renderLeads();
+  }
+  document.querySelectorAll('.p3-tab').forEach(b=>b.addEventListener('click',()=>select(b.dataset.p3Tab)));
+
+  function renderRequirements(){
+    const box=document.getElementById('p3-requirement-list'), rs=read(RKEY);
+    if(!rs.length){box.innerHTML='<div class="p3-empty" style="grid-column:1/-1">No requirements yet. Be the first client to post a project.</div>';return}
+    box.innerHTML=rs.map(r=>'<article class="p3-card"><div class="p3-kicker">'+esc(r.category)+'</div><h3>'+esc(r.title)+'</h3><p>'+esc(r.description)+'</p><div class="p3-meta"><span class="p3-chip">'+esc(r.budget||'Budget open')+'</span><span class="p3-chip">'+esc(r.engagement)+'</span><span class="p3-chip">'+esc(r.location)+'</span></div><div class="p3-small">Posted by '+esc(r.clientName||'Marketplace client')+(r.deadline?' · Deadline '+esc(r.deadline):'')+'</div><div class="p3-actions"><button class="net-btn primary" onclick="atsfySubmitProposal(\''+r.id+'\')">Send Proposal</button></div></article>').join('');
+  }
+  window.atsfyPostRequirement=function(){
+    const u=currentUser(); if(!u)return window.atsfyOpenAuth?atsfyOpenAuth():toast('Create an account first.');
+    const title=document.getElementById('p3-title').value.trim(),desc=document.getElementById('p3-description').value.trim();
+    if(!title||!desc)return toast('Project title and description are required.');
+    if(u.type!=='client')return toast('Switch to a Client / Service Seeker account to post requirements.');
+    const rs=read(RKEY);rs.unshift({id:id(),title,description:desc,category:document.getElementById('p3-category').value,budget:document.getElementById('p3-budget').value.trim(),location:document.getElementById('p3-location').value.trim(),deadline:document.getElementById('p3-deadline').value,engagement:document.getElementById('p3-engagement').value,clientId:u.id,clientName:u.name,createdAt:new Date().toISOString(),status:'open'});write(RKEY,rs);
+    document.getElementById('p3-title').value='';document.getElementById('p3-description').value='';document.getElementById('p3-budget').value='';toast('Requirement published to the local marketplace.');select('requirements');
+  };
+  window.atsfySubmitProposal=function(reqId){
+    const u=currentUser();if(!u)return window.atsfyOpenAuth?atsfyOpenAuth():toast('Create an account first.');
+    if(u.type!=='provider')return toast('Switch to a Service Provider account to submit proposals.');
+    const rs=read(RKEY),r=rs.find(x=>x.id===reqId);if(!r)return toast('Requirement not found.');
+    if(r.clientId===u.id)return toast('You cannot apply to your own requirement.');
+    const ps=read(PKEY);if(ps.some(p=>p.requirementId===reqId&&p.providerId===u.id))return toast('You already submitted a proposal.');
+    const note=prompt('Add a short proposal message:','I can help deliver this requirement. Let us discuss scope, timeline and next steps.');
+    if(note===null)return;ps.unshift({id:id(),requirementId:reqId,requirementTitle:r.title,providerId:u.id,providerName:u.name,clientId:r.clientId,clientName:r.clientName,message:note,createdAt:new Date().toISOString(),status:'submitted'});write(PKEY,ps);toast('Proposal submitted successfully.');select('proposals');
+  };
+  function renderProposals(){
+    const box=document.getElementById('p3-proposal-list'),u=currentUser(),ps=read(PKEY).filter(p=>u&&(p.providerId===u.id||p.clientId===u.id));
+    if(!u){box.innerHTML='<div class="p3-empty">Sign in to see your proposals.</div>';return}
+    if(!ps.length){box.innerHTML='<div class="p3-empty">No proposals yet. Browse requirements and send your first proposal.</div>';return}
+    box.innerHTML='<div class="p3-grid">'+ps.map(p=>'<article class="p3-card"><div class="p3-kicker">'+esc(p.status)+'</div><h3>'+esc(p.requirementTitle)+'</h3><p>'+esc(p.message)+'</p><div class="p3-meta"><span class="p3-chip">'+(p.providerId===u.id?'You are provider':'Client view')+'</span><span class="p3-chip">'+esc(p.providerName)+'</span></div><div class="p3-small">Submitted '+new Date(p.createdAt).toLocaleString()+'</div></article>').join('')+'</div>';
+  }
+  function renderLeads(){
+    const box=document.getElementById('p3-lead-list'),u=currentUser(),rs=read(RKEY),ps=read(PKEY);
+    if(!u){box.innerHTML='<div class="p3-empty">Sign in to see your leads.</div>';return}
+    const items=u.type==='provider'?ps.filter(p=>p.providerId===u.id):rs.filter(r=>r.clientId===u.id);
+    if(!items.length){box.innerHTML='<div class="p3-empty">No active leads yet. Your opportunity pipeline will appear here.</div>';return}
+    box.innerHTML='<div class="p3-grid">'+items.map(x=>{const title=x.requirementTitle||x.title;return '<article class="p3-card"><div class="p3-kicker">ACTIVE LEAD</div><h3>'+esc(title)+'</h3><p>'+esc(u.type==='provider'?'Proposal submitted for this requirement.':'Requirement is live and receiving marketplace interest.')+'</p><div class="p3-meta"><span class="p3-chip">'+esc(x.status||'open')+'</span><span class="p3-chip">'+esc(u.type==='provider'?(x.clientName||'Client'):'Client requirement')+'</span></div></article>'}).join('')+'</div>';
+  }
+  window.addEventListener('load',()=>{renderRequirements();});
 })();
 </script>
 </body>
