@@ -2743,6 +2743,106 @@ window.addEventListener('load',atsfyNetworkHydrate);
 </script>
 
 
+
+<section id="net-phase7-2" class="p72-wrap">
+  <div class="p72-head">
+    <div><div class="p72-kicker">PHASE 7.2 · MARKETPLACE DIRECTORY</div>
+      <h2>Real profiles. Real discovery.</h2>
+      <p>Every marketplace account can become a discoverable public profile. Clients can find providers, and providers can discover clients and opportunities.</p>
+    </div>
+    <div class="p72-live">LIVE PROTOTYPE DIRECTORY</div>
+  </div>
+
+  <div class="p72-switch">
+    <button class="p72-mode active" data-mode="providers">Find Services</button>
+    <button class="p72-mode" data-mode="clients">Find Clients</button>
+  </div>
+
+  <div class="p72-tools">
+    <input id="p72-search" type="search" placeholder="Search name, service, skill or category…" />
+    <select id="p72-category"><option value="">All categories</option></select>
+    <select id="p72-location"><option value="">All locations</option></select>
+    <select id="p72-sort"><option value="featured">Featured</option><option value="trust">Trust score</option><option value="name">Name</option><option value="newest">Newest</option></select>
+    <label class="p72-check"><input id="p72-verified" type="checkbox"> Verified only</label>
+  </div>
+
+  <div class="p72-summary"><span id="p72-count">0 profiles</span><span>Public marketplace profiles</span></div>
+  <div id="p72-grid" class="p72-grid"></div>
+</section>
+
+<div id="p72-modal" class="p72-modal" aria-hidden="true">
+  <div class="p72-modal-card">
+    <button class="p72-close" onclick="atsfyP72Close()">×</button>
+    <div id="p72-modal-content"></div>
+  </div>
+</div>
+
+<style>
+.p72-wrap{background:#f7f6f2;color:#142119;padding:82px clamp(18px,5vw,72px);border-top:1px solid rgba(40,80,64,.12);scroll-margin-top:80px}
+.p72-head{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:25px;align-items:end}.p72-kicker{font-size:.62rem;letter-spacing:.18em;font-weight:850;color:#d09b2f}.p72-head h2{font-size:clamp(2.5rem,5.6vw,5.8rem);line-height:.92;letter-spacing:-.06em;margin:10px 0}.p72-head p{color:#69766e;max-width:690px;line-height:1.6}.p72-live{border:1px solid rgba(40,80,64,.16);padding:9px 12px;border-radius:999px;font-size:.58rem;letter-spacing:.12em;color:#657253;white-space:nowrap}
+.p72-switch{max-width:1180px;margin:38px auto 15px;display:flex;gap:7px}.p72-mode{border:1px solid rgba(40,80,64,.15);background:#fff;color:#536159;border-radius:999px;padding:11px 16px;font-size:.7rem;font-weight:800;cursor:pointer}.p72-mode.active{background:#1c301f;color:#fff;border-color:#1c301f}
+.p72-tools{max-width:1180px;margin:auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:8px;padding:14px 0;border-top:1px solid rgba(40,80,64,.1);border-bottom:1px solid rgba(40,80,64,.1)}.p72-tools input,.p72-tools select{width:100%;background:#fff;border:1px solid rgba(40,80,64,.14);border-radius:10px;padding:11px 12px;color:#26352c;font:inherit;font-size:.7rem;outline:none}.p72-tools input:focus,.p72-tools select:focus{border-color:#d9a43b}.p72-check{display:flex;align-items:center;gap:6px;font-size:.66rem;color:#5d6a62;white-space:nowrap}
+.p72-summary{max-width:1180px;margin:18px auto 11px;display:flex;justify-content:space-between;color:#829087;font-size:.66rem}.p72-summary span:first-child{color:#26392d;font-weight:800}
+.p72-grid{max-width:1180px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.p72-card{background:#fff;border:1px solid rgba(40,80,64,.1);border-radius:18px;overflow:hidden;transition:.3s;box-shadow:0 8px 25px rgba(28,48,31,.04)}.p72-card:hover{transform:translateY(-4px);border-color:rgba(217,164,59,.5);box-shadow:0 16px 32px rgba(28,48,31,.08)}
+.p72-card-top{padding:20px 20px 13px;display:flex;gap:13px}.p72-avatar{width:52px;height:52px;border-radius:15px;background:#285040;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:850;flex:none;overflow:hidden}.p72-avatar img{width:100%;height:100%;object-fit:cover}.p72-name{font-size:1rem;font-weight:850}.p72-type{font-size:.61rem;color:#77847c;margin-top:4px}.p72-verified{display:inline-flex;margin-left:5px;background:#e9f1eb;color:#285040;border-radius:999px;padding:3px 6px;font-size:.52rem;font-weight:850}
+.p72-body{padding:0 20px 18px}.p72-category{color:#657253;font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.p72-about{color:#6f7b74;font-size:.7rem;line-height:1.55;margin-top:7px;min-height:43px}.p72-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px}.p72-tag{background:#eef1eb;border-radius:999px;padding:5px 7px;font-size:.56rem;color:#53635a}.p72-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:14px}.p72-meta div{background:#f5f6f1;border-radius:9px;padding:8px}.p72-meta small{display:block;color:#87918b;font-size:.5rem;text-transform:uppercase;letter-spacing:.08em}.p72-meta b{font-size:.64rem;margin-top:3px;display:block}.p72-actions{display:flex;gap:6px;margin-top:13px}.p72-btn{flex:1;border:1px solid rgba(40,80,64,.15);background:#fff;border-radius:9px;padding:9px 8px;font-size:.61rem;font-weight:800;cursor:pointer}.p72-btn.primary{background:#1c301f;color:#fff;border-color:#1c301f}.p72-btn:hover{border-color:#d9a43b}
+.p72-empty{grid-column:1/-1;padding:55px 20px;text-align:center;border:1px dashed rgba(40,80,64,.2);border-radius:18px;color:#78847d;font-size:.75rem;background:#fff}.p72-featured{border-color:rgba(217,164,59,.42);position:relative}.p72-featured:before{content:"FEATURED";position:absolute;right:13px;top:13px;background:#d9a43b;color:#142119;border-radius:999px;padding:4px 7px;font-size:.5rem;font-weight:900;letter-spacing:.08em}
+.p72-modal{position:fixed;inset:0;background:rgba(0,0,0,.64);backdrop-filter:blur(8px);z-index:9999;display:none;padding:20px;overflow:auto}.p72-modal.open{display:flex;align-items:center;justify-content:center}.p72-modal-card{width:min(700px,100%);max-height:90vh;overflow:auto;background:#f7f6f2;color:#142119;border-radius:22px;padding:27px;position:relative}.p72-close{position:absolute;right:15px;top:12px;width:32px;height:32px;border:0;border-radius:50%;background:#e8ebe4;font-size:1.25rem;cursor:pointer}.p72-detail-head{display:flex;gap:15px;align-items:center;padding-right:35px}.p72-detail-avatar{width:72px;height:72px;border-radius:19px;background:#285040;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.4rem;overflow:hidden}.p72-detail-avatar img{width:100%;height:100%;object-fit:cover}.p72-detail h2{margin:0;font-size:1.7rem}.p72-detail p{color:#69766e;font-size:.76rem;line-height:1.65}.p72-detail-section{border-top:1px solid rgba(40,80,64,.1);padding-top:17px;margin-top:18px}.p72-detail-section h4{font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:#d09b2f}.p72-detail-actions{display:flex;gap:8px;margin-top:18px}.p72-detail-actions button{flex:1}
+@media(max-width:950px){.p72-tools{grid-template-columns:1fr 1fr}.p72-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:620px){.p72-head{display:block}.p72-live{display:inline-block;margin-top:14px}.p72-grid{grid-template-columns:1fr}.p72-tools{grid-template-columns:1fr}.p72-summary{display:block}.p72-summary span{display:block;margin-bottom:5px}}
+</style>
+
+<script>
+(function(){
+ const esc=v=>String(v==null?'':v).replace(/[&<>\"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#039;'}[m]));
+ const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}};
+ const current=()=>{try{return JSON.parse(localStorage.getItem('atsfy_marketplace_current_user_v1')||'null')}catch(e){return null}};
+ const users=()=>read('atsfy_marketplace_users_v1');
+ const profile=u=>Object.assign({name:u?.name||'Marketplace Member',category:'General',location:'India',about:'',services:'',skills:'',website:'',serviceArea:'',availability:'',responseTime:'',experience:'',slug:''},u?.profile||{});
+ const norm=s=>String(s||'').toLowerCase().split(/[,|/•·]+/).map(x=>x.trim()).filter(Boolean);
+ const trust=u=>{const t=read('atsfy_marketplace_trust_v1').find(x=>x.userId===u.id);return t?.score||0};
+ const verified=u=>{const v=read('atsfy_marketplace_verifications_v1').find(x=>x.userId===u.id);return !!(v?.email&&v?.phone)};
+ const featured=u=>read('atsfy_marketplace_growth_v1').some(x=>x.userId===u.id&&x.type==='Featured Listing');
+ let mode='providers';
+
+ function seedDemo(){
+   if(users().length)return;
+   const demo=[
+    {id:'demo_provider_1',name:'NorthEast Digital Studio',email:'demo.provider1@atsfy.local',type:'provider',plan:'professional',createdAt:'2026-10-01T10:00:00Z',profile:{name:'NorthEast Digital Studio',category:'Digital Solutions',location:'Agartala, Tripura',about:'Websites, SaaS products and automation for growing businesses.',services:'Web Development, SaaS, Automation',skills:'React, UI UX, WhatsApp Automation',serviceArea:'Tripura, Northeast India',availability:'Available',responseTime:'Within 2 hours',experience:'5+ years',slug:'northeast-digital-studio'}},
+    {id:'demo_provider_2',name:'Tripura Creative Works',email:'demo.provider2@atsfy.local',type:'provider',plan:'starter',createdAt:'2026-10-02T10:00:00Z',profile:{name:'Tripura Creative Works',category:'Branding & Design',location:'Agartala, Tripura',about:'Brand identity, social creatives and product design for local businesses.',services:'Branding, Graphic Design, UI UX',skills:'Figma, Branding, Social Media',serviceArea:'Tripura',availability:'Available',responseTime:'Within 4 hours',experience:'4 years',slug:'tripura-creative-works'}},
+    {id:'demo_client_1',name:'Agartala Retail Co.',email:'demo.client1@atsfy.local',type:'client',plan:'free',createdAt:'2026-10-03T10:00:00Z',profile:{name:'Agartala Retail Co.',category:'Retail & MSME',location:'Agartala, Tripura',about:'Growing retail business looking for technology, marketing and automation partners.',services:'E-commerce, WhatsApp Automation',skills:'Retail, Customer Experience',serviceArea:'Tripura',availability:'Open to proposals',responseTime:'Within 1 day',experience:'8 years',slug:'agartala-retail-co'}},
+    {id:'demo_client_2',name:'NorthEast Hospitality Group',email:'demo.client2@atsfy.local',type:'client',plan:'business',createdAt:'2026-10-04T10:00:00Z',profile:{name:'NorthEast Hospitality Group',category:'Hospitality',location:'Imphal, Manipur',about:'Hospitality operator seeking software and digital growth partners.',services:'PMS, Website, Digital Marketing',skills:'Hotels, Restaurants, Guest Experience',serviceArea:'Northeast India',availability:'Open to proposals',responseTime:'Within 6 hours',experience:'10+ years',slug:'northeast-hospitality-group'}}
+   ];
+   const all=users();demo.forEach(x=>all.push(x));localStorage.setItem('atsfy_marketplace_users_v1',JSON.stringify(all));
+ }
+ function data(){
+   const q=(document.getElementById('p72-search')?.value||'').toLowerCase().trim(),cat=document.getElementById('p72-category')?.value||'',loc=document.getElementById('p72-location')?.value||'',ver=document.getElementById('p72-verified')?.checked,sort=document.getElementById('p72-sort')?.value||'featured';
+   let arr=users().filter(u=>mode==='providers'?u.type==='provider':u.type!=='provider').map(u=>({u,p:profile(u),trust:trust(u),verified:verified(u),featured:featured(u)}));
+   if(q)arr=arr.filter(x=>(x.u.name+' '+x.p.category+' '+x.p.location+' '+x.p.services+' '+x.p.skills+' '+x.p.about).toLowerCase().includes(q));
+   if(cat)arr=arr.filter(x=>x.p.category===cat);if(loc)arr=arr.filter(x=>x.p.location===loc);if(ver)arr=arr.filter(x=>x.verified);
+   arr.sort((a,b)=>sort==='trust'?b.trust-a.trust:sort==='name'?a.p.name.localeCompare(b.p.name):sort==='newest'?new Date(b.u.createdAt||0)-new Date(a.u.createdAt||0):(b.featured-a.featured)||(b.trust-a.trust));
+   return arr;
+ }
+ function filters(){
+   const arr=users().filter(u=>mode==='providers'?u.type==='provider':u.type!=='provider').map(profile),cs=[...new Set(arr.map(x=>x.category).filter(Boolean))].sort(),ls=[...new Set(arr.map(x=>x.location).filter(Boolean))].sort();
+   document.getElementById('p72-category').innerHTML='<option value="">All categories</option>'+cs.map(x=>'<option>'+esc(x)+'</option>').join('');
+   document.getElementById('p72-location').innerHTML='<option value="">All locations</option>'+ls.map(x=>'<option>'+esc(x)+'</option>').join('');
+ }
+ function card(x){
+   const p=x.p, initials=p.name.split(/\s+/).slice(0,2).map(y=>y[0]).join('').toUpperCase(),tags=norm(p.skills+' '+p.services).slice(0,4);
+   const photo=p.photo||p.logo||p.photoUrl;
+   return '<article class="p72-card '+(x.featured?'p72-featured':'')+'"><div class="p72-card-top"><div class="p72-avatar">'+(photo?'<img src="'+esc(photo)+'" alt="'+esc(p.name)+'">':esc(initials))+'</div><div><div class="p72-name">'+esc(p.name)+(x.verified?'<span class="p72-verified">✓ VERIFIED</span>':'')+'</div><div class="p72-type">'+(mode==='providers'?'Service Provider':'Client / Service Seeker')+' · '+esc(p.location)+'</div></div></div><div class="p72-body"><div class="p72-category">'+esc(p.category)+'</div><div class="p72-about">'+esc(p.about||'Marketplace member — complete this profile to tell others what you do.')+'</div><div class="p72-tags">'+tags.map(t=>'<span class="p72-tag">'+esc(t)+'</span>').join('')+'</div><div class="p72-meta"><div><small>Trust</small><b>'+x.trust+'/100</b></div><div><small>Experience</small><b>'+esc(p.experience||'—')+'</b></div><div><small>Availability</small><b>'+esc(p.availability||'—')+'</b></div><div><small>Response</small><b>'+esc(p.responseTime||'—')+'</b></div></div><div class="p72-actions"><button class="p72-btn primary" onclick="atsfyP72View(\''+esc(x.u.id)+'\')">View Profile</button><button class="p72-btn" onclick="atsfyP72Contact(\''+esc(x.u.id)+'\',\''+mode+'\')">'+(mode==='providers'?'Send Requirement':'Send Proposal')+'</button></div></div></article>';
+ }
+ function render(){filters();const arr=data();document.getElementById('p72-count').textContent=arr.length+' '+(arr.length===1?'profile':'profiles');document.getElementById('p72-grid').innerHTML=arr.length?arr.map(card).join(''):'<div class="p72-empty">No matching profiles yet.<br><br>Create a marketplace profile and it will appear here automatically.</div>'}
+ window.atsfyP72View=id=>{const u=users().find(x=>x.id===id);if(!u)return;const p=profile(u),t=trust(u),v=verified(u),photo=p.photo||p.logo||p.photoUrl,initials=p.name.split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase();document.getElementById('p72-modal-content').innerHTML='<div class="p72-detail"><div class="p72-detail-head"><div class="p72-detail-avatar">'+(photo?'<img src="'+esc(photo)+'" alt="'+esc(p.name)+'">':initials)+'</div><div><h2>'+esc(p.name)+'</h2><p>'+esc(u.type==='provider'?'Service Provider':'Client / Service Seeker')+' · '+esc(p.category)+' · '+esc(p.location)+(v?' · ✓ Verified':'')+'</p></div></div><div class="p72-detail-section"><h4>About</h4><p>'+esc(p.about||'No public description yet.')+'</p></div><div class="p72-detail-section"><h4>Services / Needs</h4><p>'+esc(p.services||'Not specified')+'</p></div><div class="p72-detail-section"><h4>Skills / Keywords</h4><p>'+esc(p.skills||'Not specified')+'</p></div><div class="p72-meta"><div><small>Trust Score</small><b>'+t+'/100</b></div><div><small>Experience</small><b>'+esc(p.experience||'—')+'</b></div><div><small>Availability</small><b>'+esc(p.availability||'—')+'</b></div><div><small>Response</small><b>'+esc(p.responseTime||'—')+'</b></div></div><div class="p72-detail-actions"><button class="p72-btn primary" onclick="atsfyP72Contact(\''+esc(u.id)+'\',\''+(u.type==='provider'?'providers':'clients')+'\')">'+(u.type==='provider'?'Send Requirement':'Send Proposal')+'</button>'+(p.website?'<button class="p72-btn" onclick="window.open(\''+esc(p.website)+'\',\\'_blank\\')">Visit Website</button>':'')+'</div></div>';document.getElementById('p72-modal').classList.add('open');document.getElementById('p72-modal').setAttribute('aria-hidden','false')};
+ window.atsfyP72Close=()=>{document.getElementById('p72-modal').classList.remove('open');document.getElementById('p72-modal').setAttribute('aria-hidden','true')};
+ window.atsfyP72Contact=(id,m)=>{const me=current();if(!me){if(window.atsfyOpenAuth)atsfyOpenAuth();return}const target=users().find(x=>x.id===id);if(!target)return;if(target.id===me.id){alert('This is your own marketplace profile.');return}if(m==='providers'){window.atsfyOpenPhase3?atsfyOpenPhase3('post'):atsfyP72View(id)}else{window.atsfyOpenPhase3?atsfyOpenPhase3('requirements'):atsfyP72View(id)}};
+ document.querySelectorAll('.p72-mode').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;document.querySelectorAll('.p72-mode').forEach(x=>x.classList.toggle('active',x===b));render()});
+ ['p72-search','p72-category','p72-location','p72-sort','p72-verified'].forEach(id=>document.getElementById(id)?.addEventListener('input',render));
+ window.atsfyOpenPhase72=()=>{document.getElementById('net-phase7-2')?.scrollIntoView({behavior:'smooth',block:'start'});render()};
+ window.addEventListener('load',()=>{seedDemo();const tabs=document.querySelector('.p4-tabs');if(tabs&&!tabs.querySelector('[data-p72-nav]')){const b=document.createElement('button');b.className='p4-tab';b.textContent='Marketplace';b.dataset.p72Nav='1';b.onclick=atsfyOpenPhase72;tabs.appendChild(b)}render()});
+})();
+</script>
+
 <section id="net-phase7" class="p7-wrap">
   <div class="p7-head">
     <div>
