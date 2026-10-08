@@ -2742,6 +2742,177 @@ window.addEventListener('load',atsfyNetworkHydrate);
 })();
 </script>
 
+
+<section id="net-phase7" class="p7-wrap">
+  <div class="p7-head">
+    <div>
+      <div class="p7-kicker">PHASE 7 · GROWTH & TRUST</div>
+      <h2>Turn marketplace activity into reputation, visibility and growth.</h2>
+      <p>Build trust signals, verified profiles, referral loops and marketplace analytics on top of the Phase 1–6 foundation.</p>
+    </div>
+    <div class="p7-badge">TRUST · GROWTH · ANALYTICS · PROTOTYPE</div>
+  </div>
+
+  <div class="p7-tabs">
+    <button class="p7-tab active" data-p7-tab="trust">Trust Center</button>
+    <button class="p7-tab" data-p7-tab="visibility">Visibility</button>
+    <button class="p7-tab" data-p7-tab="referrals">Referrals</button>
+    <button class="p7-tab" data-p7-tab="analytics">Analytics</button>
+    <button class="p7-tab" data-p7-tab="admin">Admin Intelligence</button>
+  </div>
+
+  <div id="p7-panel-trust" class="p7-panel active"></div>
+  <div id="p7-panel-visibility" class="p7-panel"></div>
+  <div id="p7-panel-referrals" class="p7-panel"></div>
+  <div id="p7-panel-analytics" class="p7-panel"></div>
+  <div id="p7-panel-admin" class="p7-panel"></div>
+</section>
+
+<style>
+.p7-wrap{background:#070908;color:#f7f6f2;border-top:1px solid rgba(247,246,242,.12);padding:78px clamp(18px,5vw,72px);scroll-margin-top:80px}
+.p7-head{max-width:1180px;margin:auto auto 34px;display:flex;justify-content:space-between;gap:25px;align-items:end}
+.p7-kicker{font-size:.64rem;letter-spacing:.18em;font-weight:800;color:#d9a43b}
+.p7-head h2{font-size:clamp(2.3rem,5vw,5.2rem);line-height:.94;letter-spacing:-.055em;margin:10px 0;max-width:880px}
+.p7-head p{color:#9ba79f;max-width:720px;line-height:1.65}
+.p7-badge{border:1px solid rgba(247,246,242,.16);border-radius:999px;padding:10px 13px;font-size:.58rem;letter-spacing:.1em;color:#aeb8b1;white-space:nowrap}
+.p7-tabs{max-width:1180px;margin:auto;display:flex;gap:7px;flex-wrap:wrap;border-bottom:1px solid rgba(247,246,242,.12);padding-bottom:12px}
+.p7-tab{border:1px solid rgba(247,246,242,.12);background:rgba(255,255,255,.03);color:#aeb8b1;border-radius:999px;padding:10px 14px;font-size:.68rem;font-weight:750;cursor:pointer}
+.p7-tab:hover{border-color:rgba(217,164,59,.5);color:#fff}.p7-tab.active{background:#f7f6f2;color:#08100b;border-color:#f7f6f2}
+.p7-panel{max-width:1180px;margin:18px auto 0;display:none}.p7-panel.active{display:block}
+.p7-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.p7-card{background:#0d120f;border:1px solid rgba(247,246,242,.1);border-radius:18px;padding:21px;box-shadow:0 14px 35px rgba(0,0,0,.16)}
+.p7-card h3{font-size:1.05rem}.p7-muted{color:#8e9b93;font-size:.74rem;line-height:1.6}.p7-label{font-size:.6rem;letter-spacing:.16em;color:#d9a43b;font-weight:800}
+.p7-score{font-size:3rem;font-weight:850;letter-spacing:-.06em;margin-top:7px}.p7-meter{height:8px;background:#202922;border-radius:99px;overflow:hidden;margin:9px 0 15px}.p7-meter span{display:block;height:100%;background:#285040;border-radius:99px}
+.p7-line{display:flex;justify-content:space-between;gap:15px;padding:12px 0;border-bottom:1px solid rgba(247,246,242,.08);font-size:.73rem}.p7-line:last-child{border-bottom:0}.p7-line b{color:#dce3de}
+.p7-status{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 8px;font-size:.58rem;font-weight:800;background:rgba(40,80,64,.3);color:#a9d0b8}
+.p7-status.pending{background:rgba(217,164,59,.12);color:#e3bf72}
+.p7-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.p7-btn{border:1px solid rgba(247,246,242,.15);background:rgba(255,255,255,.03);color:#f7f6f2;border-radius:9px;padding:9px 12px;font-size:.66rem;font-weight:750;cursor:pointer}.p7-btn:hover{border-color:#d9a43b}.p7-btn.primary{background:#f7f6f2;color:#08100b;border-color:#f7f6f2}.p7-btn.gold{background:#d9a43b;color:#08100b;border-color:#d9a43b}
+.p7-check{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid rgba(247,246,242,.08);font-size:.73rem}.p7-check:last-child{border-bottom:0}.p7-check small{display:block;color:#7f8c84;margin-top:3px}
+.p7-boost{background:linear-gradient(135deg,rgba(40,80,64,.42),rgba(13,18,15,.9));border-color:rgba(217,164,59,.22)}
+.p7-stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.p7-stat{background:#0d120f;border:1px solid rgba(247,246,242,.1);border-radius:14px;padding:16px}.p7-stat b{display:block;font-size:1.5rem;margin-top:5px}.p7-stat span{font-size:.58rem;letter-spacing:.08em;color:#7f8c84;text-transform:uppercase}
+.p7-bar{height:7px;background:#202922;border-radius:99px;overflow:hidden;margin-top:8px}.p7-bar span{display:block;height:100%;background:#657253}
+.p7-refcode{font-size:1.45rem;letter-spacing:.12em;font-weight:850;border:1px dashed rgba(217,164,59,.35);border-radius:12px;padding:15px;text-align:center;margin-top:13px;background:rgba(217,164,59,.05)}
+.p7-empty{padding:35px;text-align:center;border:1px dashed rgba(247,246,242,.15);border-radius:16px;color:#829087;font-size:.78rem}
+.p7-table{width:100%;border-collapse:collapse;font-size:.68rem}.p7-table th,.p7-table td{text-align:left;padding:11px 8px;border-bottom:1px solid rgba(247,246,242,.08)}.p7-table th{color:#7f8c84;font-size:.58rem;text-transform:uppercase;letter-spacing:.08em}
+@media(max-width:800px){.p7-head{display:block}.p7-badge{display:inline-block;margin-top:14px}.p7-grid{grid-template-columns:1fr}.p7-stat-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+
+<script>
+(function(){
+  const esc=v=>String(v==null?'':v).replace(/[&<>\"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#039;'}[m]));
+  const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}};
+  const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+  const uid=()=>('p7_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8));
+  const user=()=>{try{return JSON.parse(localStorage.getItem('atsfy_marketplace_current_user_v1')||'null')}catch(e){return null}};
+  const users=()=>read('atsfy_marketplace_users_v1');
+  const toast=m=>window.atsfyNetworkToast?atsfyNetworkToast(m):alert(m);
+  const VKEY='atsfy_marketplace_verifications_v1', TKEY='atsfy_marketplace_trust_v1', RKEY='atsfy_marketplace_referrals_v1', VIEWS='atsfy_marketplace_views_v1', GKEY='atsfy_marketplace_growth_v1';
+
+  function currentProfile(){
+    const u=user();return u?Object.assign({name:u.name||'Marketplace Member',category:'',location:'',about:'',services:'',skills:'',website:'',serviceArea:'',availability:'',responseTime:'',experience:'',slug:''},u.profile||{}):null;
+  }
+  function verification(){
+    const u=user();if(!u)return null;
+    const all=read(VKEY),x=all.find(v=>v.userId===u.id);
+    if(x)return x;
+    const n={userId:u.id,email:true,phone:false,identity:false,business:false,portfolio:false,updatedAt:new Date().toISOString()};
+    all.push(n);write(VKEY,all);return n;
+  }
+  function trust(){
+    const u=user();if(!u)return null;
+    const p=currentProfile(),v=verification(),reviews=read('atsfy_marketplace_reviews_v1').filter(x=>x.reviewerId!==u.id&&(x.providerId===u.id||x.clientId===u.id)),projects=read('atsfy_marketplace_projects_v1').filter(x=>x.clientId===u.id||x.providerId===u.id);
+    const complete=[p.name,p.category,p.location,p.about,p.services,p.skills,p.website,p.availability].filter(Boolean).length;
+    const profileScore=Math.round(complete/8*30);
+    const verifyScore=(v.email?5:0)+(v.phone?8:0)+(v.identity?12:0)+(v.business?10:0)+(v.portfolio?5:0);
+    const reviewScore=Math.min(15,reviews.length*3);
+    const projectScore=Math.min(10,projects.filter(x=>x.status==='completed').length*2);
+    const responseScore=p.responseTime?5:0;
+    const total=Math.min(100,profileScore+verifyScore+reviewScore+projectScore+responseScore);
+    const item={userId:u.id,score:total,updatedAt:new Date().toISOString(),breakdown:{profile:profileScore,verification:verifyScore,reviews:reviewScore,projects:projectScore,response:responseScore}};
+    const all=read(TKEY),i=all.findIndex(x=>x.userId===u.id);if(i>=0)all[i]=item;else all.push(item);write(TKEY,all);return item;
+  }
+  function verifyLabel(ok){return '<span class="p7-status '+(ok?'':'pending')+'">'+(ok?'✓ Verified':'Pending')+'</span>'}
+  function renderTrust(){
+    const el=document.getElementById('p7-panel-trust'),u=user();if(!u){el.innerHTML='<div class="p7-empty">Sign in to build your trust profile.</div>';return}
+    const p=currentProfile(),v=verification(),t=trust();
+    el.innerHTML='<div class="p7-grid"><div class="p7-card"><div class="p7-label">TRUST SCORE</div><div class="p7-score">'+t.score+'/100</div><div class="p7-meter"><span style="width:'+t.score+'%"></span></div><p class="p7-muted">A prototype reputation score based on profile completeness, verification, reviews, completed projects and response readiness.</p><div class="p7-line"><span>Profile quality</span><b>'+t.breakdown.profile+'/30</b></div><div class="p7-line"><span>Verification</span><b>'+t.breakdown.verification+'/40</b></div><div class="p7-line"><span>Reviews</span><b>'+t.breakdown.reviews+'/15</b></div><div class="p7-line"><span>Completed projects</span><b>'+t.breakdown.projects+'/10</b></div><div class="p7-line"><span>Response readiness</span><b>'+t.breakdown.response+'/5</b></div></div><div class="p7-card"><div class="p7-label">VERIFICATION CENTER</div><div class="p7-check"><span><b>Email verification</b><small>Account email is present.</small></span>'+verifyLabel(v.email)+'</div><div class="p7-check"><span><b>Phone verification</b><small>Production flow can use OTP verification.</small></span>'+verifyLabel(v.phone)+'</div><div class="p7-check"><span><b>Identity verification</b><small>Government-ID/KYC integration placeholder.</small></span>'+verifyLabel(v.identity)+'</div><div class="p7-check"><span><b>Business verification</b><small>Company registration/GST verification placeholder.</small></span>'+verifyLabel(v.business)+'</div><div class="p7-check"><span><b>Portfolio verification</b><small>Portfolio evidence review placeholder.</small></span>'+verifyLabel(v.portfolio)+'</div><div class="p7-actions"><button class="p7-btn primary" onclick="atsfyP7Verify('phone')">Verify Phone</button><button class="p7-btn" onclick="atsfyP7Verify('identity')">Request Identity Review</button><button class="p7-btn" onclick="atsfyP7Verify('business')">Request Business Review</button></div></div></div>';
+  }
+  window.atsfyP7Verify=(type)=>{
+    const u=user();if(!u)return toast('Create an account first.');
+    const all=read(VKEY),i=all.findIndex(x=>x.userId===u.id),v=i>=0?all[i]:verification();
+    if(type==='phone'){v.phone=true;toast('Phone marked verified in prototype mode. Production should use OTP.')}
+    else {v[type]=true;toast(type==='identity'?'Identity review marked complete in prototype mode.':'Business review marked complete in prototype mode.')}
+    v.updatedAt=new Date().toISOString();if(i>=0)all[i]=v;else all.push(v);write(VKEY,all);renderTrust();
+  };
+
+  function growthActions(){
+    const u=user();return u?read(GKEY).filter(x=>x.userId===u.id):[];
+  }
+  window.atsfyP7Growth=(type)=>{
+    const u=user();if(!u)return toast('Create an account first.');
+    const g=read(GKEY);g.unshift({id:uid(),userId:u.id,type,createdAt:new Date().toISOString(),status:'active'});write(GKEY,g);
+    toast(type+' activated in prototype mode.');renderVisibility();renderAnalytics();
+  };
+  function renderVisibility(){
+    const el=document.getElementById('p7-panel-visibility'),u=user();if(!u){el.innerHTML='<div class="p7-empty">Sign in to manage visibility.</div>';return}
+    const plan=read('atsfy_marketplace_subscriptions_v1').find(x=>x.userId===u.id)?.planId||'free',actions=growthActions();
+    const boosts=actions.filter(x=>x.type==='Profile Boost').length,featured=actions.filter(x=>x.type==='Featured Listing').length;
+    el.innerHTML='<div class="p7-grid"><div class="p7-card p7-boost"><div class="p7-label">PROFILE VISIBILITY</div><h3 style="font-size:1.55rem;margin-top:9px">Be easier to discover.</h3><p class="p7-muted">Boost profile ranking, highlight your services and create a stronger trust signal. Real placement logic will connect to the production ranking system.</p><div class="p7-actions"><button class="p7-btn gold" onclick="atsfyP7Growth(\\'Profile Boost\\')">Activate Profile Boost</button><button class="p7-btn" onclick="atsfyP7Growth(\\'Featured Listing\\')">Feature Listing</button></div><div class="p7-line"><span>Current plan</span><b>'+esc(plan)+'</b></div><div class="p7-line"><span>Boosts used</span><b>'+boosts+'</b></div><div class="p7-line"><span>Featured actions</span><b>'+featured+'</b></div></div><div class="p7-card"><div class="p7-label">PUBLIC PROFILE SEO</div><h3 style="margin-top:9px">Search-ready profile foundation</h3><p class="p7-muted">Public profiles can expose clean slugs, service keywords, location, experience and structured metadata for search engines and AI discovery.</p><div class="p7-line"><span>Profile slug</span><b>'+esc(currentProfile()?.slug||'not set')+'</b></div><div class="p7-line"><span>Category</span><b>'+esc(currentProfile()?.category||'not set')+'</b></div><div class="p7-line"><span>Service area</span><b>'+esc(currentProfile()?.serviceArea||currentProfile()?.location||'not set')+'</b></div><div class="p7-line"><span>Website</span><b>'+esc(currentProfile()?.website||'not set')+'</b></div><div class="p7-actions"><button class="p7-btn primary" onclick="atsfyNetworkToggleProfile()">Edit public profile</button></div></div></div>';
+  }
+
+  function referral(){
+    const u=user();if(!u)return null;
+    const all=read(RKEY),x=all.find(r=>r.userId===u.id);if(x)return x;
+    const code='ATSFY-'+String(u.id||'USER').replace(/[^a-z0-9]/gi,'').slice(-6).toUpperCase();
+    const n={userId:u.id,code,invites:0,successful:0,credits:0,createdAt:new Date().toISOString()};all.push(n);write(RKEY,all);return n;
+  }
+  window.atsfyCopyReferral=()=>{const r=referral();if(!r)return toast('Create an account first.');navigator.clipboard?.writeText(r.code);toast('Referral code copied: '+r.code)}
+  window.atsfyP7Referral=()=>{const u=user();if(!u)return toast('Create an account first.');const all=read(RKEY),i=all.findIndex(x=>x.userId===u.id),r=i>=0?all[i]:referral();r.invites++;r.successful++;r.credits+=100;if(i>=0)all[i]=r;else all.push(r);write(RKEY,all);toast('Prototype referral recorded. +100 credits.');renderReferrals()}
+  function renderReferrals(){
+    const el=document.getElementById('p7-panel-referrals'),u=user();if(!u){el.innerHTML='<div class="p7-empty">Sign in to activate your referral profile.</div>';return}
+    const r=referral();
+    el.innerHTML='<div class="p7-grid"><div class="p7-card"><div class="p7-label">YOUR REFERRAL CODE</div><div class="p7-refcode">'+esc(r.code)+'</div><div class="p7-actions"><button class="p7-btn primary" onclick="atsfyCopyReferral()">Copy Code</button><button class="p7-btn" onclick="atsfyP7Referral()">Simulate Successful Referral</button></div><p class="p7-muted">Referral rewards are prototype credits. Production can connect this to subscription discounts, wallet credits or partner rewards.</p></div><div class="p7-card"><div class="p7-label">REFERRAL PERFORMANCE</div><div class="p7-line"><span>Invites</span><b>'+r.invites+'</b></div><div class="p7-line"><span>Successful referrals</span><b>'+r.successful+'</b></div><div class="p7-line"><span>Credits earned</span><b>'+r.credits+'</b></div><div class="p7-line"><span>Conversion</span><b>'+ (r.invites?Math.round(r.successful/r.invites*100):0) +'%</b></div></div></div>';
+  }
+
+  function analyticsData(){
+    const u=user();if(!u)return null;
+    const req=read('atsfy_marketplace_requirements_v1'),props=read('atsfy_marketplace_proposals_v1'),projects=read('atsfy_marketplace_projects_v1'),reviews=read('atsfy_marketplace_reviews_v1');
+    const ownReq=req.filter(x=>x.clientId===u.id),ownProps=props.filter(x=>x.providerId===u.id),ownProjects=projects.filter(x=>x.clientId===u.id||x.providerId===u.id),ownReviews=reviews.filter(x=>x.providerId===u.id||x.clientId===u.id);
+    const actions=growthActions();
+    return {views:read(VIEWS).filter(x=>x.userId===u.id).length+actions.length*7,leads:ownProps.length+ownReq.length,proposals:ownProps.length,requirements:ownReq.length,projects:ownProjects.length,reviews:ownReviews.length,response:currentProfile()?.responseTime?95:60};
+  }
+  function renderAnalytics(){
+    const el=document.getElementById('p7-panel-analytics'),u=user();if(!u){el.innerHTML='<div class="p7-empty">Sign in to view analytics.</div>';return}
+    const a=analyticsData();
+    el.innerHTML='<div class="p7-stat-grid"><div class="p7-stat"><span>Profile / activity views</span><b>'+a.views+'</b></div><div class="p7-stat"><span>Leads / opportunities</span><b>'+a.leads+'</b></div><div class="p7-stat"><span>Projects</span><b>'+a.projects+'</b></div><div class="p7-stat"><span>Reviews</span><b>'+a.reviews+'</b></div></div><div class="p7-grid" style="margin-top:14px"><div class="p7-card"><div class="p7-label">MARKETPLACE FUNNEL</div><div class="p7-line"><span>Requirements posted</span><b>'+a.requirements+'</b></div><div class="p7-line"><span>Proposals submitted</span><b>'+a.proposals+'</b></div><div class="p7-line"><span>Lead activity</span><b>'+a.leads+'</b></div><div class="p7-line"><span>Response readiness</span><b>'+a.response+'%</b></div></div><div class="p7-card"><div class="p7-label">GROWTH HEALTH</div><p class="p7-muted">Your marketplace health improves as you complete your profile, verify your identity/business, respond quickly, win projects and collect quality reviews.</p><div style="margin-top:18px"><div class="p7-line"><span>Trust score</span><b>'+((trust()||{}).score||0)+'/100</b></div><div class="p7-bar"><span style="width:'+((trust()||{}).score||0)+'%"></span></div></div></div></div>';
+  }
+
+  function adminMetrics(){
+    const us=users(),req=read('atsfy_marketplace_requirements_v1'),pr=read('atsfy_marketplace_proposals_v1'),proj=read('atsfy_marketplace_projects_v1'),subs=read('atsfy_marketplace_subscriptions_v1'),growth=read(GKEY),ver=read(VKEY);
+    const providers=us.filter(x=>x.type==='provider').length,clients=us.filter(x=>x.type!=='provider').length,activeSubs=subs.filter(x=>x.status==='active'&&x.planId!=='free');
+    const planPrices={starter:499,professional:999,business:1999,pro:499};
+    const mrr=activeSubs.reduce((s,x)=>s+(planPrices[x.planId]||0),0);
+    return {users:us.length,providers,clients,requirements:req.length,proposals:pr.length,projects:proj.length,subscriptions:activeSubs.length,mrr,verified:ver.filter(x=>x.email&&x.phone).length,featured:growth.filter(x=>x.type==='Featured Listing').length};
+  }
+  function renderAdmin(){
+    const el=document.getElementById('p7-panel-admin'),m=adminMetrics();
+    el.innerHTML='<div class="p7-stat-grid"><div class="p7-stat"><span>Total users</span><b>'+m.users+'</b></div><div class="p7-stat"><span>Providers</span><b>'+m.providers+'</b></div><div class="p7-stat"><span>Clients</span><b>'+m.clients+'</b></div><div class="p7-stat"><span>Prototype MRR</span><b>₹'+m.mrr.toLocaleString('en-IN')+'</b></div></div><div class="p7-card" style="margin-top:14px"><div class="p7-label">MARKETPLACE INTELLIGENCE</div><table class="p7-table"><thead><tr><th>Metric</th><th>Value</th><th>Purpose</th></tr></thead><tbody><tr><td>Requirements</td><td>'+m.requirements+'</td><td>Demand volume</td></tr><tr><td>Proposals</td><td>'+m.proposals+'</td><td>Provider activity</td></tr><tr><td>Projects</td><td>'+m.projects+'</td><td>Marketplace transactions</td></tr><tr><td>Paid subscriptions</td><td>'+m.subscriptions+'</td><td>Recurring revenue base</td></tr><tr><td>Verified members</td><td>'+m.verified+'</td><td>Trust penetration</td></tr><tr><td>Featured actions</td><td>'+m.featured+'</td><td>Growth monetization</td></tr></tbody></table><p class="p7-muted" style="margin-top:13px">Admin intelligence is calculated from local prototype records. Production should move these metrics to Supabase with role-based access control.</p></div>';
+  }
+
+  function renderAll(){renderTrust();renderVisibility();renderReferrals();renderAnalytics();renderAdmin()}
+  window.atsfyOpenPhase7=(tab)=>{
+    document.getElementById('net-phase7')?.scrollIntoView({behavior:'smooth',block:'start'});
+    if(tab){const b=document.querySelector('.p7-tab[data-p7-tab="'+tab+'"]');if(b)b.click()}
+    setTimeout(renderAll,120);
+  };
+  document.querySelectorAll('.p7-tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.p7-tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.p7-panel').forEach(x=>x.classList.toggle('active',x.id==='p7-panel-'+b.dataset.p7Tab));});
+  window.addEventListener('load',()=>{
+    const tabs=document.querySelector('.p4-tabs');
+    if(tabs&&!tabs.querySelector('[data-p7-nav]')){const b=document.createElement('button');b.className='p4-tab';b.textContent='Growth & Trust';b.dataset.p7Nav='1';b.onclick=()=>atsfyOpenPhase7('trust');tabs.appendChild(b)}
+    renderAll();
+  });
+})();
+</script>
+
 <section id="net-phase6" class="p6-wrap">
   <div class="p6-head">
     <div><div class="p6-kicker">PHASE 6 · AI INTELLIGENCE</div><h2>Let the marketplace find the right match.</h2><p>Turn profiles, requirements and marketplace activity into explainable recommendations — without hiding the logic.</p></div>
