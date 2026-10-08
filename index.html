@@ -2573,5 +2573,173 @@ window.addEventListener('load',atsfyNetworkHydrate);
  function render(tab){if(tab==='inbox')renderInbox();if(tab==='messages')renderMessages();if(tab==='projects')renderProjects();if(tab==='reviews')renderReviews()}
  window.addEventListener('load',()=>render('inbox'));
 })();
-</script></body>
+</script>
+<section id="net-phase5" class="p5-wrap">
+  <div class="p5-head">
+    <div>
+      <div class="p5-kicker">PHASE 5 · SUBSCRIPTION & MONETIZATION</div>
+      <h2>Choose your growth level.</h2>
+      <p>Unlock more opportunities, visibility and marketplace tools with a monthly plan.</p>
+    </div>
+    <div class="p5-proto">PROTOTYPE BILLING · PAYMENT GATEWAY COMES IN PRODUCTION</div>
+  </div>
+
+  <div class="p5-summary" id="p5-summary"></div>
+
+  <div class="p5-tabs">
+    <button class="p5-tab active" data-p5-tab="plans">Plans</button>
+    <button class="p5-tab" data-p5-tab="subscription">My Subscription</button>
+    <button class="p5-tab" data-p5-tab="usage">Usage</button>
+    <button class="p5-tab" data-p5-tab="billing">Billing</button>
+    <button class="p5-tab" data-p5-tab="growth">Growth</button>
+  </div>
+
+  <div class="p5-panel active" data-p5-panel="plans"><div id="p5-plans"></div></div>
+  <div class="p5-panel" data-p5-panel="subscription"><div id="p5-subscription"></div></div>
+  <div class="p5-panel" data-p5-panel="usage"><div id="p5-usage"></div></div>
+  <div class="p5-panel" data-p5-panel="billing"><div id="p5-billing"></div></div>
+  <div class="p5-panel" data-p5-panel="growth"><div id="p5-growth"></div></div>
+</section>
+
+<style>
+.p5-wrap{background:#0a0e0b;color:#f7f6f2;border-top:1px solid rgba(247,246,242,.12);padding:72px clamp(18px,5vw,72px);scroll-margin-top:80px}
+.p5-head{max-width:1180px;margin:0 auto 34px;display:flex;justify-content:space-between;gap:24px;align-items:flex-end}
+.p5-kicker{font-size:.66rem;letter-spacing:.18em;color:#d9a43b;font-weight:800}
+.p5-head h2{font-size:clamp(2.2rem,5vw,4.8rem);letter-spacing:-.055em;line-height:.95;margin:10px 0}
+.p5-head p{color:#89968e;max-width:650px;margin:12px 0 0;line-height:1.6}
+.p5-proto{font-size:.62rem;letter-spacing:.12em;color:#89968e;border:1px solid rgba(247,246,242,.15);padding:10px 12px;border-radius:999px;white-space:nowrap}
+.p5-summary{max-width:1180px;margin:0 auto 20px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.p5-stat{background:#101612;border:1px solid rgba(247,246,242,.1);border-radius:14px;padding:17px}.p5-stat small{display:block;color:#758078;font-size:.65rem;text-transform:uppercase;letter-spacing:.1em}.p5-stat strong{display:block;font-size:1.35rem;margin-top:6px}
+.p5-tabs{max-width:1180px;margin:0 auto 18px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid rgba(247,246,242,.1);padding-bottom:12px}
+.p5-tab{background:transparent;color:#aeb7ad;border:1px solid transparent;border-radius:999px;padding:9px 14px;font-size:.75rem;font-weight:700;cursor:pointer}.p5-tab.active{background:#f7f6f2;color:#0a0e0b}.p5-tab:hover{border-color:#d9a43b;color:#fff}
+.p5-panel{max-width:1180px;margin:0 auto;display:none}.p5-panel.active{display:block}
+.p5-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.p5-grid.client{grid-template-columns:repeat(3,1fr)}
+.p5-card{background:#101612;border:1px solid rgba(247,246,242,.1);border-radius:18px;padding:22px;position:relative}.p5-card.featured{border-color:rgba(217,164,59,.65);box-shadow:0 18px 50px rgba(0,0,0,.18)}
+.p5-badge{position:absolute;right:14px;top:14px;background:#d9a43b;color:#0a0e0b;border-radius:999px;padding:5px 8px;font-size:.58rem;font-weight:900}
+.p5-card h3{font-size:1.3rem;margin:4px 0}.p5-price{font-size:2rem;font-weight:800;letter-spacing:-.04em;margin:14px 0}.p5-price span{font-size:.72rem;color:#758078;font-weight:500}
+.p5-card ul{list-style:none;padding:0;margin:18px 0;color:#aeb7ad;font-size:.78rem;line-height:1.8}.p5-card li:before{content:"✓";color:#d9a43b;margin-right:8px}
+.p5-card button{width:100%}.p5-current{font-size:.6rem;letter-spacing:.1em;color:#d9a43b;font-weight:800;margin-bottom:7px}
+.p5-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.p5-box{background:#101612;border:1px solid rgba(247,246,242,.1);border-radius:18px;padding:22px}.p5-box h3{margin:0 0 14px;font-size:1rem}.p5-muted{color:#89968e;font-size:.78rem;line-height:1.6}
+.p5-meter{height:8px;background:#1c241f;border-radius:999px;overflow:hidden;margin:10px 0 5px}.p5-meter>span{display:block;height:100%;background:#d9a43b;border-radius:999px}
+.p5-line{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid rgba(247,246,242,.08);font-size:.78rem}.p5-line:last-child{border-bottom:0}.p5-line b{color:#fff}
+.p5-empty{border:1px dashed rgba(247,246,242,.16);border-radius:16px;padding:30px;color:#89968e;text-align:center}
+.p5-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.p5-btn{border:1px solid rgba(247,246,242,.18);background:#151c17;color:#f7f6f2;border-radius:10px;padding:9px 13px;font-weight:700;font-size:.72rem;cursor:pointer}.p5-btn.primary{background:#f7f6f2;color:#0a0e0b;border-color:#f7f6f2}.p5-btn.gold{background:#d9a43b;color:#0a0e0b;border-color:#d9a43b}
+@media(max-width:900px){.p5-grid,.p5-grid.client{grid-template-columns:1fr 1fr}.p5-summary{grid-template-columns:1fr 1fr}.p5-head{display:block}.p5-proto{display:inline-block;margin-top:15px}.p5-row{grid-template-columns:1fr}}
+@media(max-width:560px){.p5-grid,.p5-grid.client,.p5-summary{grid-template-columns:1fr}}
+</style>
+
+<script>
+(function(){
+  const SKEY='atsfy_marketplace_subscriptions_v1', BKEY='atsfy_marketplace_billing_v1', UKEY='atsfy_marketplace_usage_v1', GKEY='atsfy_marketplace_growth_v1';
+  const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}};
+  const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+  const uid=()=> 'p5_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7);
+  const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+  const user=()=>{try{return JSON.parse(localStorage.getItem('atsfy_marketplace_current_user_v1')||'null')}catch(e){return null}};
+  const toast=m=>window.atsfyNetworkToast?atsfyNetworkToast(m):alert(m);
+
+  const providerPlans=[
+    {id:'free',name:'Free',price:0,desc:'Start building your marketplace presence.',features:['Basic public profile','Standard discovery','3 proposals / month','Basic messaging'],limits:{proposals:3,requirements:0},badge:''},
+    {id:'starter',name:'Starter',price:499,desc:'For independent service providers.',features:['Enhanced profile','15 proposals / month','1 profile boost / month','Lead dashboard','Portfolio visibility'],limits:{proposals:15,requirements:0},badge:''},
+    {id:'professional',name:'Professional',price:999,desc:'For serious freelancers and agencies.',features:['50 proposals / month','1 featured profile / month','Priority discovery','Advanced analytics','Faster lead access'],limits:{proposals:50,requirements:0},badge:'MOST POPULAR'},
+    {id:'business',name:'Business',price:1999,desc:'For teams and established providers.',features:['Unlimited proposals','Featured profile','Verified business badge','Priority leads','Growth analytics'],limits:{proposals:Infinity,requirements:0},badge:'GROWTH'}
+  ];
+  const clientPlans=[
+    {id:'free',name:'Free',price:0,desc:'Find providers and test the marketplace.',features:['Basic client profile','2 requirements / month','Standard matching','Basic messaging'],limits:{proposals:0,requirements:2},badge:''},
+    {id:'pro',name:'Pro',price:499,desc:'For growing businesses hiring regularly.',features:['10 requirements / month','1 featured requirement / month','Priority matching','Saved providers','Requirement analytics'],limits:{proposals:0,requirements:10},badge:'MOST POPULAR'},
+    {id:'business',name:'Business',price:999,desc:'For teams with recurring hiring needs.',features:['Unlimited requirements','Featured requirements','Priority matching','Business profile tools','Advanced analytics'],limits:{proposals:0,requirements:Infinity},badge:'GROWTH'}
+  ];
+
+  function currentPlan(){
+    const u=user(); if(!u)return null;
+    const all=read(SKEY); let s=all.find(x=>x.userId===u.id);
+    if(!s){s={id:uid(),userId:u.id,planId:'free',status:'active',startedAt:new Date().toISOString(),renewalAt:null,role:u.type};all.unshift(s);write(SKEY,all)}
+    return s;
+  }
+  function plans(){return user()?.type==='provider'?providerPlans:clientPlans}
+  function planDef(){const s=currentPlan();return plans().find(p=>p.id===s?.planId)||plans()[0]}
+  function usage(){
+    const u=user();if(!u)return {proposals:0,requirements:0};
+    const ps=read('atsfy_marketplace_proposals_v1').filter(x=>x.providerId===u.id);
+    const rs=read('atsfy_marketplace_requirements_v1').filter(x=>x.clientId===u.id);
+    const month=new Date().toISOString().slice(0,7);
+    const monthlyP=ps.filter(x=>String(x.createdAt||'').slice(0,7)===month).length;
+    const monthlyR=rs.filter(x=>String(x.createdAt||'').slice(0,7)===month).length;
+    return {proposals:monthlyP,requirements:monthlyR};
+  }
+  function activateTab(tab){
+    document.querySelectorAll('.p5-tab').forEach(b=>b.classList.toggle('active',b.dataset.p5Tab===tab));
+    document.querySelectorAll('.p5-panel').forEach(p=>p.classList.toggle('active',p.dataset.p5Panel===tab));
+    render(tab);
+  }
+  document.querySelectorAll('.p5-tab').forEach(b=>b.addEventListener('click',()=>activateTab(b.dataset.p5Tab)));
+  window.atsfyOpenPhase5=tab=>{document.getElementById('net-phase5')?.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>activateTab(tab||'plans'),180)};
+
+  function renderSummary(){
+    const box=document.getElementById('p5-summary'),u=user(),s=u?currentPlan():null,p=u?planDef():null;
+    if(!u){box.innerHTML='<div class="p5-stat" style="grid-column:1/-1"><small>Marketplace Membership</small><strong>Sign in to manage your plan</strong></div>';return}
+    const us=usage(),lim=p.limits;
+    box.innerHTML='<div class="p5-stat"><small>Current plan</small><strong>'+esc(p.name)+'</strong></div><div class="p5-stat"><small>Monthly price</small><strong>₹'+p.price.toLocaleString('en-IN')+'</strong></div><div class="p5-stat"><small>Proposals / month</small><strong>'+us.proposals+' / '+(lim.proposals===Infinity?'∞':lim.proposals)+'</strong></div><div class="p5-stat"><small>Requirements / month</small><strong>'+us.requirements+' / '+(lim.requirements===Infinity?'∞':lim.requirements)+'</strong></div>';
+  }
+
+  function renderPlans(){
+    const box=document.getElementById('p5-plans'),u=user();
+    if(!u){box.innerHTML='<div class="p5-empty">Create an account to view and activate marketplace memberships.</div>';return}
+    const s=currentPlan(),arr=plans();
+    box.innerHTML='<div class="p5-grid '+(u.type==='client'?'client':'')+'">'+arr.map(p=>'<article class="p5-card '+(p.badge?'featured':'')+'">'+(p.badge?'<div class="p5-badge">'+esc(p.badge)+'</div>':'')+(s.planId===p.id?'<div class="p5-current">CURRENT PLAN</div>':'')+'<h3>'+esc(p.name)+'</h3><div class="p5-price">₹'+p.price.toLocaleString('en-IN')+' <span>/ month</span></div><div class="p5-muted">'+esc(p.desc)+'</div><ul>'+p.features.map(f=>'<li>'+esc(f)+'</li>').join('')+'</ul><button class="p5-btn '+(s.planId===p.id?'':'primary')+'" onclick="atsfySelectPlan(\''+p.id+'\')">'+(s.planId===p.id?'Current Plan':p.price===0?'Switch to Free':'Choose '+esc(p.name))+'</button></article>').join('')+'</div>';
+  }
+
+  window.atsfySelectPlan=planId=>{
+    const u=user();if(!u)return toast('Create an account first.');
+    const p=plans().find(x=>x.id===planId);if(!p)return;
+    const s=currentPlan(),all=read(SKEY),idx=all.findIndex(x=>x.userId===u.id);
+    if(s.planId===planId)return toast('You are already on this plan.');
+    const previous=s.planId;s.planId=planId;s.status='active';s.startedAt=new Date().toISOString();s.renewalAt=p.price?new Date(Date.now()+30*24*60*60*1000).toISOString():null;s.updatedAt=new Date().toISOString();
+    all[idx]=s;write(SKEY,all);
+    const bills=read(BKEY);bills.unshift({id:uid(),userId:u.id,planId,planName:p.name,amount:p.price,status:p.price?'prototype_paid':'free',type:'subscription',createdAt:new Date().toISOString(),previousPlan:previous});write(BKEY,bills);
+    if(p.price)toast('Prototype subscription activated. In production this button will open the payment gateway.');else toast('Switched to Free plan.');
+    renderAll();
+  };
+
+  function renderSubscription(){
+    const box=document.getElementById('p5-subscription'),u=user();if(!u){box.innerHTML='<div class="p5-empty">Sign in to manage your subscription.</div>';return}
+    const s=currentPlan(),p=planDef(),renew=s.renewalAt?new Date(s.renewalAt).toLocaleDateString('en-IN'):'No renewal · Free plan';
+    box.innerHTML='<div class="p5-row"><div class="p5-box"><div class="p5-kicker">ACTIVE MEMBERSHIP</div><h3 style="font-size:1.8rem;margin-top:8px">'+esc(p.name)+'</h3><div class="p5-price">₹'+p.price.toLocaleString('en-IN')+' <span>/ month</span></div><p class="p5-muted">'+esc(p.desc)+'</p><div class="p5-line"><span>Status</span><b>'+esc(s.status)+'</b></div><div class="p5-line"><span>Started</span><b>'+new Date(s.startedAt).toLocaleDateString('en-IN')+'</b></div><div class="p5-line"><span>Next renewal</span><b>'+renew+'</b></div></div><div class="p5-box"><h3>Included with your plan</h3>'+p.features.map(x=>'<div class="p5-line"><span>'+esc(x)+'</span><b>✓</b></div>').join('')+'<div class="p5-actions"><button class="p5-btn primary" onclick="atsfyOpenPhase5(\'plans\')">Change Plan</button><button class="p5-btn" onclick="atsfyOpenPhase5(\'billing\')">View Billing</button></div></div></div>';
+  }
+
+  function renderUsage(){
+    const box=document.getElementById('p5-usage'),u=user();if(!u){box.innerHTML='<div class="p5-empty">Sign in to view usage.</div>';return}
+    const p=planDef(),us=usage(),items=u.type==='provider'?[['Proposals',us.proposals,p.limits.proposals]]:[['Requirements',us.requirements,p.limits.requirements]];
+    box.innerHTML='<div class="p5-box"><h3>Monthly marketplace usage</h3><p class="p5-muted">Usage resets automatically by calendar month. Current prototype counts your locally stored marketplace activity.</p>'+items.map(x=>{const pct=x[2]===Infinity?8:Math.min(100,(x[0]==='Proposals'?us.proposals:us.requirements)/Math.max(1,x[2])*100);return '<div style="margin-top:20px"><div class="p5-line" style="padding-top:0"><span>'+x[0]+'</span><b>'+x[1]+' / '+(x[2]===Infinity?'Unlimited':x[2])+'</b></div><div class="p5-meter"><span style="width:'+pct+'%"></span></div></div>'}).join('')+'<div class="p5-actions"><button class="p5-btn primary" onclick="atsfyOpenPhase5(\'plans\')">Upgrade for more capacity</button></div></div>';
+  }
+
+  function renderBilling(){
+    const box=document.getElementById('p5-billing'),u=user();if(!u){box.innerHTML='<div class="p5-empty">Sign in to view billing history.</div>';return}
+    const bs=read(BKEY).filter(x=>x.userId===u.id);
+    box.innerHTML='<div class="p5-box"><h3>Billing history</h3><p class="p5-muted">These are prototype billing records. No real payment is processed by this localStorage build.</p>'+(bs.length?bs.map(b=>'<div class="p5-line"><span><b>'+esc(b.planName)+'</b><br><small>'+new Date(b.createdAt).toLocaleString('en-IN')+'</small></span><b>₹'+Number(b.amount||0).toLocaleString('en-IN')+' · '+esc(b.status)+'</b></div>').join(''):'<div class="p5-empty" style="margin-top:15px">No billing events yet.</div>')+'</div>';
+  }
+
+  function renderGrowth(){
+    const box=document.getElementById('p5-growth'),u=user();if(!u){box.innerHTML='<div class="p5-empty">Sign in to access growth tools.</div>';return}
+    const p=planDef(),g=read(GKEY),mine=g.filter(x=>x.userId===u.id);
+    const canBoost=p.price>=499,canFeature=p.price>=999,canVerify=p.id==='business';
+    box.innerHTML='<div class="p5-row"><div class="p5-box"><h3>Visibility tools</h3><p class="p5-muted">Increase your marketplace visibility as you grow.</p><div class="p5-line"><span>Profile Boost</span><b>'+(canBoost?'Included':'Upgrade')+'</b></div><div class="p5-line"><span>Featured Profile / Requirement</span><b>'+(canFeature?'Included':'Upgrade')+'</b></div><div class="p5-line"><span>Verified Business Badge</span><b>'+(canVerify?'Included':'Business plan')+'</b></div><div class="p5-actions"><button class="p5-btn gold" onclick="atsfyActivateGrowth(\'boost\')">Use Boost</button><button class="p5-btn" onclick="atsfyActivateGrowth(\'featured\')">Feature Listing</button></div></div><div class="p5-box"><h3>Your growth activity</h3>'+(mine.length?mine.map(x=>'<div class="p5-line"><span>'+esc(x.type)+'</span><b>'+new Date(x.createdAt).toLocaleDateString('en-IN')+'</b></div>').join(''):'<div class="p5-empty">No growth actions used yet.</div>')+'</div></div>';
+  }
+  window.atsfyActivateGrowth=(type)=>{
+    const u=user();if(!u)return toast('Create an account first.');const p=planDef();
+    if(type==='boost'&&p.price<499)return toast('Profile Boost starts with the Starter / Pro plan.');
+    if(type==='featured'&&p.price<999)return toast('Featured placement starts with the Professional / Business tier.');
+    const g=read(GKEY);g.unshift({id:uid(),userId:u.id,type:type==='boost'?'Profile Boost':'Featured Listing',createdAt:new Date().toISOString()});write(GKEY,g);toast('Growth action activated in prototype mode.');renderGrowth();
+  };
+  function render(tab){renderSummary();if(tab==='plans')renderPlans();if(tab==='subscription')renderSubscription();if(tab==='usage')renderUsage();if(tab==='billing')renderBilling();if(tab==='growth')renderGrowth()}
+  function renderAll(){renderSummary();renderPlans();renderSubscription();renderUsage();renderBilling();renderGrowth()}
+  window.addEventListener('load',()=>{
+    const tabs=document.querySelector('.p4-tabs');
+    if(tabs&&!tabs.querySelector('[data-p5-nav]')){const b=document.createElement('button');b.className='p4-tab';b.textContent='Membership';b.dataset.p5Nav='1';b.onclick=()=>atsfyOpenPhase5('plans');tabs.appendChild(b)}
+    renderAll();
+  });
+})();
+</script>
+</body>
 </html>
