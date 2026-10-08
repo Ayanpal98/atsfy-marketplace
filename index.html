@@ -2835,7 +2835,7 @@ window.addEventListener('load',atsfyNetworkHydrate);
  function render(){filters();const arr=data();document.getElementById('p72-count').textContent=arr.length+' '+(arr.length===1?'profile':'profiles');document.getElementById('p72-grid').innerHTML=arr.length?arr.map(card).join(''):'<div class="p72-empty">No matching profiles yet.<br><br>Create a marketplace profile and it will appear here automatically.</div>'}
  window.atsfyP72View=id=>{const u=users().find(x=>x.id===id);if(!u)return;const p=profile(u),t=trust(u),v=verified(u),photo=p.photo||p.logo||p.photoUrl,initials=p.name.split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase();document.getElementById('p72-modal-content').innerHTML='<div class="p72-detail"><div class="p72-detail-head"><div class="p72-detail-avatar">'+(photo?'<img src="'+esc(photo)+'" alt="'+esc(p.name)+'">':initials)+'</div><div><h2>'+esc(p.name)+'</h2><p>'+esc(u.type==='provider'?'Service Provider':'Client / Service Seeker')+' · '+esc(p.category)+' · '+esc(p.location)+(v?' · ✓ Verified':'')+'</p></div></div><div class="p72-detail-section"><h4>About</h4><p>'+esc(p.about||'No public description yet.')+'</p></div><div class="p72-detail-section"><h4>Services / Needs</h4><p>'+esc(p.services||'Not specified')+'</p></div><div class="p72-detail-section"><h4>Skills / Keywords</h4><p>'+esc(p.skills||'Not specified')+'</p></div><div class="p72-meta"><div><small>Trust Score</small><b>'+t+'/100</b></div><div><small>Experience</small><b>'+esc(p.experience||'—')+'</b></div><div><small>Availability</small><b>'+esc(p.availability||'—')+'</b></div><div><small>Response</small><b>'+esc(p.responseTime||'—')+'</b></div></div><div class="p72-detail-actions"><button class="p72-btn primary" onclick="atsfyP72Contact(\''+esc(u.id)+'\',\''+(u.type==='provider'?'providers':'clients')+'\')">'+(u.type==='provider'?'Send Requirement':'Send Proposal')+'</button>'+(p.website?'<button class="p72-btn" onclick="window.open(\''+esc(p.website)+'\',\\'_blank\\')">Visit Website</button>':'')+'</div></div>';document.getElementById('p72-modal').classList.add('open');document.getElementById('p72-modal').setAttribute('aria-hidden','false')};
  window.atsfyP72Close=()=>{document.getElementById('p72-modal').classList.remove('open');document.getElementById('p72-modal').setAttribute('aria-hidden','true')};
- window.atsfyP72Contact=(id,m)=>{const me=current();if(!me){if(window.atsfyOpenAuth)atsfyOpenAuth();return}const target=users().find(x=>x.id===id);if(!target)return;if(target.id===me.id){alert('This is your own marketplace profile.');return}if(m==='providers'){window.atsfyOpenPhase3?atsfyOpenPhase3('post'):atsfyP72View(id)}else{window.atsfyOpenPhase3?atsfyOpenPhase3('requirements'):atsfyP72View(id)}};
+ window.atsfyP72Contact=(id,m)=>{if(window.atsfyMarketplaceConnect)atsfyMarketplaceConnect(id,m);};
  document.querySelectorAll('.p72-mode').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;document.querySelectorAll('.p72-mode').forEach(x=>x.classList.toggle('active',x===b));render()});
  ['p72-search','p72-category','p72-location','p72-sort','p72-verified'].forEach(id=>document.getElementById(id)?.addEventListener('input',render));
  window.atsfyOpenPhase72=()=>{document.getElementById('net-phase7-2')?.scrollIntoView({behavior:'smooth',block:'start'});render()};
@@ -3190,5 +3190,116 @@ window.addEventListener('load',atsfyNetworkHydrate);
  window.addEventListener('load',()=>{const tabs=document.querySelector('.p4-tabs');if(tabs&&!tabs.querySelector('[data-p6-nav]')){const b=document.createElement('button');b.className='p4-tab';b.textContent='Smart Match';b.dataset.p6Nav='1';b.onclick=atsfyOpenPhase6;tabs.appendChild(b)}render();});
 })();
 </script>
+
+<section id="net-connect" class="mc-wrap" aria-label="Marketplace connection workspace">
+  <div class="mc-head">
+    <div>
+      <div class="mc-kicker">CONNECT</div>
+      <h2>Turn discovery into a real conversation.</h2>
+      <p>Contact a business, send a project requirement, or submit a proposal — without losing the profile you started from.</p>
+    </div>
+    <div class="mc-note">DIRECT MARKETPLACE ACTIONS</div>
+  </div>
+  <div id="mc-content"></div>
+</section>
+
+<div id="mc-modal" class="mc-modal" aria-hidden="true">
+  <div class="mc-dialog">
+    <button class="mc-close" onclick="atsfyCloseConnect()">×</button>
+    <div id="mc-modal-content"></div>
+  </div>
+</div>
+
+<style>
+.mc-wrap{background:#f7f6f2;color:#162219;padding:74px clamp(18px,5vw,72px);border-top:1px solid rgba(40,80,64,.1);scroll-margin-top:90px}
+.mc-head{max-width:1180px;margin:auto auto 28px;display:flex;justify-content:space-between;gap:25px;align-items:end}
+.mc-kicker{font-size:.62rem;letter-spacing:.18em;font-weight:850;color:#d09b2f}
+.mc-head h2{font-size:clamp(2.2rem,5vw,5rem);line-height:.94;letter-spacing:-.055em;margin:9px 0}
+.mc-head p{max-width:680px;color:#68756d;line-height:1.6}
+.mc-note{border:1px solid rgba(40,80,64,.14);padding:9px 12px;border-radius:999px;font-size:.58rem;letter-spacing:.12em;color:#657253;white-space:nowrap}
+.mc-card{max-width:1180px;margin:auto;background:#fff;border:1px solid rgba(40,80,64,.1);border-radius:20px;padding:22px;box-shadow:0 12px 34px rgba(28,48,31,.05)}
+.mc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.mc-action{border:1px solid rgba(40,80,64,.11);background:#fbfcf9;border-radius:16px;padding:18px;cursor:pointer;text-align:left;transition:.22s}
+.mc-action:hover{transform:translateY(-2px);border-color:rgba(217,164,59,.55);box-shadow:0 10px 24px rgba(28,48,31,.06)}
+.mc-action b{display:block;font-size:.95rem}.mc-action span{display:block;margin-top:5px;color:#718078;font-size:.72rem;line-height:1.5}
+.mc-field{margin-top:12px}.mc-field label{display:block;font-size:.64rem;font-weight:800;color:#526159;margin-bottom:5px}.mc-field input,.mc-field textarea{width:100%;box-sizing:border-box;border:1px solid rgba(40,80,64,.14);border-radius:10px;padding:11px;background:#fff;font:inherit;font-size:.75rem;outline:none}.mc-field textarea{min-height:110px;resize:vertical}.mc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.mc-btn{border:1px solid rgba(40,80,64,.14);background:#fff;border-radius:10px;padding:10px 13px;font-size:.68rem;font-weight:800;cursor:pointer}.mc-btn.primary{background:#1c301f;color:#fff;border-color:#1c301f}.mc-btn.gold{background:#d9a43b;color:#162219;border-color:#d9a43b}
+.mc-modal{position:fixed;inset:0;background:rgba(7,10,8,.62);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:18px;z-index:10000}.mc-modal.open{display:flex}.mc-dialog{width:min(620px,100%);max-height:90vh;overflow:auto;background:#f7f6f2;border:1px solid rgba(255,255,255,.15);border-radius:22px;padding:24px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.3)}.mc-close{position:absolute;right:16px;top:12px;border:0;background:transparent;font-size:27px;cursor:pointer;color:#526159}.mc-title{font-size:1.6rem;font-weight:850;letter-spacing:-.035em}.mc-sub{color:#718078;font-size:.75rem;line-height:1.55;margin-top:6px}.mc-req{background:#fff;border:1px solid rgba(40,80,64,.1);border-radius:14px;padding:14px;margin-top:10px}.mc-req h4{margin:0;font-size:.9rem}.mc-req p{font-size:.7rem;color:#718078;line-height:1.5}.mc-req-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.mc-chip{font-size:.58rem;padding:5px 7px;border-radius:999px;background:#eef1eb;color:#526159}
+@media(max-width:760px){.mc-head{display:block}.mc-note{display:inline-block;margin-top:12px}.mc-grid{grid-template-columns:1fr}}
+</style>
+
+<script>
+(function(){
+  const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}};
+  const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+  const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+  const current=()=>{try{return JSON.parse(localStorage.getItem('atsfy_marketplace_current_user_v1')||'null')}catch(e){return null}};
+  const users=()=>read('atsfy_marketplace_users_v1');
+  const open=()=>document.getElementById('mc-modal')?.classList.add('open');
+  window.atsfyCloseConnect=()=>document.getElementById('mc-modal')?.classList.remove('open');
+
+  function target(id){return users().find(x=>x.id===id)}
+  function profile(u){return Object.assign({name:u?.name||'Marketplace Member',category:'',location:'',about:'',services:'',skills:'',experience:'',availability:'',responseTime:''},u?.profile||{})}
+  function id(){return 'connect_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7)}
+
+  function messageView(t){
+    const me=current(); if(!me)return;
+    document.getElementById('mc-modal-content').innerHTML='<div class="mc-title">Message '+esc(profile(t).name)+'</div><div class="mc-sub">Start a direct marketplace conversation. Your message will appear in the Messages workspace.</div><div class="mc-field"><label>MESSAGE</label><textarea id="mc-message" placeholder="Tell them what you need, what you offer, or what you would like to discuss."></textarea></div><div class="mc-actions"><button class="mc-btn" onclick="atsfyCloseConnect()">Cancel</button><button class="mc-btn primary" onclick="atsfyConnectMessage(\''+esc(t.id)+'\')">Send Message</button></div>';
+    open();
+  }
+  window.atsfyConnectMessage=id=>{
+    const me=current(),t=target(id),input=document.getElementById('mc-message');if(!me||!t||!input||!input.value.trim())return;
+    const messages=read('atsfy_marketplace_messages_v1');
+    const providerId=me.type==='provider'?me.id:t.id, clientId=me.type==='client'?me.id:t.id;
+    messages.push({id:id(),providerId,clientId,senderId:me.id,senderName:me.name,text:input.value.trim(),createdAt:new Date().toISOString()});
+    write('atsfy_marketplace_messages_v1',messages);
+    atsfyCloseConnect(); if(window.atsfyOpenPhase4)atsfyOpenPhase4('messages');
+  };
+
+  function requirementView(t){
+    const me=current(); if(!me)return;
+    if(me.type!=='client'){alert('Create or use a Client / Service Seeker account to send a requirement.');return}
+    document.getElementById('mc-modal-content').innerHTML='<div class="mc-title">Send a project to '+esc(profile(t).name)+'</div><div class="mc-sub">This requirement will be targeted to this provider while remaining visible in your marketplace workflow.</div><div class="mc-field"><label>PROJECT TITLE</label><input id="mc-rt" placeholder="e.g. Build a business website"></div><div class="mc-field"><label>BUDGET</label><input id="mc-rb" placeholder="e.g. ₹25,000"></div><div class="mc-field"><label>LOCATION / ENGAGEMENT</label><input id="mc-rl" value="Remote"></div><div class="mc-field"><label>WHAT DO YOU NEED?</label><textarea id="mc-rd" placeholder="Describe the outcome, scope and important details."></textarea></div><div class="mc-actions"><button class="mc-btn" onclick="atsfyCloseConnect()">Cancel</button><button class="mc-btn primary" onclick="atsfySendTargetedRequirement(\''+esc(t.id)+'\')">Send Requirement</button></div>';
+    open();
+  }
+  window.atsfySendTargetedRequirement=id=>{
+    const me=current(),t=target(id);if(!me||!t)return;
+    const title=document.getElementById('mc-rt')?.value.trim(),desc=document.getElementById('mc-rd')?.value.trim();
+    if(!title||!desc)return alert('Project title and description are required.');
+    const rs=read('atsfy_marketplace_requirements_v1');
+    rs.unshift({id:'opp_'+Date.now().toString(36),title,description:desc,category:profile(t).category||'Other',budget:document.getElementById('mc-rb')?.value.trim(),location:document.getElementById('mc-rl')?.value.trim(),deadline:'',engagement:'Remote',clientId:me.id,clientName:me.name,targetProviderId:t.id,createdAt:new Date().toISOString(),status:'open'});
+    write('atsfy_marketplace_requirements_v1',rs);atsfyCloseConnect();alert('Requirement sent to '+profile(t).name+'.');if(window.atsfyOpenPhase3)atsfyOpenPhase3('requirements');
+  };
+
+  function proposalView(t){
+    const me=current();if(!me)return;
+    if(me.type!=='provider'){alert('Create or use a Service Provider account to submit proposals.');return}
+    const reqs=read('atsfy_marketplace_requirements_v1').filter(r=>r.clientId===t.id&&r.status!=='closed');
+    let html='<div class="mc-title">Work with '+esc(profile(t).name)+'</div><div class="mc-sub">Choose one of this client’s open requirements and submit a tailored proposal.</div>';
+    if(!reqs.length)html+='<div class="mc-req"><h4>No open requirements yet</h4><p>Start a conversation with this client instead, or check back when they post a project.</p><div class="mc-actions"><button class="mc-btn primary" onclick="atsfyConnectMessage(\''+esc(t.id)+'\')">Message Client</button></div></div>';
+    else reqs.forEach(r=>{html+='<div class="mc-req"><h4>'+esc(r.title)+'</h4><p>'+esc(r.description)+'</p><div class="mc-req-meta"><span class="mc-chip">'+esc(r.budget||'Budget open')+'</span><span class="mc-chip">'+esc(r.location||'Flexible')+'</span></div><div class="mc-actions"><button class="mc-btn primary" onclick="atsfySubmitDirectProposal(\''+esc(r.id)+'\')">Submit Proposal</button></div></div>'});
+    document.getElementById('mc-modal-content').innerHTML=html;open();
+  }
+  window.atsfySubmitDirectProposal=reqId=>{
+    const me=current(),r=read('atsfy_marketplace_requirements_v1').find(x=>x.id===reqId);if(!me||!r)return;
+    const existing=read('atsfy_marketplace_proposals_v1');if(existing.some(p=>p.requirementId===reqId&&p.providerId===me.id)){alert('You already submitted a proposal for this project.');return}
+    const note=prompt('Write your proposal message:','I can help deliver this requirement. I would be happy to discuss scope, timeline and next steps.');
+    if(note===null||!note.trim())return;
+    existing.unshift({id:id(),requirementId:r.id,requirementTitle:r.title,providerId:me.id,providerName:me.name,clientId:r.clientId,clientName:r.clientName,message:note.trim(),createdAt:new Date().toISOString(),status:'submitted'});
+    write('atsfy_marketplace_proposals_v1',existing);atsfyCloseConnect();alert('Proposal submitted successfully.');if(window.atsfyOpenPhase4)atsfyOpenPhase4('inbox');
+  };
+
+  window.atsfyMarketplaceConnect=(targetId,mode)=>{
+    const me=current(),t=target(targetId);if(!me){if(window.atsfyOpenAuth)atsfyOpenAuth();return}if(!t)return;if(t.id===me.id){alert('This is your own marketplace profile.');return}
+    document.getElementById('net-connect')?.scrollIntoView({behavior:'smooth',block:'start'});
+    const name=profile(t).name;
+    document.getElementById('mc-content').innerHTML='<div class="mc-card"><div class="mc-title">'+esc(name)+'</div><div class="mc-sub">'+esc(t.type==='provider'?'Service Provider':'Client / Service Seeker')+' · '+esc(profile(t).category||'Marketplace member')+' · '+esc(profile(t).location||'Location flexible')+'</div><div class="mc-grid" style="margin-top:16px"><button class="mc-action" onclick="atsfyMarketplaceMessage(\''+esc(t.id)+'\')"><b>Start a conversation</b><span>Ask a question, introduce yourself or discuss a potential project.</span></button>'+(t.type==='provider'?'<button class="mc-action" onclick="atsfyMarketplaceRequirement(\''+esc(t.id)+'\')"><b>Send a project requirement</b><span>Describe what you need and send it directly to this provider.</span></button>':'<button class="mc-action" onclick="atsfyMarketplaceProposal(\''+esc(t.id)+'\')"><b>Explore client opportunities</b><span>View this client’s open requirements and submit a proposal.</span></button>')+'</div></div>';
+    document.getElementById('mc-content').scrollIntoView({behavior:'smooth',block:'start'});
+  };
+  window.atsfyMarketplaceMessage=id=>{const t=target(id);if(t)messageView(t)};
+  window.atsfyMarketplaceRequirement=id=>{const t=target(id);if(t)requirementView(t)};
+  window.atsfyMarketplaceProposal=id=>{const t=target(id);if(t)proposalView(t)};
+})();
+</script>
+
 </body>
 </html>
