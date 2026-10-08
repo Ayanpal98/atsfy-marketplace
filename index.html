@@ -421,6 +421,15 @@ footer{background:#1c301f!important}
 @media(max-width:800px){.p4-grid{grid-template-columns:1fr 1fr}}@media(max-width:620px){.p4-head{align-items:flex-start;flex-direction:column}.p4-grid{grid-template-columns:1fr}}
 </style><style>
 /* =========================================================
+   ATSFY MARKETPLACE — ROUTE VISIBILITY / RENDER FIX
+========================================================= */
+#marketplace-workspace{display:none!important;visibility:visible!important;opacity:1!important;height:auto!important;min-height:100vh;overflow:visible}
+body.marketplace-route #marketplace-workspace{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;min-height:100vh}
+body.marketplace-route #app-content{display:none!important}
+body.marketplace-route footer{display:none!important}
+body.home-route #marketplace-workspace{display:none!important}
+
+/* =========================================================
    ATSFY MARKETPLACE — SITE SHELL & UX AUDIT
 ========================================================= */
 .home-enhancements{display:none}
