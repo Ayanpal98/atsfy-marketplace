@@ -1142,6 +1142,7 @@ body.marketplace-route header nav button{color:#33453a!important}
                 updateActiveNav();
             }
         };
+        window.router = router;
 
         function updateActiveNav() {
             document.querySelectorAll('.nav-link').forEach(el => {
@@ -2362,9 +2363,19 @@ body.marketplace-route header nav button{color:#33453a!important}
 <script>
 (function(){
   const overlay=document.getElementById('atsfy-network-overlay');
-  window.atsfyNetworkOpen=function(){overlay.classList.add('is-open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';};
-  window.atsfyNetworkClose=function(){overlay.classList.remove('is-open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow='';};
-  window.atsfyNetworkScroll=function(id){document.getElementById('net-'+id)?.scrollIntoView({behavior:'smooth',block:'start'});};
+  window.atsfyNetworkOpen=function(){
+    if(window.router){window.router.navigate('marketplace');return;}
+    if(overlay){overlay.classList.add('is-open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+  };
+  window.atsfyNetworkClose=function(){
+    if(window.router && typeof window.router.navigate==='function'){window.router.navigate('home');return;}
+    if(overlay){overlay.classList.remove('is-open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+  };
+  window.atsfyNetworkScroll=function(id){
+    const el=document.getElementById('net-'+id);
+    if(el){el.scrollIntoView({behavior:'smooth',block:'start'});return;}
+    if(window.router){window.router.navigate('marketplace');setTimeout(()=>document.getElementById('net-'+id)?.scrollIntoView({behavior:'smooth',block:'start'}),120);}
+  };
   window.atsfyNetworkToggleProfile=function(){try{const u=JSON.parse(localStorage.getItem('atsfy_marketplace_current_user_v1')||'null');if(!u){return window.atsfyOpenAuth?atsfyOpenAuth():null;}}catch(e){return window.atsfyOpenAuth?atsfyOpenAuth():null;}const f=document.getElementById('net-profile-form');if(!f)return;f.classList.toggle('is-open');f.scrollIntoView({behavior:'smooth',block:'center'});};
   window.atsfyNetworkToast=function(msg){const t=document.createElement('div');t.textContent=msg;t.style='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:10003;background:#1c301f;color:#fff;padding:12px 16px;border-radius:10px;font-size:12px;box-shadow:0 12px 30px rgba(0,0,0,.18)';document.body.appendChild(t);setTimeout(()=>t.remove(),2600);};
   window.atsfyNetworkSaveProfile=function(){
