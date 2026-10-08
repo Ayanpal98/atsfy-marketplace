@@ -416,7 +416,10 @@ footer{background:#1c301f!important}
 /* keep dense dark technical blocks intentional, but limit dark surface area */
 @media(max-width:768px){.hero-cinematic{background:linear-gradient(160deg,#f7f6f2,#edf2ec)!important}.pw-track{scrollbar-color:#657253 #dfe5df}}
 </style>
-</head>
+<style>
+.p4-wrap{margin-top:18px}.p4-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:12px}.p4-kicker{font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#9a6c16}.p4-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.p4-tab{border:1px solid rgba(28,48,31,.14);background:#fff;border-radius:999px;padding:9px 13px;font-size:11px;font-weight:800;cursor:pointer}.p4-tab.active{background:#1c301f;color:#fff;border-color:#1c301f}.p4-panel{display:none}.p4-panel.active{display:block}.p4-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.p4-card{background:#fff;border:1px solid rgba(28,48,31,.1);border-radius:16px;padding:17px}.p4-card h3{font-size:17px;margin:7px 0}.p4-card p{font-size:12px;color:#66736b;line-height:1.55}.p4-meta{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.p4-chip{background:#eef2ed;color:#536258;border-radius:999px;padding:5px 8px;font-size:9px;font-weight:800}.p4-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.p4-empty{padding:28px;text-align:center;background:#fff;border:1px dashed rgba(28,48,31,.18);border-radius:16px;color:#68756d;font-size:12px}.p4-message{display:flex;flex-direction:column;gap:6px;max-height:360px;overflow:auto;background:#f7f9f5;border-radius:14px;padding:12px}.p4-bubble{max-width:82%;padding:10px 12px;border-radius:12px;background:#fff;border:1px solid rgba(28,48,31,.08);font-size:12px}.p4-bubble.mine{align-self:flex-end;background:#1c301f;color:#fff}.p4-bubble small{display:block;opacity:.65;font-size:9px;margin-top:4px}.p4-compose{display:flex;gap:7px;margin-top:9px}.p4-compose input{flex:1;border:1px solid rgba(28,48,31,.14);background:#fff;border-radius:10px;padding:10px;font:inherit;font-size:12px}.p4-review{background:#fff;border:1px solid rgba(28,48,31,.1);border-radius:16px;padding:18px;max-width:620px}.p4-stars{font-size:24px;letter-spacing:3px;cursor:pointer}.p4-project-status{font-weight:800;color:#285040}
+@media(max-width:800px){.p4-grid{grid-template-columns:1fr 1fr}}@media(max-width:620px){.p4-head{align-items:flex-start;flex-direction:column}.p4-grid{grid-template-columns:1fr}}
+</style></head>
 <body class="min-h-screen flex flex-col selection:bg-atsfy-gold selection:text-atsfy-dark">
 
     <!-- Navigation -->
@@ -2507,5 +2510,68 @@ window.addEventListener('load',atsfyNetworkHydrate);
   window.addEventListener('load',()=>{renderRequirements();});
 })();
 </script>
-</body>
+<section id="net-phase4" class="p4-wrap">
+  <div class="p4-head">
+    <div><div class="p4-kicker">PHASE 4 · COMMUNICATION & PROJECTS</div><h2>Turn opportunities into real work.</h2></div>
+    <div class="net-muted">Proposals → Conversations → Projects → Reviews</div>
+  </div>
+  <div class="p4-tabs">
+    <button class="p4-tab active" data-p4-tab="inbox">Proposal Inbox</button>
+    <button class="p4-tab" data-p4-tab="messages">Messages</button>
+    <button class="p4-tab" data-p4-tab="projects">Projects</button>
+    <button class="p4-tab" data-p4-tab="reviews">Reviews</button>
+  </div>
+  <div class="p4-panel active" data-p4-panel="inbox"><div id="p4-inbox"></div></div>
+  <div class="p4-panel" data-p4-panel="messages"><div id="p4-messages"></div></div>
+  <div class="p4-panel" data-p4-panel="projects"><div id="p4-projects"></div></div>
+  <div class="p4-panel" data-p4-panel="reviews"><div id="p4-reviews"></div></div>
+</section><script>
+(function(){
+ const PKEY='atsfy_marketplace_proposals_v1',KMSG='atsfy_marketplace_messages_v1',KPROJ='atsfy_marketplace_projects_v1',KREV='atsfy_marketplace_reviews_v1';
+ const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}},write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+ const id=p=>'p4_'+p+'_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,6);
+ const esc=v=>String(v||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+ const user=()=>{try{return JSON.parse(localStorage.getItem('atsfy_marketplace_current_user_v1')||'null')}catch(e){return null}};
+ const toast=m=>window.atsfyNetworkToast?atsfyNetworkToast(m):alert(m);
+ const activate=tab=>{document.querySelectorAll('.p4-tab').forEach(b=>b.classList.toggle('active',b.dataset.p4Tab===tab));document.querySelectorAll('.p4-panel').forEach(p=>p.classList.toggle('active',p.dataset.p4Panel===tab));render(tab)};
+ document.querySelectorAll('.p4-tab').forEach(b=>b.addEventListener('click',()=>activate(b.dataset.p4Tab)));
+ window.atsfyOpenPhase4=tab=>{document.getElementById('net-phase4')?.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>activate(tab||'inbox'),180)};
+ function renderInbox(){
+  const box=document.getElementById('p4-inbox'),u=user();if(!u){box.innerHTML='<div class="p4-empty">Sign in to manage proposals and projects.</div>';return}
+  const ps=read(PKEY).filter(p=>p.providerId===u.id||p.clientId===u.id);
+  if(!ps.length){box.innerHTML='<div class="p4-empty">No proposals yet. Accepted proposals will become projects here.</div>';return}
+  box.innerHTML='<div class="p4-grid">'+ps.map(p=>'<article class="p4-card"><div class="p4-kicker">'+esc(p.status||'submitted')+'</div><h3>'+esc(p.requirementTitle)+'</h3><p>'+esc(p.message)+'</p><div class="p4-meta"><span class="p4-chip">'+esc(p.providerName)+'</span><span class="p4-chip">'+esc(p.clientName)+'</span></div><div class="p4-actions">'+(u.type==='client'&&p.clientId===u.id&&p.status==='submitted'?'<button class="net-btn primary" onclick="atsfyAcceptProposal(\''+p.id+'\')">Accept</button><button class="net-btn" onclick="atsfyRejectProposal(\''+p.id+'\')">Reject</button>':'')+'<button class="net-btn" onclick="atsfyStartConversation(\''+p.providerId+'\',\''+p.clientId+'\',\''+esc(p.requirementTitle)+'\')">Message</button>'+(p.status==='accepted'?'<button class="net-btn gold" onclick="atsfyOpenPhase4(\'projects\')">Open Project</button>':'')+'</div></article>').join('')+'</div>';
+ }
+ window.atsfyAcceptProposal=pid=>{const u=user();if(!u)return;const ps=read(PKEY),p=ps.find(x=>x.id===pid);if(!p||p.clientId!==u.id)return;ps.forEach(x=>{if(x.requirementId===p.requirementId&&x.status==='submitted')x.status=x.id===pid?'accepted':'rejected'});write(PKEY,ps);const projects=read(KPROJ);if(!projects.some(x=>x.proposalId===pid)){projects.unshift({id:id('project'),proposalId:p.id,requirementId:p.requirementId,title:p.requirementTitle,clientId:p.clientId,clientName:p.clientName,providerId:p.providerId,providerName:p.providerName,status:'active',createdAt:new Date().toISOString(),agreedAmount:''});write(KPROJ,projects)}toast('Proposal accepted. Project workspace created.');renderInbox();activate('projects')};
+ window.atsfyRejectProposal=pid=>{const u=user();const ps=read(PKEY),p=ps.find(x=>x.id===pid);if(!u||!p||p.clientId!==u.id)return; p.status='rejected';write(PKEY,ps);toast('Proposal rejected.');renderInbox()};
+ window.atsfyStartConversation=(providerId,clientId,title)=>{const u=user();if(!u)return;localStorage.setItem('atsfy_marketplace_active_chat_v1',JSON.stringify({providerId,clientId,title}));activate('messages')};
+ function renderMessages(){
+  const box=document.getElementById('p4-messages'),u=user();if(!u){box.innerHTML='<div class="p4-empty">Sign in to use marketplace messaging.</div>';return}
+  const chats=read(KMSG).filter(m=>m.providerId===u.id||m.clientId===u.id),keys=[...new Set(chats.map(m=>m.providerId+'|'+m.clientId))];
+  const active=(()=>{try{return JSON.parse(localStorage.getItem('atsfy_marketplace_active_chat_v1')||'null')}catch(e){return null}})();
+  if(!active&&!keys.length){box.innerHTML='<div class="p4-empty">No conversations yet. Open Message from a proposal to start one.</div>';return}
+  const chat=active||(()=>{const [providerId,clientId]=(keys[0]||'|').split('|');return {providerId,clientId,title:'Marketplace conversation'}})();
+  const msgs=chats.filter(m=>m.providerId===chat.providerId&&m.clientId===chat.clientId);
+  box.innerHTML='<div class="p4-card"><div class="p4-kicker">CONVERSATION</div><h3>'+esc(chat.title||'Marketplace conversation')+'</h3><div class="p4-message">'+(msgs.length?msgs.map(m=>'<div class="p4-bubble '+(m.senderId===u.id?'mine':'')+'">'+esc(m.text)+'<small>'+esc(m.senderName)+' · '+new Date(m.createdAt).toLocaleString()+'</small></div>').join(''):'<div class="p4-empty">No messages yet. Start the conversation.</div>')+'</div><div class="p4-compose"><input id="p4-message-input" placeholder="Write a message..."><button class="net-btn primary" onclick="atsfySendMessage()">Send</button></div></div>';
+ }
+ window.atsfySendMessage=()=>{const u=user(),input=document.getElementById('p4-message-input');let active;try{active=JSON.parse(localStorage.getItem('atsfy_marketplace_active_chat_v1')||'null')}catch(e){};if(!u||!active||!input||!input.value.trim())return;const ms=read(KMSG);ms.push({id:id('msg'),providerId:active.providerId,clientId:active.clientId,senderId:u.id,senderName:u.name,text:input.value.trim(),createdAt:new Date().toISOString()});write(KMSG,ms);input.value='';renderMessages()};
+ function renderProjects(){
+  const box=document.getElementById('p4-projects'),u=user();if(!u){box.innerHTML='<div class="p4-empty">Sign in to view your projects.</div>';return}
+  const ps=read(KPROJ).filter(p=>p.providerId===u.id||p.clientId===u.id);if(!ps.length){box.innerHTML='<div class="p4-empty">No active projects yet. Accept a proposal to create your first project.</div>';return}
+  box.innerHTML='<div class="p4-grid">'+ps.map(p=>'<article class="p4-card"><div class="p4-kicker">PROJECT</div><h3>'+esc(p.title)+'</h3><p><b>'+esc(p.providerName)+'</b> ↔ <b>'+esc(p.clientName)+'</b></p><div class="p4-meta"><span class="p4-chip">'+esc(p.status)+'</span><span class="p4-chip">'+(p.agreedAmount?esc(p.agreedAmount):'Amount not set')+'</span></div><div class="p4-actions"><button class="net-btn" onclick="atsfyStartConversation(\''+p.providerId+'\',\''+p.clientId+'\',\''+esc(p.title)+'\')">Message</button>'+(p.status==='active'?'<button class="net-btn primary" onclick="atsfyUpdateProject(\''+p.id+'\',\'completed\')">Mark Complete</button>':'')+(p.status==='completed'?'<button class="net-btn gold" onclick="atsfyOpenReview(\''+p.id+'\')">Leave Review</button>':'')+'</div></article>').join('')+'</div>';
+ }
+ window.atsfyUpdateProject=(pid,status)=>{const u=user(),ps=read(KPROJ),p=ps.find(x=>x.id===pid);if(!u||!p||!(p.providerId===u.id||p.clientId===u.id))return;p.status=status;write(KPROJ,ps);toast('Project marked '+status+'.');renderProjects()};
+ window.atsfyOpenReview=pid=>{const u=user(),p=read(KPROJ).find(x=>x.id===pid);if(!u||!p)return;localStorage.setItem('atsfy_marketplace_review_project_v1',pid);activate('reviews')};
+ function renderReviews(){
+  const box=document.getElementById('p4-reviews'),u=user();if(!u){box.innerHTML='<div class="p4-empty">Sign in to manage reviews.</div>';return}
+  const projects=read(KPROJ).filter(p=>p.status==='completed'&&(p.providerId===u.id||p.clientId===u.id)),reviews=read(KREV);
+  if(!projects.length){box.innerHTML='<div class="p4-empty">Complete a project first to leave a review.</div>';return}
+  box.innerHTML=projects.map(p=>{const existing=reviews.find(r=>r.projectId===p.id&&r.reviewerId===u.id);return '<div class="p4-review" style="margin-bottom:12px"><div class="p4-kicker">PROJECT REVIEW</div><h3>'+esc(p.title)+'</h3><p>Review '+esc(u.id===p.clientId?p.providerName:p.clientName)+'</p>'+(existing?'<div class="p4-meta"><span class="p4-chip">'+existing.rating+' / 5</span></div><p>'+esc(existing.text)+'</p>':'<div class="p4-stars" id="p4-stars-'+p.id+'">☆ ☆ ☆ ☆ ☆</div><input id="p4-rating-'+p.id+'" type="hidden" value="0"><input id="p4-review-'+p.id+'" placeholder="Write a short review..." style="width:100%;margin-top:8px;border:1px solid rgba(28,48,31,.14);border-radius:10px;padding:10px"><div class="p4-actions"><button class="net-btn primary" onclick="atsfySubmitReview(\''+p.id+'\')">Publish Review</button></div></div>')}).join('');
+  projects.forEach(p=>{const el=document.getElementById('p4-stars-'+p.id);if(el)el.onclick=()=>{const n=prompt('Rating from 1 to 5:','5');if(n&&+n>=1&&+n<=5){document.getElementById('p4-rating-'+p.id).value=Math.round(+n);el.textContent='★ '.repeat(Math.round(+n))+'☆ '.repeat(5-Math.round(+n))}}});
+ }
+ window.atsfySubmitReview=(pid)=>{const u=user(),ps=read(KPROJ),p=ps.find(x=>x.id===pid),rating=+(document.getElementById('p4-rating-'+pid)?.value||0),text=(document.getElementById('p4-review-'+pid)?.value||'').trim();if(!u||!p||rating<1||rating>5||!text)return toast('Please add a rating and review.');const rs=read(KREV);if(rs.some(r=>r.projectId===pid&&r.reviewerId===u.id))return toast('You already reviewed this project.');rs.push({id:id('review'),projectId:pid,reviewerId:u.id,reviewerName:u.name,revieweeId:u.id===p.clientId?p.providerId:p.clientId,revieweeName:u.id===p.clientId?p.providerName:p.clientName,rating,text,createdAt:new Date().toISOString()});write(KREV,rs);toast('Review published.');renderReviews()};
+ function render(tab){if(tab==='inbox')renderInbox();if(tab==='messages')renderMessages();if(tab==='projects')renderProjects();if(tab==='reviews')renderReviews()}
+ window.addEventListener('load',()=>render('inbox'));
+})();
+</script></body>
 </html>
