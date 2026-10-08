@@ -457,6 +457,16 @@ body.marketplace-route header nav button{color:#33453a!important}
 .marketplace-appbar-links button:hover{background:#e9eee8;color:#1c301f}
 @media(max-width:900px){.marketplace-appbar{top:70px}.marketplace-appbar-inner{display:block}.marketplace-appbar-links{margin-top:7px}.marketplace-appbar-links button{padding:7px 9px}}
 </style>
+<style>
+.marketplace-network-file{margin:0 auto 22px;max-width:1440px;padding:26px clamp(16px,4vw,42px);background:#1c301f;color:#fff;border-bottom:1px solid rgba(217,164,59,.25)}
+.marketplace-network-file-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:16px}
+.marketplace-network-kicker{font-size:10px;letter-spacing:.18em;color:#d9a43b;font-weight:800}
+.marketplace-network-file h2{font-size:clamp(28px,4vw,52px);line-height:.95;letter-spacing:-.045em;margin:7px 0}
+.marketplace-network-file p{color:#bdc8c0;font-size:13px;line-height:1.55;max-width:680px}
+.marketplace-network-open{display:inline-flex;white-space:nowrap;padding:10px 14px;border:1px solid rgba(217,164,59,.45);border-radius:999px;color:#d9a43b;font-size:11px;font-weight:800}
+.marketplace-network-file iframe{display:block;width:100%;height:920px;border:1px solid rgba(255,255,255,.12);border-radius:22px;background:#070908}
+@media(max-width:700px){.marketplace-network-file-head{display:block}.marketplace-network-open{margin-top:14px}.marketplace-network-file iframe{height:850px;border-radius:16px}}
+</style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-atsfy-gold selection:text-atsfy-dark">
 
@@ -2262,6 +2272,17 @@ body.marketplace-route header nav button{color:#33453a!important}
 <div id="atsfy-network-overlay" aria-hidden="true">
   </div>
 <div id="marketplace-workspace" class="marketplace-workspace" style="display:none;">
+<section id="marketplace-network-file" class="marketplace-network-file" aria-label="Marketplace Network">
+  <div class="marketplace-network-file-head">
+    <div>
+      <div class="marketplace-network-kicker">MARKETPLACE NETWORK</div>
+      <h2>Find clients. Find services. Build business.</h2>
+      <p>The dedicated Marketplace Network experience is available directly inside the Marketplace workspace.</p>
+    </div>
+    <a class="marketplace-network-open" href="/network/index.html" target="_blank" rel="noopener">Open Network ↗</a>
+  </div>
+  <iframe src="/network/index.html" title="ATSFY Marketplace Network" loading="eager"></iframe>
+</section>
 <div class="marketplace-appbar" role="navigation" aria-label="Marketplace workspace navigation">
   <div class="marketplace-appbar-inner">
     <div class="marketplace-appbar-brand"><span class="marketplace-appbar-dot"></span><strong>Marketplace</strong><span>Find · Connect · Work · Grow</span></div>
