@@ -2741,5 +2741,104 @@ window.addEventListener('load',atsfyNetworkHydrate);
   });
 })();
 </script>
+
+<section id="net-phase6" class="p6-wrap">
+  <div class="p6-head">
+    <div><div class="p6-kicker">PHASE 6 · AI INTELLIGENCE</div><h2>Let the marketplace find the right match.</h2><p>Turn profiles, requirements and marketplace activity into explainable recommendations — without hiding the logic.</p></div>
+    <div class="p6-badge">EXPLAINABLE MATCHING · PROTOTYPE</div>
+  </div>
+  <div class="p6-grid">
+    <div class="p6-box"><div class="p6-label">YOUR MATCH PROFILE</div><div id="p6-profile"></div></div>
+    <div class="p6-box p6-main"><div class="p6-label">RECOMMENDED MATCHES</div><div id="p6-matches"></div></div>
+  </div>
+  <div class="p6-tools">
+    <button class="p6-tab active" data-p6-tab="score">Match Score</button>
+    <button class="p6-tab" data-p6-tab="signals">Why this match?</button>
+    <button class="p6-tab" data-p6-tab="opportunities">Opportunities</button>
+  </div>
+  <div id="p6-panel-score" class="p6-panel active"></div>
+  <div id="p6-panel-signals" class="p6-panel"></div>
+  <div id="p6-panel-opportunities" class="p6-panel"></div>
+</section>
+<style>
+.p6-wrap{background:#f7f6f2;color:#162219;border-top:1px solid rgba(40,80,64,.12);padding:76px clamp(18px,5vw,72px);scroll-margin-top:80px}
+.p6-head{max-width:1180px;margin:auto auto 34px;display:flex;justify-content:space-between;gap:25px;align-items:end}.p6-kicker,.p6-label{font-size:.64rem;letter-spacing:.18em;font-weight:800;color:#d09b2f}.p6-head h2{font-size:clamp(2.3rem,5vw,5rem);line-height:.95;letter-spacing:-.055em;margin:10px 0}.p6-head p{color:#68756d;max-width:690px;line-height:1.6}.p6-badge{border:1px solid rgba(40,80,64,.16);border-radius:999px;padding:10px 13px;font-size:.6rem;letter-spacing:.1em;color:#657253;white-space:nowrap}
+.p6-grid{max-width:1180px;margin:auto;display:grid;grid-template-columns:320px 1fr;gap:14px}.p6-box{background:#fff;border:1px solid rgba(40,80,64,.1);border-radius:20px;padding:22px;box-shadow:0 12px 35px rgba(28,48,31,.05)}.p6-main{min-height:360px}
+.p6-profile-name{font-size:1.35rem;font-weight:800;margin:10px 0 4px}.p6-muted{font-size:.76rem;color:#77827b;line-height:1.55}.p6-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px}.p6-tag{font-size:.62rem;padding:6px 8px;border-radius:999px;background:#eef0e9;color:#405348}.p6-score{font-size:2.6rem;font-weight:850;letter-spacing:-.06em}.p6-meter{height:8px;background:#e5e8e1;border-radius:99px;overflow:hidden;margin:8px 0 17px}.p6-meter span{display:block;height:100%;background:#285040;border-radius:99px}
+.p6-match{display:grid;grid-template-columns:1fr auto;gap:15px;padding:16px 0;border-bottom:1px solid rgba(40,80,64,.1)}.p6-match:last-child{border-bottom:0}.p6-match h4{margin:0;font-size:1rem}.p6-meta{font-size:.68rem;color:#78837d;margin-top:5px}.p6-match-score{font-size:1.35rem;font-weight:850;color:#285040}.p6-reasons{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}.p6-reason{font-size:.59rem;background:#f0f3ed;border-radius:999px;padding:5px 7px;color:#53645a}.p6-btn{border:1px solid rgba(40,80,64,.16);background:#fff;border-radius:9px;padding:8px 11px;font-size:.68rem;font-weight:750;cursor:pointer;margin-top:9px}.p6-btn:hover{border-color:#d9a43b}.p6-btn.primary{background:#1c301f;color:#fff;border-color:#1c301f}
+.p6-tools{max-width:1180px;margin:24px auto 15px;display:flex;gap:8px;border-bottom:1px solid rgba(40,80,64,.12);padding-bottom:10px;flex-wrap:wrap}.p6-tab{border:0;background:transparent;padding:9px 13px;border-radius:999px;font-size:.7rem;font-weight:750;cursor:pointer;color:#657068}.p6-tab.active{background:#1c301f;color:#fff}.p6-panel{max-width:1180px;margin:auto;display:none}.p6-panel.active{display:block}.p6-signal{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid rgba(40,80,64,.1);font-size:.75rem}.p6-signal b{color:#285040}.p6-empty{padding:35px;text-align:center;border:1px dashed rgba(40,80,64,.2);border-radius:16px;color:#78837d;font-size:.8rem}
+.p6-op{background:#fff;border:1px solid rgba(40,80,64,.1);border-radius:16px;padding:17px;margin-bottom:9px}.p6-op strong{font-size:.9rem}.p6-op small{display:block;color:#78837d;margin-top:5px}
+@media(max-width:800px){.p6-head{display:block}.p6-badge{display:inline-block;margin-top:14px}.p6-grid{grid-template-columns:1fr}}
+</style>
+<script>
+(function(){
+ const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+ const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}};
+ const user=()=>{try{return JSON.parse(localStorage.getItem('atsfy_marketplace_current_user_v1')||'null')}catch(e){return null}};
+ const toast=m=>window.atsfyNetworkToast?atsfyNetworkToast(m):alert(m);
+ const norm=s=>String(s||'').toLowerCase().split(/[,|/•·]+/).map(x=>x.trim()).filter(Boolean);
+ const overlap=(a,b)=>{const A=norm(a),B=norm(b);return A.filter(x=>B.some(y=>x===y||x.includes(y)||y.includes(x))).length};
+ function profile(u){return Object.assign({name:u?.name||'Marketplace Member',category:'',location:'',about:'',services:'',skills:'',serviceArea:'',experience:'',availability:'',responseTime:''},u?.profile||{});}
+ function score(a,b){
+   let points=0,signals=[];
+   const pairs=[
+    ['Category',overlap(a.category,b.category),24],
+    ['Skills / services',overlap(a.skills+' '+a.services,b.skills+' '+b.services),28],
+    ['Location / service area',overlap(a.location+' '+a.serviceArea,b.location+' '+b.serviceArea),15],
+    ['Experience',a.experience&&b.experience?8:0,8],
+    ['Availability',a.availability&&b.availability?6:0,6],
+    ['Profile completeness',([a.about,a.services,a.skills,a.location].filter(Boolean).length/4)*10,10],
+    ['Response readiness',a.responseTime&&b.responseTime?4:0,4]
+   ];
+   pairs.forEach(x=>{let v=x[1];if(v>0){v=Math.min(x[2],x[1]>=2?x[2]:x[2]*.55);points+=v;signals.push({name:x[0],value:Math.round(v),max:x[2]})}});
+   return {score:Math.min(99,Math.round(points)),signals};
+ }
+ function enrichProvider(u){return {id:u.id,type:'provider',name:u.name,profile:profile(u)}}
+ function enrichClient(u){return {id:u.id,type:'client',name:u.name,profile:profile(u)}}
+ function allUsers(){return read('atsfy_marketplace_users_v1')}
+ function requirements(){return read('atsfy_marketplace_requirements_v1')}
+ function recommended(){
+   const u=user();if(!u)return [];
+   const me=profile(u),users=allUsers().filter(x=>x.id!==u.id);
+   if(u.type==='provider'){
+     const req=requirements().filter(x=>x.status!=='closed').map(r=>({id:r.id,type:'requirement',name:r.title,profile:{category:r.category,location:r.location,about:r.description,services:r.skills,skills:r.skills,serviceArea:r.location,experience:'',availability:'',responseTime:''},budget:r.budget}));
+     return req.map(x=>({item:x,...score(me,x.profile)})).sort((a,b)=>b.score-a.score).slice(0,8);
+   }
+   return users.map(x=>({item:enrichProvider(x),...score(me,profile(x))})).filter(x=>x.item.type==='provider').sort((a,b)=>b.score-a.score).slice(0,8);
+ }
+ function profileView(){
+   const el=document.getElementById('p6-profile'),u=user();if(!u){el.innerHTML='<div class="p6-empty">Sign in to activate AI matching.</div>';return}
+   const p=profile(u),tags=norm(p.skills+' '+p.services).slice(0,8);
+   el.innerHTML='<div class="p6-profile-name">'+esc(p.name)+'</div><div class="p6-muted">'+esc(u.type==='provider'?'Service Provider':'Client / Service Seeker')+' · '+esc(p.category||'General')+'</div><div class="p6-tags">'+tags.map(x=>'<span class="p6-tag">'+esc(x)+'</span>').join('')+'</div><div style="margin-top:22px"><div class="p6-muted">Profile intelligence readiness</div><div class="p6-meter"><span style="width:'+Math.min(100,([p.category,p.location,p.about,p.services,p.skills,p.availability].filter(Boolean).length/6)*100)+'%"></span></div></div><button class="p6-btn primary" onclick="atsfyOpenPhase5?atsfyOpenPhase5('subscription'):null">Manage membership</button>';
+ }
+ function matchesView(){
+   const el=document.getElementById('p6-matches'),u=user(),arr=recommended();if(!u){el.innerHTML='<div class="p6-empty">Create or sign in to an account first.</div>';return}
+   if(!arr.length){el.innerHTML='<div class="p6-empty">Add more profile details or create marketplace requirements to generate recommendations.</div>';return}
+   el.innerHTML=arr.map(x=>'<div class="p6-match"><div><h4>'+esc(x.item.name)+'</h4><div class="p6-meta">'+esc(x.item.profile.category||'Marketplace opportunity')+' · '+esc(x.item.profile.location||'Location flexible')+(x.item.budget?' · Budget '+esc(x.item.budget):'')+'</div><div class="p6-reasons">'+x.signals.slice(0,4).map(s=>'<span class="p6-reason">'+esc(s.name)+' +'+s.value+'</span>').join('')+'</div><button class="p6-btn" onclick="atsfyP6Action(\''+esc(x.item.id)+'\',\''+esc(x.item.type)+'\')">'+(x.item.type==='requirement'?'View requirement':'View profile')+'</button></div><div><div class="p6-score">'+x.score+'%</div><div class="p6-muted">match</div></div></div>').join('');
+ }
+ function renderScore(){
+   const el=document.getElementById('p6-panel-score'),u=user();if(!u){el.innerHTML='<div class="p6-empty">Sign in to see your match score.</div>';return}
+   const arr=recommended();el.innerHTML=arr.length?'<div class="p6-box"><div class="p6-label">TOP MATCH</div><div class="p6-score">'+arr[0].score+'%</div><p class="p6-muted">Based on category, skills, location, profile completeness, experience, availability and response readiness.</p></div>':'<div class="p6-empty">No match data yet.</div>';
+ }
+ function renderSignals(){
+   const el=document.getElementById('p6-panel-signals'),u=user();if(!u){el.innerHTML='<div class="p6-empty">Sign in to see explainable signals.</div>';return}
+   const arr=recommended();if(!arr.length){el.innerHTML='<div class="p6-empty">No signals available yet.</div>';return}
+   const x=arr[0];el.innerHTML='<div class="p6-box"><div class="p6-label">WHY THIS MATCH?</div>'+x.signals.map(s=>'<div class="p6-signal"><span>'+esc(s.name)+'</span><b>'+s.value+' / '+s.max+'</b></div>').join('')+'<p class="p6-muted" style="margin-top:14px">The prototype shows the factors used to calculate the score. Production AI can replace these deterministic signals with a trained / LLM-assisted ranking layer while retaining explanations.</p></div>';
+ }
+ function renderOpp(){
+   const el=document.getElementById('p6-panel-opportunities'),u=user();if(!u){el.innerHTML='<div class="p6-empty">Sign in to view opportunities.</div>';return}
+   const arr=recommended();el.innerHTML=arr.length?arr.map(x=>'<div class="p6-op"><strong>'+esc(x.item.name)+'</strong><small>Match '+x.score+'% · '+esc(x.item.profile.category||'General')+' · '+esc(x.item.profile.location||'Flexible location')+'</small></div>').join(''):'<div class="p6-empty">No opportunities yet.</div>';
+ }
+ window.atsfyP6Action=(id,type)=>{
+   if(type==='requirement'&&window.atsfyOpenPhase3){atsfyOpenPhase3('requirements');return}
+   const users=allUsers(),u=users.find(x=>x.id===id);if(u&&window.atsfyNetworkToggleProfile){atsfyNetworkToggleProfile();setTimeout(()=>{const f=document.getElementById('net-profile-form');f?.scrollIntoView({behavior:'smooth'});},150);return}
+   toast('Open the marketplace discovery area to continue.');
+ };
+ document.querySelectorAll('.p6-tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.p6-tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.p6-panel').forEach(x=>x.classList.toggle('active',x.id==='p6-panel-'+b.dataset.p6Tab));});
+ function render(){profileView();matchesView();renderScore();renderSignals();renderOpp();}
+ window.atsfyOpenPhase6=()=>{document.getElementById('net-phase6')?.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(render,180)};
+ window.addEventListener('load',()=>{const tabs=document.querySelector('.p4-tabs');if(tabs&&!tabs.querySelector('[data-p6-nav]')){const b=document.createElement('button');b.className='p4-tab';b.textContent='AI Match';b.dataset.p6Nav='1';b.onclick=atsfyOpenPhase6;tabs.appendChild(b)}render();});
+})();
+</script>
 </body>
 </html>
