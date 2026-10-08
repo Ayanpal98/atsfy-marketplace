@@ -2198,7 +2198,7 @@ footer{background:#1c301f!important}
       <div class="net-actions">
         <button class="net-btn optional" onclick="atsfyNetworkScroll('services')">Find Services</button>
         <button class="net-btn optional" onclick="atsfyNetworkScroll('clients')">Find Clients</button>
-        <button class="net-btn primary" onclick="atsfyNetworkToggleProfile()">Create Profile</button>
+        <button class="net-btn primary" onclick="atsfyOpenAuth()">Create Profile</button>
         <button class="net-btn net-close" onclick="atsfyNetworkClose()" aria-label="Close">×</button>
       </div>
     </div>
@@ -2211,7 +2211,7 @@ footer{background:#1c301f!important}
         <div class="net-hero-cta">
           <button class="net-btn primary" onclick="atsfyNetworkScroll('services')">Explore Services ↗</button>
           <button class="net-btn" onclick="atsfyNetworkScroll('clients')">Find Clients ↗</button>
-          <button class="net-btn gold" onclick="atsfyNetworkToggleProfile()">Join the Network</button>
+          <button class="net-btn gold" onclick="atsfyOpenAuth()">Join the Network</button>
         </div>
       </div>
       <div class="net-orbit" aria-label="ATSFY Marketplace Network map">
@@ -2316,5 +2316,50 @@ footer{background:#1c301f!important}
 })();
 </script>
 
+
+<!-- LOCAL USER DATABASE: prototype-only, browser localStorage -->
+<style>
+#net-auth-panel{display:none;margin-top:14px;background:#fff;border:1px solid rgba(28,48,31,.1);border-radius:18px;padding:22px}.net-auth-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.net-userbar{display:none;align-items:center;gap:9px}.net-userbar.is-on{display:flex}.net-avatar{width:30px;height:30px;border-radius:50%;background:#285040;color:#fff;display:grid;place-items:center;font-size:11px;font-weight:800}.net-account-card{margin-top:14px;padding:18px;border-radius:16px;background:#f4f6f1;border:1px solid rgba(28,48,31,.08)}
+@media(max-width:620px){.net-auth-grid{grid-template-columns:1fr}}
+</style>
+<script>
+(function(){
+  const USERS_KEY='atsfy_marketplace_users_v1', CURRENT_KEY='atsfy_marketplace_current_user_v1';
+  const db=()=>{try{return JSON.parse(localStorage.getItem(USERS_KEY)||'[]')}catch(e){return[]}};
+  const saveDb=u=>localStorage.setItem(USERS_KEY,JSON.stringify(u));
+  const current=()=>{try{return JSON.parse(localStorage.getItem(CURRENT_KEY)||'null')}catch(e){return null}};
+  const setCurrent=u=>localStorage.setItem(CURRENT_KEY,JSON.stringify(u));
+  const uid=()=> 'usr_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7);
+  window.atsfyOpenAuth=function(){
+    document.getElementById('net-auth-panel').style.display='block';
+    document.getElementById('net-auth-panel').scrollIntoView({behavior:'smooth',block:'center'});
+  };
+  window.atsfyRegisterUser=function(){
+    const name=document.getElementById('auth-name').value.trim(),email=document.getElementById('auth-email').value.trim().toLowerCase(),type=document.getElementById('auth-type').value,password=document.getElementById('auth-password').value;
+    if(!name||!email||!password)return atsfyNetworkToast('Name, email and password are required.');
+    if(password.length<6)return atsfyNetworkToast('Password must be at least 6 characters.');
+    const users=db(); if(users.some(u=>u.email===email))return atsfyNetworkToast('An account with this email already exists.');
+    const user={id:uid(),name,email,password,type,plan:'Free',createdAt:new Date().toISOString(),profile:{name,category:'',location:'',about:''}};
+    users.push(user);saveDb(users);setCurrent({id:user.id,name:user.name,email:user.email,type:user.type,plan:user.plan});
+    atsfyNetworkToast('Account created successfully.'); atsfyNetworkHydrate(); document.getElementById('net-auth-panel').style.display='none';
+  };
+  window.atsfyLoginUser=function(){
+    const email=document.getElementById('auth-email').value.trim().toLowerCase(),password=document.getElementById('auth-password').value;
+    const u=db().find(x=>x.email===email&&x.password===password); if(!u)return atsfyNetworkToast('Invalid email or password.');
+    setCurrent({id:u.id,name:u.name,email:u.email,type:u.type,plan:u.plan}); atsfyNetworkToast('Welcome back, '+u.name+'.'); atsfyNetworkHydrate(); document.getElementById('net-auth-panel').style.display='none';
+  };
+  window.atsfyLogout=function(){localStorage.removeItem(CURRENT_KEY);atsfyNetworkHydrate();atsfyNetworkToast('Signed out.');};
+  window.atsfyNetworkSaveProfile=(function(original){return function(){
+    const u=current(); if(!u)return atsfyOpenAuth();
+    const p={type:document.getElementById('net-type').value,name:document.getElementById('net-name').value.trim(),category:document.getElementById('net-category').value.trim(),location:document.getElementById('net-location').value.trim(),about:document.getElementById('net-about').value.trim(),savedAt:new Date().toISOString()};
+    if(!p.name)return atsfyNetworkToast('Please enter your name or business name.');
+    const users=db(),i=users.findIndex(x=>x.id===u.id); if(i<0)return atsfyLogout(); users[i].profile=p;users[i].type=p.type;saveDb(users);setCurrent({...u,type:p.type});
+    document.getElementById('net-dashboard').classList.add('is-open');document.getElementById('net-profile-label').textContent=p.name+' · '+(p.category||'Marketplace');document.getElementById('net-stat-status').textContent='Complete';document.getElementById('net-stat-type').textContent=p.type==='provider'?'Provider':'Client';document.getElementById('net-profile-form').classList.remove('is-open');atsfyNetworkToast('Profile saved to your local user database.');
+  };})(window.atsfyNetworkSaveProfile);
+  const oldHydrate=window.atsfyNetworkHydrate; window.atsfyNetworkHydrate=function(){oldHydrate();const u=current();const bar=document.getElementById('net-userbar');if(!bar)return;if(u){bar.classList.add('is-on');document.getElementById('net-user-name').textContent=u.name;document.getElementById('net-user-avatar').textContent=u.name.slice(0,1).toUpperCase();}else{bar.classList.remove('is-on');}};
+  window.atsfyShowUserDatabase=function(){const users=db();atsfyNetworkToast(users.length+' local user'+(users.length===1?'':'s')+' stored on this browser.');console.table(users.map(({password,...x})=>x));};
+  window.addEventListener('load',()=>setTimeout(()=>{const nav=document.querySelector('.net-actions');if(nav&&!document.getElementById('net-userbar')){const d=document.createElement('div');d.id='net-userbar';d.className='net-userbar';d.innerHTML='<span id="net-user-avatar" class="net-avatar">U</span><span id="net-user-name" style="font-size:11px;font-weight:800"></span><button class="net-btn" onclick="atsfyLogout()">Sign out</button>';nav.prepend(d);}atsfyNetworkHydrate();},300));
+})();
+</script>
 </body>
 </html>
