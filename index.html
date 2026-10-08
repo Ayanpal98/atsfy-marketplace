@@ -2145,5 +2145,176 @@ footer{background:#1c301f!important}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',watch);else watch();
 })();
 </script>
+
+<!-- =========================================================
+     ATSFY MARKETPLACE NETWORK — LIVE HOMEPAGE INTEGRATION
+     Two-sided network: find services, find clients, build profile.
+========================================================= -->
+<style>
+#atsfy-network-launch{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;background:#285040;color:#fff;border:1px solid rgba(198,143,37,.45);font-size:12px;font-weight:700;box-shadow:0 8px 22px rgba(28,48,31,.12);transition:.25s;cursor:pointer}
+#atsfy-network-launch:hover{transform:translateY(-2px);background:#1c301f;box-shadow:0 12px 28px rgba(28,48,31,.16)}
+#atsfy-network-launch .net-dot{width:7px;height:7px;border-radius:50%;background:#d9a43b;box-shadow:0 0 10px rgba(217,164,59,.65)}
+#atsfy-network-overlay{position:fixed;inset:0;z-index:10001;background:rgba(247,246,242,.97);backdrop-filter:blur(20px);display:none;overflow:auto;color:#1c301f}
+#atsfy-network-overlay.is-open{display:block}
+.net-shell{max-width:1380px;margin:0 auto;padding:24px 24px 70px}
+.net-top{position:sticky;top:0;z-index:5;background:rgba(247,246,242,.9);backdrop-filter:blur(16px);border-bottom:1px solid rgba(28,48,31,.1);margin:0 -24px;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.net-brand{display:flex;align-items:center;gap:10px;font-weight:800}.net-brand-mark{width:34px;height:34px;border-radius:10px;background:#1c301f;color:#d9a43b;display:grid;place-items:center}
+.net-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.net-btn{border:1px solid rgba(28,48,31,.13);background:#fff;color:#1c301f;border-radius:10px;padding:9px 13px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s}
+.net-btn:hover{border-color:#c68f25;transform:translateY(-1px)}.net-btn.primary{background:#1c301f;color:#fff;border-color:#1c301f}.net-btn.gold{background:#d9a43b;color:#1c301f;border-color:#d9a43b}
+.net-close{width:38px;height:38px;border-radius:50%;font-size:20px;display:grid;place-items:center}
+.net-hero{padding:72px 0 42px;display:grid;grid-template-columns:1.15fr .85fr;gap:45px;align-items:center}
+.net-kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#9a6c16;font-weight:800}
+.net-hero h1{font-size:clamp(44px,6vw,88px);line-height:.9;letter-spacing:-.065em;margin:16px 0;color:#1c301f}
+.net-hero h1 span{color:#7a897f}.net-hero p{max-width:650px;color:#65736a;line-height:1.7;font-size:16px}
+.net-hero-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}
+.net-orbit{min-height:330px;border:1px solid rgba(28,48,31,.1);border-radius:28px;background:radial-gradient(circle,rgba(40,80,64,.11),transparent 55%),#fff;position:relative;overflow:hidden;display:grid;place-items:center}
+.net-orbit:before,.net-orbit:after{content:"";position:absolute;border:1px solid rgba(198,143,37,.25);border-radius:50%;animation:netSpin 22s linear infinite}
+.net-orbit:before{width:250px;height:250px}.net-orbit:after{width:170px;height:170px;animation-direction:reverse}
+.net-core{width:100px;height:100px;border-radius:50%;background:#285040;color:#fff;display:grid;place-items:center;font-weight:800;box-shadow:0 20px 70px rgba(40,80,64,.25);z-index:2}
+.net-node{position:absolute;background:#fff;border:1px solid rgba(28,48,31,.12);box-shadow:0 8px 20px rgba(28,48,31,.07);padding:9px 11px;border-radius:10px;font-size:10px;font-weight:800}
+.net-node.a{top:18%;left:8%}.net-node.b{top:15%;right:7%}.net-node.c{bottom:16%;left:10%}.net-node.d{bottom:14%;right:8%}
+.net-section{margin-top:28px}.net-section-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:18px}.net-section-head h2{font-size:32px;letter-spacing:-.04em}.net-muted{color:#718077;font-size:13px}
+.net-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.net-card{background:#fff;border:1px solid rgba(28,48,31,.1);border-radius:18px;padding:22px;box-shadow:0 10px 30px rgba(28,48,31,.04);transition:.25s}
+.net-card:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(28,48,31,.09);border-color:rgba(198,143,37,.45)}
+.net-card .ico{width:40px;height:40px;border-radius:12px;background:#edf2ed;display:grid;place-items:center;margin-bottom:18px;font-size:18px}
+.net-card h3{font-size:19px;margin-bottom:7px}.net-card p{color:#6b786f;font-size:13px;line-height:1.6;margin-bottom:16px}
+.net-card b{font-size:11px;color:#9a6c16;letter-spacing:.08em;text-transform:uppercase}
+.net-profile-strip{margin-top:14px;padding:22px;border-radius:18px;background:#1c301f;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.net-profile-strip h3{font-size:24px}.net-profile-strip p{color:#bdc8c0;font-size:13px;margin-top:5px}
+.net-profile-form{display:none;margin-top:14px;background:#fff;border:1px solid rgba(28,48,31,.1);border-radius:18px;padding:22px}
+.net-profile-form.is-open{display:block}.net-form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.net-field label{display:block;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#65736a;margin-bottom:6px}.net-field input,.net-field select,.net-field textarea{width:100%;border:1px solid rgba(28,48,31,.14);background:#f9faf7;border-radius:10px;padding:11px;color:#1c301f;outline:none}.net-field textarea{min-height:95px;resize:vertical}.net-field.full{grid-column:1/-1}.net-form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+.net-dashboard{display:none;margin-top:14px}.net-dashboard.is-open{display:block}.net-dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.net-stat{background:#fff;border:1px solid rgba(28,48,31,.1);border-radius:14px;padding:17px}.net-stat small{display:block;color:#718077;font-size:10px;text-transform:uppercase;letter-spacing:.08em}.net-stat strong{display:block;font-size:25px;margin-top:7px}
+@keyframes netSpin{to{transform:rotate(360deg)}}
+@media(max-width:900px){.net-hero{grid-template-columns:1fr}.net-cards{grid-template-columns:1fr 1fr}.net-dash-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.net-shell{padding:14px 14px 50px}.net-top{margin:0 -14px;padding:11px 14px}.net-top .net-actions .optional{display:none}.net-hero{padding-top:45px}.net-cards,.net-form-grid,.net-dash-grid{grid-template-columns:1fr}.net-profile-strip{align-items:flex-start;flex-direction:column}.net-hero h1{font-size:48px}}
+</style>
+
+<div id="atsfy-network-overlay" aria-hidden="true">
+  <div class="net-shell">
+    <div class="net-top">
+      <div class="net-brand"><div class="net-brand-mark">A</div><div>ATSFY Marketplace <span style="font-weight:500;color:#718077">/ Network</span></div></div>
+      <div class="net-actions">
+        <button class="net-btn optional" onclick="atsfyNetworkScroll('services')">Find Services</button>
+        <button class="net-btn optional" onclick="atsfyNetworkScroll('clients')">Find Clients</button>
+        <button class="net-btn primary" onclick="atsfyNetworkToggleProfile()">Create Profile</button>
+        <button class="net-btn net-close" onclick="atsfyNetworkClose()" aria-label="Close">×</button>
+      </div>
+    </div>
+
+    <section class="net-hero">
+      <div>
+        <div class="net-kicker">07 — MARKETPLACE NETWORK</div>
+        <h1>Find clients.<br>Find services.<br><span>Build business.</span></h1>
+        <p>ATSFY Marketplace is evolving from a product catalogue into a two-sided business network where service providers can discover clients and clients can discover trusted professionals, agencies and technology partners.</p>
+        <div class="net-hero-cta">
+          <button class="net-btn primary" onclick="atsfyNetworkScroll('services')">Explore Services ↗</button>
+          <button class="net-btn" onclick="atsfyNetworkScroll('clients')">Find Clients ↗</button>
+          <button class="net-btn gold" onclick="atsfyNetworkToggleProfile()">Join the Network</button>
+        </div>
+      </div>
+      <div class="net-orbit" aria-label="ATSFY Marketplace Network map">
+        <div class="net-core">ATSFY<br>NETWORK</div>
+        <div class="net-node a">SERVICE PROVIDERS</div><div class="net-node b">CLIENTS</div>
+        <div class="net-node c">PROJECTS</div><div class="net-node d">OPPORTUNITIES</div>
+      </div>
+    </section>
+
+    <section class="net-section" id="net-services">
+      <div class="net-section-head"><div><div class="net-kicker">DISCOVERY</div><h2>What are you looking for?</h2></div><div class="net-muted">One marketplace. Two directions.</div></div>
+      <div class="net-cards">
+        <article class="net-card"><div class="ico">⌕</div><h3>Find Services</h3><p>Discover developers, designers, marketers, AI specialists, agencies, consultants and business service providers.</p><button class="net-btn primary" onclick="atsfyNetworkToast('Service discovery is ready for provider listings.')">Browse Providers</button></article>
+        <article class="net-card"><div class="ico">↗</div><h3>Find Clients</h3><p>Providers can discover active requirements, submit proposals and turn relevant opportunities into paid work.</p><button class="net-btn primary" onclick="atsfyNetworkScroll('clients')">View Opportunities</button></article>
+        <article class="net-card"><div class="ico">＋</div><h3>Post a Requirement</h3><p>Tell the marketplace what you need, your budget, location, deadline and preferred engagement model.</p><button class="net-btn primary" onclick="atsfyNetworkToggleProfile();atsfyNetworkToast('Requirement posting is the next production workflow.')">Post Requirement</button></article>
+      </div>
+    </section>
+
+    <section class="net-section" id="net-clients">
+      <div class="net-section-head"><div><div class="net-kicker">OPPORTUNITY LAYER</div><h2>Built for both sides.</h2></div><div class="net-muted">Providers ↔ Clients</div></div>
+      <div class="net-cards">
+        <article class="net-card"><div class="ico">◎</div><h3>Provider Profiles</h3><p>Show services, skills, pricing, portfolio, experience, location, availability and trust signals.</p><b>PROVIDER MODE</b></article>
+        <article class="net-card"><div class="ico">◇</div><h3>Client Profiles</h3><p>Create an individual or business profile, publish requirements and build a reliable hiring identity.</p><b>CLIENT MODE</b></article>
+        <article class="net-card"><div class="ico">★</div><h3>Membership</h3><p>Free entry plus paid plans for better visibility, lead access, analytics and marketplace growth tools.</p><b>SUBSCRIPTION MODEL</b></article>
+      </div>
+    </section>
+
+    <section class="net-section">
+      <div class="net-profile-strip">
+        <div><h3>Put your business on the network.</h3><p>Create your marketplace identity and prepare your profile for discovery.</p></div>
+        <button class="net-btn gold" onclick="atsfyNetworkToggleProfile()">Create My Profile</button>
+      </div>
+      <div class="net-profile-form" id="net-profile-form">
+        <div class="net-kicker">PROFILE SETUP</div>
+        <h2 style="font-size:28px;margin:8px 0 16px">Create your network profile</h2>
+        <div class="net-form-grid">
+          <div class="net-field"><label>Profile Type</label><select id="net-type"><option value="provider">Service Provider</option><option value="client">Client / Service Seeker</option></select></div>
+          <div class="net-field"><label>Name / Business</label><input id="net-name" placeholder="Your name or company"></div>
+          <div class="net-field"><label>Category</label><input id="net-category" placeholder="e.g. Software, Design, Marketing"></div>
+          <div class="net-field"><label>Location</label><input id="net-location" placeholder="City / State / Remote"></div>
+          <div class="net-field full"><label>About</label><textarea id="net-about" placeholder="Tell clients what you do, or tell providers what your business needs."></textarea></div>
+        </div>
+        <div class="net-form-actions"><button class="net-btn" onclick="atsfyNetworkToggleProfile()">Cancel</button><button class="net-btn primary" onclick="atsfyNetworkSaveProfile()">Save Profile</button></div>
+      </div>
+    </section>
+
+    <section class="net-dashboard" id="net-dashboard">
+      <div class="net-section-head"><div><div class="net-kicker">MY NETWORK</div><h2>Your profile workspace</h2></div><div class="net-muted" id="net-profile-label"></div></div>
+      <div class="net-dash-grid">
+        <div class="net-stat"><small>Profile Status</small><strong id="net-stat-status">Draft</strong></div>
+        <div class="net-stat"><small>Profile Type</small><strong id="net-stat-type">—</strong></div>
+        <div class="net-stat"><small>Visibility</small><strong>Public</strong></div>
+        <div class="net-stat"><small>Plan</small><strong>Free</strong></div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+(function(){
+  const overlay=document.getElementById('atsfy-network-overlay');
+  window.atsfyNetworkOpen=function(){overlay.classList.add('is-open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';};
+  window.atsfyNetworkClose=function(){overlay.classList.remove('is-open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow='';};
+  window.atsfyNetworkScroll=function(id){document.getElementById('net-'+id)?.scrollIntoView({behavior:'smooth',block:'start'});};
+  window.atsfyNetworkToggleProfile=function(){document.getElementById('net-profile-form').classList.toggle('is-open');document.getElementById('net-profile-form').scrollIntoView({behavior:'smooth',block:'center'});};
+  window.atsfyNetworkToast=function(msg){const t=document.createElement('div');t.textContent=msg;t.style='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:10003;background:#1c301f;color:#fff;padding:12px 16px;border-radius:10px;font-size:12px;box-shadow:0 12px 30px rgba(0,0,0,.18)';document.body.appendChild(t);setTimeout(()=>t.remove(),2600);};
+  window.atsfyNetworkSaveProfile=function(){
+    const p={type:document.getElementById('net-type').value,name:document.getElementById('net-name').value.trim(),category:document.getElementById('net-category').value.trim(),location:document.getElementById('net-location').value.trim(),about:document.getElementById('net-about').value.trim(),savedAt:new Date().toISOString()};
+    if(!p.name){atsfyNetworkToast('Please enter your name or business name.');return;}
+    localStorage.setItem('atsfy_marketplace_network_profile',JSON.stringify(p));
+    document.getElementById('net-dashboard').classList.add('is-open');
+    document.getElementById('net-profile-label').textContent=p.name+' · '+p.category;
+    document.getElementById('net-stat-status').textContent='Complete';
+    document.getElementById('net-stat-type').textContent=p.type==='provider'?'Provider':'Client';
+    document.getElementById('net-profile-form').classList.remove('is-open');
+    atsfyNetworkToast('Profile saved locally. Production account sync comes in the next backend phase.');
+  };
+  window.atsfyNetworkHydrate=function(){
+    try{const p=JSON.parse(localStorage.getItem('atsfy_marketplace_network_profile'));if(!p)return;document.getElementById('net-dashboard').classList.add('is-open');document.getElementById('net-profile-label').textContent=p.name+' · '+(p.category||'Marketplace');document.getElementById('net-stat-status').textContent='Complete';document.getElementById('net-stat-type').textContent=p.type==='provider'?'Provider':'Client';}catch(e){}
+  };
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')atsfyNetworkClose();});
+  window.addEventListener('load',atsfyNetworkHydrate);
+})();
+</script>
+
+<script>
+(function(){
+  function mountNetworkEntry(){
+    const nav=document.querySelector('header nav');
+    if(nav && !document.getElementById('atsfy-network-nav')){
+      const b=document.createElement('button');b.id='atsfy-network-nav';b.className='nav-link px-3.5 py-2 rounded-lg text-sm font-bold';b.style.color='#285040';b.innerHTML='Network <span style="color:#c68f25">●</span>';b.onclick=atsfyNetworkOpen;nav.insertBefore(b,nav.lastElementChild);
+    }
+    const right=document.querySelector('header .flex.items-center.gap-3');
+    if(right && !document.getElementById('atsfy-network-launch')){
+      const b=document.createElement('button');b.id='atsfy-network-launch';b.innerHTML='<span class="net-dot"></span> Network';b.onclick=atsfyNetworkOpen;right.insertBefore(b,right.firstChild);
+    }
+    if(!document.getElementById('atsfy-network-fab')){
+      const f=document.createElement('button');f.id='atsfy-network-fab';f.textContent='NETWORK';f.onclick=atsfyNetworkOpen;f.style='position:fixed;right:18px;bottom:18px;z-index:9998;background:#1c301f;color:#fff;border:1px solid #d9a43b;border-radius:999px;padding:10px 14px;font-size:10px;font-weight:800;letter-spacing:.12em;box-shadow:0 10px 28px rgba(28,48,31,.2);cursor:pointer';document.body.appendChild(f);
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(mountNetworkEntry,250));else setTimeout(mountNetworkEntry,250);
+})();
+</script>
+
 </body>
 </html>
