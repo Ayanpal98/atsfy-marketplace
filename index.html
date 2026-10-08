@@ -2269,7 +2269,7 @@ body.marketplace-route header nav button{color:#33453a!important}
 </div>
 <div class="net-shell">
     <div class="net-top">
-      <div class="net-brand"><div class="net-brand-mark">A</div><div>ATSFY Marketplace <span style="font-weight:500;color:#718077">/ Business Network</span></div></div>
+      <div class="net-brand"><div class="net-brand-mark">A</div><div>ATSFY Marketplace</div></div>
       <div class="net-actions">
         <button class="net-btn optional" onclick="atsfyNetworkScroll('services')">Find Services</button>
         <button class="net-btn optional" onclick="atsfyOpenPhase3('requirements')">Find Clients</button>
@@ -2280,17 +2280,17 @@ body.marketplace-route header nav button{color:#33453a!important}
 
     <section class="net-hero">
       <div>
-        <div class="net-kicker">07 — BUSINESS MARKETPLACE</div>
+        <div class="net-kicker">BUSINESS MARKETPLACE</div>
         <h1>Find services.<br>Find clients.<br><span>Build business.</span></h1>
         <p>ATSFY Marketplace is a two-sided business marketplace where clients find trusted service providers, and professionals, agencies and technology partners discover relevant clients and opportunities.</p>
         <div class="net-hero-cta">
           <button class="net-btn primary" onclick="atsfyNetworkScroll('services')">Explore Services ↗</button>
           <button class="net-btn" onclick="atsfyNetworkScroll('clients')">Find Clients ↗</button>
-          <button class="net-btn gold" onclick="atsfyOpenAuth()">Join the Network</button>
+          <button class="net-btn gold" onclick="atsfyOpenAuth()">Join Marketplace</button>
         </div>
       </div>
       <div class="net-orbit" aria-label="ATSFY Marketplace Network map">
-        <div class="net-core">ATSFY<br>NETWORK</div>
+        <div class="net-core">ATSFY<br>MARKETPLACE</div>
         <div class="net-node a">SERVICE PROVIDERS</div><div class="net-node b">CLIENTS</div>
         <div class="net-node c">PROJECTS</div><div class="net-node d">OPPORTUNITIES</div>
       </div>
@@ -2436,22 +2436,16 @@ window.addEventListener('load',atsfyNetworkHydrate);
 
 <script>
 (function(){
-  function mountNetworkEntry(){
-    const nav=document.querySelector('header nav');
-    if(nav && !document.getElementById('atsfy-network-nav')){
-      const b=document.createElement('button');b.id='atsfy-network-nav';b.className='nav-link px-3.5 py-2 rounded-lg text-sm font-bold';b.style.color='#285040';b.innerHTML='Network <span style="color:#c68f25">●</span>';b.onclick=atsfyNetworkOpen;nav.insertBefore(b,nav.lastElementChild);
-    }
-    const right=document.querySelector('header .flex.items-center.gap-3');
-    if(right && !document.getElementById('atsfy-network-launch')){
-      const b=document.createElement('button');b.id='atsfy-network-launch';b.innerHTML='<span class="net-dot"></span> Network';b.onclick=atsfyNetworkOpen;right.insertBefore(b,right.firstChild);
-    }
-    if(!document.getElementById('atsfy-network-fab')){
-      const f=document.createElement('button');f.id='atsfy-network-fab';f.textContent='NETWORK';f.onclick=atsfyNetworkOpen;f.style='position:fixed;right:18px;bottom:18px;z-index:9998;background:#1c301f;color:#fff;border:1px solid #d9a43b;border-radius:999px;padding:10px 14px;font-size:10px;font-weight:800;letter-spacing:.12em;box-shadow:0 10px 28px rgba(28,48,31,.2);cursor:pointer';document.body.appendChild(f);
-    }
+  function removeLegacyNetworkEntries(){
+    document.getElementById('atsfy-network-nav')?.remove();
+    document.getElementById('atsfy-network-launch')?.remove();
+    document.getElementById('atsfy-network-fab')?.remove();
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(mountNetworkEntry,250));else setTimeout(mountNetworkEntry,250);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',removeLegacyNetworkEntries);
+  else removeLegacyNetworkEntries();
+  window.addEventListener('load',removeLegacyNetworkEntries);
 })();
-</script>
+</script>>
 
 
 <!-- LOCAL USER DATABASE: prototype-only, browser localStorage -->
