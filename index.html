@@ -467,6 +467,14 @@ body.marketplace-route header nav button{color:#33453a!important}
 .marketplace-network-file iframe{display:block;width:100%;height:920px;border:1px solid rgba(255,255,255,.12);border-radius:22px;background:#070908}
 @media(max-width:700px){.marketplace-network-file-head{display:block}.marketplace-network-open{margin-top:14px}.marketplace-network-file iframe{height:850px;border-radius:16px}}
 </style>
+<style id="marketplace-visibility-fix">
+/* MARKETPLACE ROUTE — hard visibility fix */
+#marketplace-workspace{display:none!important;visibility:hidden!important;opacity:0!important;min-height:0;}
+body.marketplace-route #marketplace-workspace{display:block!important;visibility:visible!important;opacity:1!important;min-height:100vh!important;}
+body.marketplace-route #app-content{display:none!important;}
+body.marketplace-route>footer{display:none!important;}
+body.marketplace-route{background:#f7f6f2!important;}
+</style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-atsfy-gold selection:text-atsfy-dark">
 
@@ -494,7 +502,7 @@ body.marketplace-route header nav button{color:#33453a!important}
             <!-- Desktop Nav Links -->
             <nav class="hidden md:flex items-center gap-1 lg:gap-2" aria-label="Main Navigation">
                 <button onclick="router.navigate('home')" class="nav-link px-3.5 py-2 rounded-lg text-sm font-medium text-atsfy-dark hover:bg-atsfy-green/10 transition-colors" data-page="home">Home</button>
-                <button onclick="router.navigate('marketplace')" class="nav-link px-3.5 py-2 rounded-lg text-sm font-medium text-atsfy-dark hover:bg-atsfy-green/10 transition-colors" data-page="marketplace">Marketplace</button>
+                <button onclick="atsfyNetworkOpen()" class="nav-link px-3.5 py-2 rounded-lg text-sm font-medium text-atsfy-dark hover:bg-atsfy-green/10 transition-colors" data-page="marketplace">Marketplace</button>
                 <button onclick="router.navigate('products')" class="nav-link px-3.5 py-2 rounded-lg text-sm font-medium text-atsfy-dark hover:bg-atsfy-green/10 transition-colors" data-page="products">Products</button>
                 <button onclick="router.navigate('services')" class="nav-link px-3.5 py-2 rounded-lg text-sm font-medium text-atsfy-dark hover:bg-atsfy-green/10 transition-colors" data-page="services">Services</button>
                 <button onclick="router.navigate('industries')" class="nav-link px-3.5 py-2 rounded-lg text-sm font-medium text-atsfy-dark hover:bg-atsfy-green/10 transition-colors" data-page="industries">Industries</button>
@@ -520,7 +528,7 @@ body.marketplace-route header nav button{color:#33453a!important}
                 <a href="tel:+919862510477" class="flex items-center gap-2"><i data-lucide="phone" class="w-3.5 h-3.5 text-atsfy-gold"></i> +91 98625 10477</a>
             </div>
             <button onclick="router.navigate('home'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-atsfy-dark hover:bg-atsfy-green/10">Home</button>
-            <button onclick="router.navigate('marketplace'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-atsfy-dark hover:bg-atsfy-green/10">Marketplace</button>
+            <button onclick="atsfyNetworkOpen(); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-atsfy-dark hover:bg-atsfy-green/10">Marketplace</button>
             <button onclick="router.navigate('products'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-atsfy-dark hover:bg-atsfy-green/10">Products</button>
             <button onclick="router.navigate('services'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-atsfy-dark hover:bg-atsfy-green/10">Services</button>
             <button onclick="router.navigate('industries'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-atsfy-dark hover:bg-atsfy-green/10">Industries</button>
@@ -2399,7 +2407,7 @@ body.marketplace-route header nav button{color:#33453a!important}
     const workspace=document.getElementById('marketplace-workspace');
     if(app) app.style.display='none';
     if(footer) footer.style.display='none';
-    if(workspace) workspace.style.display='block';
+    if(workspace){ workspace.style.setProperty('display','block','important'); workspace.style.setProperty('visibility','visible','important'); workspace.style.setProperty('opacity','1','important'); workspace.style.setProperty('min-height','100vh','important'); }
     document.body.classList.add('marketplace-route');
     document.body.classList.remove('home-route');
     window.scrollTo({top:0,behavior:'smooth'});
@@ -2409,7 +2417,7 @@ body.marketplace-route header nav button{color:#33453a!important}
     const app=document.getElementById('app-content');
     const footer=document.querySelector('footer');
     const workspace=document.getElementById('marketplace-workspace');
-    if(workspace) workspace.style.display='none';
+    if(workspace){ workspace.style.setProperty('display','none','important'); workspace.style.setProperty('visibility','hidden','important'); workspace.style.setProperty('opacity','0','important'); }
     if(app) app.style.display='block';
     if(footer) footer.style.display='block';
     document.body.classList.remove('marketplace-route');
