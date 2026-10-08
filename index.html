@@ -58,7 +58,15 @@
         FAVICON
     ====================================================== -->
     <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="/icon-192.svg">
+    <!-- ATSFY Marketplace PWA -->
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="theme-color" content="#0b120d">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ATSFY Marketplace">
+
 
     <!-- =====================================================
         STRUCTURED DATA / JSON-LD FOR AEO & GEO
@@ -481,6 +489,52 @@ body.marketplace-route #app-content{display:block!important;visibility:visible!i
 body.marketplace-route #marketplace-workspace{display:none!important}
 body.marketplace-route footer{display:none!important}
 </style>
+
+<!-- =====================================================
+     ATSFY MARKETPLACE PWA
+====================================================== -->
+<style>
+  #atsfy-pwa-install{position:fixed;right:18px;bottom:18px;z-index:99999;display:none;align-items:center;gap:12px;max-width:min(390px,calc(100vw - 36px));padding:14px 16px;border:1px solid rgba(217,164,59,.35);border-radius:16px;background:rgba(13,18,15,.96);color:#f7f6f2;box-shadow:0 18px 50px rgba(0,0,0,.28);backdrop-filter:blur(18px);font-family:Inter,system-ui,sans-serif}
+  #atsfy-pwa-install.show{display:flex}
+  #atsfy-pwa-install .pwa-copy{flex:1;min-width:0}.pwa-copy strong{display:block;font-size:13px}.pwa-copy span{display:block;margin-top:3px;color:#aeb7ad;font-size:11px;line-height:1.45}
+  #atsfy-pwa-install button{border:0;border-radius:999px;padding:9px 13px;font:700 11px Inter,system-ui,sans-serif;cursor:pointer}.pwa-install-btn{background:#d9a43b;color:#162219}.pwa-dismiss{background:rgba(255,255,255,.08);color:#f7f6f2}
+  #atsfy-pwa-update{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:99998;display:none;align-items:center;gap:10px;padding:10px 14px;border:1px solid rgba(217,164,59,.3);border-radius:999px;background:#1c301f;color:#f7f6f2;box-shadow:0 12px 30px rgba(0,0,0,.22);font:600 11px Inter,system-ui,sans-serif}
+  #atsfy-pwa-update.show{display:flex}.pwa-update-btn{border:0;border-radius:999px;padding:7px 11px;background:#d9a43b;color:#162219;font-weight:800;cursor:pointer}
+  @media(max-width:640px){#atsfy-pwa-install{bottom:12px;right:12px;left:12px;max-width:none}.pwa-copy span{font-size:10px}}
+</style>
+<div id="atsfy-pwa-install" role="dialog" aria-label="Install ATSFY Marketplace">
+  <div class="pwa-copy"><strong>Install ATSFY Marketplace</strong><span>Get faster access, a dedicated app window and an app-like marketplace experience.</span></div>
+  <button class="pwa-install-btn" id="atsfy-pwa-install-btn">Install</button>
+  <button class="pwa-dismiss" id="atsfy-pwa-dismiss" aria-label="Dismiss">×</button>
+</div>
+<div id="atsfy-pwa-update"><span>A new ATSFY Marketplace version is ready.</span><button class="pwa-update-btn" id="atsfy-pwa-update-btn">Refresh</button></div>
+<script>
+(function(){
+  const installBox=document.getElementById('atsfy-pwa-install');
+  const installBtn=document.getElementById('atsfy-pwa-install-btn');
+  const dismissBtn=document.getElementById('atsfy-pwa-dismiss');
+  const updateBox=document.getElementById('atsfy-pwa-update');
+  let deferredPrompt=null;
+  const dismissed=sessionStorage.getItem('atsfy_pwa_install_dismissed')==='1';
+  if('serviceWorker' in navigator){
+    window.addEventListener('load',async()=>{
+      try{
+        const reg=await navigator.serviceWorker.register('/sw.js',{scope:'/'});
+        reg.addEventListener('updatefound',()=>{
+          const worker=reg.installing;if(!worker)return;
+          worker.addEventListener('statechange',()=>{if(worker.state==='installed'&&navigator.serviceWorker.controller){updateBox?.classList.add('show')}});
+        });
+      }catch(err){console.warn('ATSFY PWA service worker registration failed:',err)}
+    });
+  }
+  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;if(!dismissed)installBox?.classList.add('show')});
+  installBtn?.addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();try{await deferredPrompt.userChoice}catch(e){}deferredPrompt=null;installBox?.classList.remove('show')});
+  dismissBtn?.addEventListener('click',()=>{sessionStorage.setItem('atsfy_pwa_install_dismissed','1');installBox?.classList.remove('show')});
+  window.addEventListener('appinstalled',()=>{deferredPrompt=null;installBox?.classList.remove('show')});
+  document.getElementById('atsfy-pwa-update-btn')?.addEventListener('click',()=>window.location.reload());
+})();
+</script>
+
 </head>
 <body class="min-h-screen flex flex-col selection:bg-atsfy-gold selection:text-atsfy-dark">
 
