@@ -2363,18 +2363,54 @@ body.marketplace-route header nav button{color:#33453a!important}
 <script>
 (function(){
   const overlay=document.getElementById('atsfy-network-overlay');
+  function showMarketplace(){
+    const app=document.getElementById('app-content');
+    const footer=document.querySelector('footer');
+    const workspace=document.getElementById('marketplace-workspace');
+    if(app) app.style.display='none';
+    if(footer) footer.style.display='none';
+    if(workspace) workspace.style.display='block';
+    document.body.classList.add('marketplace-route');
+    document.body.classList.remove('home-route');
+    window.scrollTo({top:0,behavior:'smooth'});
+    if(window.atsfyMarketplaceRefresh) setTimeout(window.atsfyMarketplaceRefresh,60);
+  }
+  function showHome(){
+    const app=document.getElementById('app-content');
+    const footer=document.querySelector('footer');
+    const workspace=document.getElementById('marketplace-workspace');
+    if(workspace) workspace.style.display='none';
+    if(app) app.style.display='block';
+    if(footer) footer.style.display='block';
+    document.body.classList.remove('marketplace-route');
+    document.body.classList.add('home-route');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
   window.atsfyNetworkOpen=function(){
-    if(window.router){window.router.navigate('marketplace');return;}
-    if(overlay){overlay.classList.add('is-open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+    if(window.router && typeof window.router.navigate==='function'){
+      window.router.navigate('marketplace');
+    } else {
+      showMarketplace();
+    }
+    setTimeout(showMarketplace,80);
   };
   window.atsfyNetworkClose=function(){
-    if(window.router && typeof window.router.navigate==='function'){window.router.navigate('home');return;}
-    if(overlay){overlay.classList.remove('is-open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+    if(window.router && typeof window.router.navigate==='function'){
+      window.router.navigate('home');
+    } else {
+      showHome();
+    }
+    setTimeout(showHome,80);
   };
   window.atsfyNetworkScroll=function(id){
-    const el=document.getElementById('net-'+id);
-    if(el){el.scrollIntoView({behavior:'smooth',block:'start'});return;}
-    if(window.router){window.router.navigate('marketplace');setTimeout(()=>document.getElementById('net-'+id)?.scrollIntoView({behavior:'smooth',block:'start'}),120);}
+    const openTarget=()=>{
+      const el=document.getElementById('net-'+id);
+      if(el){el.scrollIntoView({behavior:'smooth',block:'start'});return true;}
+      return false;
+    };
+    showMarketplace();
+    if(window.router && typeof window.router.navigate==='function') window.router.navigate('marketplace');
+    setTimeout(()=>openTarget(),120);
   };
   window.atsfyNetworkToggleProfile=function(){try{const u=JSON.parse(localStorage.getItem('atsfy_marketplace_current_user_v1')||'null');if(!u){return window.atsfyOpenAuth?atsfyOpenAuth():null;}}catch(e){return window.atsfyOpenAuth?atsfyOpenAuth():null;}const f=document.getElementById('net-profile-form');if(!f)return;f.classList.toggle('is-open');f.scrollIntoView({behavior:'smooth',block:'center'});};
   window.atsfyNetworkToast=function(msg){const t=document.createElement('div');t.textContent=msg;t.style='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:10003;background:#1c301f;color:#fff;padding:12px 16px;border-radius:10px;font-size:12px;box-shadow:0 12px 30px rgba(0,0,0,.18)';document.body.appendChild(t);setTimeout(()=>t.remove(),2600);};
