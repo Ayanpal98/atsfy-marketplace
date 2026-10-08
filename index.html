@@ -475,6 +475,12 @@ body.marketplace-route #app-content{display:none!important;}
 body.marketplace-route>footer{display:none!important;}
 body.marketplace-route{background:#f7f6f2!important;}
 </style>
+<style id="marketplace-direct-page-style">
+.marketplace-direct-page{width:100%;min-height:100vh;background:#f7f6f2}
+body.marketplace-route #app-content{display:block!important;visibility:visible!important;opacity:1!important}
+body.marketplace-route #marketplace-workspace{display:none!important}
+body.marketplace-route footer{display:none!important}
+</style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-atsfy-gold selection:text-atsfy-dark">
 
@@ -1236,7 +1242,11 @@ body.marketplace-route{background:#f7f6f2!important;}
                     container.innerHTML = renderContactView();
                     break;
                 case 'marketplace':
-                    container.innerHTML = '';
+                    container.innerHTML = `
+                        <section class="marketplace-direct-page" aria-label="ATSFY Marketplace">
+                            <iframe src="/network/index.html" title="ATSFY Marketplace Network" loading="eager" style="display:block;width:100%;min-height:calc(100vh - 80px);height:1200px;border:0;background:#f7f6f2;"></iframe>
+                        </section>
+                    `;
                     break;
                 case 'incubate':
                     router.navigate('product-detail', { slug: 'atsfy-incubate' });
