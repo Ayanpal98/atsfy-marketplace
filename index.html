@@ -436,6 +436,18 @@ body.marketplace-route header nav button{color:#33453a!important}
  .marketplace-workspace .p4-tab{white-space:nowrap}
 }
 </style>
+<style>
+.marketplace-appbar{position:sticky;top:80px;z-index:40;background:rgba(247,246,242,.9);backdrop-filter:blur(16px);border-bottom:1px solid rgba(28,48,31,.1)}
+.marketplace-appbar-inner{max-width:1280px;margin:auto;padding:10px clamp(16px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.marketplace-appbar-brand{display:flex;align-items:center;gap:9px;white-space:nowrap;font-size:11px;color:#1c301f}
+.marketplace-appbar-brand span:last-child{color:#7a877f;font-size:9px}
+.marketplace-appbar-dot{width:8px;height:8px;border-radius:50%;background:#d9a43b;box-shadow:0 0 0 4px rgba(217,164,59,.12)}
+.marketplace-appbar-links{display:flex;gap:4px;overflow:auto;scrollbar-width:none}
+.marketplace-appbar-links::-webkit-scrollbar{display:none}
+.marketplace-appbar-links button{border:0;background:transparent;padding:8px 10px;border-radius:9px;color:#526158;font-size:10px;font-weight:750;white-space:nowrap;cursor:pointer}
+.marketplace-appbar-links button:hover{background:#e9eee8;color:#1c301f}
+@media(max-width:900px){.marketplace-appbar{top:70px}.marketplace-appbar-inner{display:block}.marketplace-appbar-links{margin-top:7px}.marketplace-appbar-links button{padding:7px 9px}}
+</style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-atsfy-gold selection:text-atsfy-dark">
 
@@ -2240,6 +2252,20 @@ body.marketplace-route header nav button{color:#33453a!important}
 <div id="atsfy-network-overlay" aria-hidden="true">
   </div>
 <div id="marketplace-workspace" class="marketplace-workspace" style="display:none;">
+<div class="marketplace-appbar" role="navigation" aria-label="Marketplace workspace navigation">
+  <div class="marketplace-appbar-inner">
+    <div class="marketplace-appbar-brand"><span class="marketplace-appbar-dot"></span><strong>Marketplace</strong><span>Find · Connect · Work · Grow</span></div>
+    <div class="marketplace-appbar-links">
+      <button onclick="atsfyOpenPhase72?.()">Discover</button>
+      <button onclick="atsfyOpenPhase3?.('requirements')">Opportunities</button>
+      <button onclick="atsfyOpenPhase4?.('messages')">Messages</button>
+      <button onclick="atsfyOpenPhase4?.('projects')">Projects</button>
+      <button onclick="atsfyOpenPhase5?.('plans')">Membership</button>
+      <button onclick="atsfyOpenPhase7?.('trust')">Trust & Growth</button>
+      <button onclick="atsfyNetworkToggleProfile?.()">My Profile</button>
+    </div>
+  </div>
+</div>
 <div class="net-shell">
     <div class="net-top">
       <div class="net-brand"><div class="net-brand-mark">A</div><div>ATSFY Marketplace <span style="font-weight:500;color:#718077">/ Business Network</span></div></div>
@@ -3345,7 +3371,6 @@ window.addEventListener('load',atsfyNetworkHydrate);
 })();
 </script>
 
-</div>
 </div>
 </body>
 </html>
