@@ -2331,8 +2331,17 @@ footer{background:#1c301f!important}
   const setCurrent=u=>localStorage.setItem(CURRENT_KEY,JSON.stringify(u));
   const uid=()=> 'usr_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7);
   window.atsfyOpenAuth=function(){
-    document.getElementById('net-auth-panel').style.display='block';
-    document.getElementById('net-auth-panel').scrollIntoView({behavior:'smooth',block:'center'});
+    let panel=document.getElementById('net-auth-panel');
+    if(!panel){
+      panel=document.createElement('div');
+      panel.id='net-auth-panel';
+      panel.innerHTML='<div class="net-kicker">ACCOUNT ACCESS</div><h2 style="font-size:28px;margin:8px 0 16px">Create your ATSFY Marketplace profile</h2><div class="net-auth-grid"><div class="net-field"><label>Name / Business</label><input id="auth-name" placeholder="Your name or business"></div><div class="net-field"><label>Account Type</label><select id="auth-type"><option value="provider">Service Provider</option><option value="client">Client / Service Seeker</option></select></div><div class="net-field"><label>Email</label><input id="auth-email" type="email" placeholder="you@example.com"></div><div class="net-field"><label>Password</label><input id="auth-password" type="password" minlength="6" placeholder="Minimum 6 characters"></div></div><div class="net-form-actions"><button class="net-btn" onclick="atsfyLoginUser()">Sign In</button><button class="net-btn primary" onclick="atsfyRegisterUser()">Create Account</button></div><div class="net-small" style="margin-top:10px;color:#718077">Prototype account data is stored locally in this browser.</div>';
+      const form=document.getElementById('net-profile-form');
+      if(form&&form.parentNode) form.parentNode.insertBefore(panel,form);
+      else { const shell=document.querySelector('.net-shell'); if(shell) shell.appendChild(panel); }
+    }
+    panel.style.display='block';
+    panel.scrollIntoView({behavior:'smooth',block:'center'});
   };
   window.atsfyRegisterUser=function(){
     const name=document.getElementById('auth-name').value.trim(),email=document.getElementById('auth-email').value.trim().toLowerCase(),type=document.getElementById('auth-type').value,password=document.getElementById('auth-password').value;
@@ -2341,7 +2350,7 @@ footer{background:#1c301f!important}
     const users=db(); if(users.some(u=>u.email===email))return atsfyNetworkToast('An account with this email already exists.');
     const user={id:uid(),name,email,password,type,plan:'Free',createdAt:new Date().toISOString(),profile:{name,category:'',location:'',about:''}};
     users.push(user);saveDb(users);setCurrent({id:user.id,name:user.name,email:user.email,type:user.type,plan:user.plan});
-    atsfyNetworkToast('Account created successfully.'); atsfyNetworkHydrate(); document.getElementById('net-auth-panel').style.display='none';
+    atsfyNetworkToast('Account created successfully.'); atsfyNetworkHydrate(); document.getElementById('net-auth-panel').style.display='none'; document.getElementById('net-profile-form')?.classList.add('is-open'); document.getElementById('net-profile-form')?.scrollIntoView({behavior:'smooth',block:'center'});
   };
   window.atsfyLoginUser=function(){
     const email=document.getElementById('auth-email').value.trim().toLowerCase(),password=document.getElementById('auth-password').value;
