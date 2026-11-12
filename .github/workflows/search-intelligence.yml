@@ -1,0 +1,33 @@
+name: Marketplace search intelligence report
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 10 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  search-intelligence:
+    name: Collect search and real-user experience data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Collect available metrics
+        env:
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          CRUX_API_KEY: ${{ secrets.CRUX_API_KEY }}
+        run: node scripts/search-intelligence.mjs
+      - name: Upload private search intelligence report
+        uses: actions/upload-artifact@v4
+        with:
+          name: atsfy-marketplace-search-intelligence
+          path: reports/search-intelligence/
+          if-no-files-found: error
+          retention-days: 90
