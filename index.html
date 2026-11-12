@@ -1670,9 +1670,9 @@ body.marketplace-route footer{display:none!important}
                         <p class="text-sm text-gray-600 mt-3 leading-relaxed">${p.description}</p>
                     </div>
                     <div class="pt-6 mt-6 border-t border-atsfy-green/10 flex items-center justify-between gap-4">
-                        <button onclick="router.navigate('product-detail', { slug: '${p.slug}' })" class="text-sm font-semibold text-atsfy-dark hover:text-atsfy-green inline-flex items-center gap-1 transition-colors">
+                        <a href="/products/${p.slug}/" class="text-sm font-semibold text-atsfy-dark hover:text-atsfy-green inline-flex items-center gap-1 transition-colors">
                             Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </button>
+                        </a>
                         ${p.url ? `
                             <a href="${p.url}" target="_blank" rel="noopener" class="px-4 py-2 rounded-xl bg-atsfy-dark text-white text-xs font-medium hover:bg-atsfy-green shadow transition-all inline-flex items-center gap-1.5">
                                 Launch <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
