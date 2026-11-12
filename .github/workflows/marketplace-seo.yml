@@ -1,0 +1,41 @@
+name: Marketplace SEO guardrails and IndexNow
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  seo-validation:
+    name: Validate sitemap and page metadata
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@1e2622e3150c1b9f6d7c0c7f4d0e3f5a3a2f8a1
+        with:
+          node-version: 22
+      - name: Validate sitemap URLs, canonical metadata and JSON-LD
+        run: node scripts/seo-check.mjs
+
+  indexnow:
+    name: Notify IndexNow about changed landing pages
+    if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
+    needs: seo-validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@1e2622e3150c1b9f6d7c0c7f4d0e3f5a3a2f8a1
+        with:
+          node-version: 22
+      - name: Submit changed public pages
+        run: node scripts/indexnow-submit.mjs "${{ github.event.before }}" "${{ github.sha }}"
