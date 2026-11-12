@@ -4,7 +4,7 @@ import fs from "node:fs";
 const [base, head] = process.argv.slice(2);
 if (!base || !head) throw new Error("Usage: node scripts/indexnow-submit.mjs <base-sha> <head-sha>");
 
-const keyFile = fs.readdirSync(".").find((name) => /^[a-f0-9]{32}\.txt$/i.test(name));
+const keyFile = fs.readdirSync(".").find((name) => /^atsfy-[a-f0-9]{32}\.txt$/i.test(name));
 if (!keyFile) throw new Error("IndexNow key file not found at repository root.");
 const key = fs.readFileSync(keyFile, "utf8").trim();
 if (key !== keyFile.slice(0, -4)) throw new Error("IndexNow key file content does not match its filename.");
