@@ -1,0 +1,250 @@
+{
+  "name": "ATSFY Marketplace Product Catalogue",
+  "publisher": "ATSFY Technologies",
+  "canonical_origin": "https://atsfymarketplace.atsfy.tech",
+  "updated_at": "2026-11-12",
+  "count": 14,
+  "source_of_truth_note": "Product names, descriptions, categories, status labels and audiences are transcribed from the marketplace catalogue. LIVE and VENTURE are catalogue labels and are not independent uptime, commercial availability or performance guarantees.",
+  "products": [
+    {
+      "id": "atsfy-core-career-intelligence",
+      "name": "ATSFY Core Career Intelligence",
+      "slug": "atsfy-core-career-intelligence",
+      "category": "CareerTech",
+      "industry": "Career & HR",
+      "status": "LIVE",
+      "tagline": "AI-powered Career & Hiring Intelligence",
+      "description": "Career readiness, ATS analysis, job matching, resume optimization and recruitment intelligence.",
+      "url": "https://atsfycareerintelligentplatform.lovable.app",
+      "audience": [
+        "Job Seekers",
+        "Professionals",
+        "Recruiters",
+        "HR Teams",
+        "Universities"
+      ]
+    },
+    {
+      "id": "gymos",
+      "name": "GYMOS",
+      "slug": "gymos",
+      "category": "FitnessTech",
+      "industry": "Fitness",
+      "status": "LIVE",
+      "tagline": "Run Your Gym. Simply.",
+      "description": "Member management, memberships, payments, attendance and gym operations.",
+      "url": "https://gy-mos.vercel.app",
+      "audience": [
+        "Gym Owners",
+        "Fitness Trainers",
+        "Health Club Managers",
+        "Members"
+      ]
+    },
+    {
+      "id": "savoros",
+      "name": "SavorOS",
+      "slug": "savoros",
+      "category": "HospitalityTech",
+      "industry": "Hospitality",
+      "status": "LIVE",
+      "tagline": "Smart Restaurant Technology",
+      "description": "Digital menus, QR integration, reservations, kitchen operations, floor management and restaurant insights.",
+      "url": "https://savour-red.vercel.app/",
+      "audience": [
+        "Restaurant Owners",
+        "Cafes",
+        "Hospitality Groups",
+        "Diners"
+      ]
+    },
+    {
+      "id": "atsfy-hotel-management-pms",
+      "name": "ATSFY Hotel Management PMS",
+      "slug": "atsfy-hotel-management-pms",
+      "category": "HospitalityTech",
+      "industry": "Hospitality",
+      "status": "LIVE",
+      "tagline": "Smarter Hotel Operations",
+      "description": "Reservations, rooms, guests, billing, POS, reporting and property management.",
+      "url": "https://hotel-management-pms.vercel.app/",
+      "audience": [
+        "Hotel Owners",
+        "Resort Managers",
+        "Boutique Stays"
+      ]
+    },
+    {
+      "id": "orderhub",
+      "name": "ORDERHUB",
+      "slug": "orderhub",
+      "category": "RetailTech",
+      "industry": "Retail & MSME",
+      "status": "LIVE",
+      "tagline": "Your Business. Now Online.",
+      "description": "Digital ordering, product catalogue, order management, customer updates and business insights.",
+      "url": "https://order-hub-kappa.vercel.app",
+      "audience": [
+        "Local Merchants",
+        "MSMEs",
+        "Retail Stores",
+        "Wholesalers"
+      ]
+    },
+    {
+      "id": "clinicos",
+      "name": "ClinicoOS",
+      "slug": "clinicos",
+      "category": "HealthTech",
+      "industry": "Healthcare",
+      "status": "LIVE",
+      "tagline": "Smart Clinic Management Platform",
+      "description": "Patient appointments, electronic health records, prescription management, and clinic workflow automation.",
+      "url": "https://clinicos-woad.vercel.app/",
+      "audience": [
+        "Doctors",
+        "Clinics",
+        "Healthcare Practitioners",
+        "Patients"
+      ]
+    },
+    {
+      "id": "student-erp",
+      "name": "ATSFY Student ERP",
+      "slug": "student-erp",
+      "category": "EdTech / Enterprise",
+      "industry": "Education",
+      "status": "LIVE",
+      "tagline": "Coaching & Education Institution Management",
+      "description": "Complete student lifecycle management, attendance, fee tracking, exams, and institution administration.",
+      "url": "https://student-erp-tau.vercel.app/",
+      "audience": [
+        "Coaching Institutes",
+        "Schools",
+        "Training Academies",
+        "Educators"
+      ]
+    },
+    {
+      "id": "lexora-legal-tech",
+      "name": "Lexora Legal-Tech",
+      "slug": "lexora-legal-tech",
+      "category": "LegalTech",
+      "industry": "Legal & Professional Services",
+      "status": "LIVE",
+      "tagline": "Modern Legal Practice & Legal-Tech SaaS",
+      "description": "A legal practice platform concept combining consultation booking, practice-area discovery, a client portal, document workflows and case tracking.",
+      "url": "https://atsfymarketplace.atsfy.tech/lexora.html",
+      "audience": [
+        "Law Firms",
+        "Advocates",
+        "Legal Consultants",
+        "Businesses",
+        "Individuals"
+      ],
+      "note": "Demonstration page; verify all professional credentials and numerical claims before relying on them."
+    },
+    {
+      "id": "atsfy-learn",
+      "name": "ATSFY Learn",
+      "slug": "atsfy-learn",
+      "category": "EdTech",
+      "industry": "Education",
+      "status": "LIVE",
+      "tagline": "Learn AI. Build Skills.",
+      "description": "Practical AI, GenAI, no-code and digital skills learning.",
+      "url": "https://learn.atsfy.tech",
+      "audience": [
+        "Students",
+        "Professionals",
+        "Lifelong Learners",
+        "Institutions"
+      ]
+    },
+    {
+      "id": "easyreport",
+      "name": "EasyReport",
+      "slug": "easyreport",
+      "category": "Business Intelligence",
+      "industry": "Business Technology",
+      "status": "LIVE",
+      "tagline": "Simple Web Reporting & Data Visualization",
+      "description": "A web-based reporting system that turns SQL query results into configurable report pages with table layouts, Excel export, charts, fixed headers and columns, scheduled reports, REST API access and permission controls.",
+      "url": "https://easy-report-sigma.vercel.app/",
+      "audience": [
+        "Businesses",
+        "Developers",
+        "Data Teams",
+        "Operations Teams",
+        "Enterprises"
+      ]
+    },
+    {
+      "id": "atsfy-incubate",
+      "name": "ATSFY Incubate",
+      "slug": "atsfy-incubate",
+      "category": "StartupTech",
+      "industry": "Startups",
+      "status": "LIVE",
+      "tagline": "Build. Validate. Launch.",
+      "description": "Startup guidance, validation, MVP development, pitch intelligence and investor readiness.",
+      "url": "https://incubate.atsfy.tech",
+      "audience": [
+        "Startup Founders",
+        "Entrepreneurs",
+        "Innovators"
+      ]
+    },
+    {
+      "id": "green-to-gold",
+      "name": "Green-to-Gold",
+      "slug": "green-to-gold",
+      "category": "AgriTech / Sustainability",
+      "industry": "Sustainability",
+      "status": "VENTURE",
+      "tagline": "Waste → Material → Opportunity",
+      "description": "Technology-driven sustainable manufacturing using agricultural waste and biomaterials.",
+      "url": "https://green-to-gold.atsfy.tech",
+      "audience": [
+        "Agri-businesses",
+        "Eco-Manufacturers",
+        "Sustainability Enterprises"
+      ]
+    },
+    {
+      "id": "rubberos",
+      "name": "RubberOS",
+      "slug": "rubberos",
+      "category": "IndustryTech",
+      "industry": "Rubber & Industrial Operations",
+      "status": "LIVE",
+      "tagline": "Digital Operations Platform for the Rubber Industry",
+      "description": "A dedicated digital platform for rubber-sector businesses, bringing their operational workflows into a connected online workspace.",
+      "url": "https://rubberos.atsfy.tech/",
+      "audience": [
+        "Rubber Producers",
+        "Rubber Processors",
+        "Rubber Traders",
+        "Rubber Industry Businesses"
+      ]
+    },
+    {
+      "id": "construction-platform",
+      "name": "ATSFY Construction",
+      "slug": "construction-platform",
+      "category": "ConstructionTech",
+      "industry": "Construction & Infrastructure",
+      "status": "LIVE",
+      "tagline": "Digital Platform for Construction Operations",
+      "description": "A digital platform for construction businesses to bring project and operational workflows into a connected online workspace.",
+      "url": "https://construction.atsfy.tech/",
+      "audience": [
+        "Construction Companies",
+        "Builders",
+        "Contractors",
+        "Project Teams",
+        "Infrastructure Businesses"
+      ]
+    }
+  ]
+}
