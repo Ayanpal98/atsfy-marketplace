@@ -560,6 +560,139 @@ body.marketplace-route footer{display:none!important}
 })();
 </script>
 
+
+    <!-- ATSFY Marketplace visual refresh — presentation-only layer; existing routes and workflows retained. -->
+    <style id="atsfy-marketplace-design-refresh">
+      :root{
+        --am-ink:#101b14;--am-forest:#1c301f;--am-green:#285040;--am-olive:#657253;
+        --am-gold:#d9a43b;--am-paper:#f4f3ed;--am-white:#fffefa;
+        --am-muted:#7b877e;--am-line:rgba(28,48,31,.13);
+        --am-shadow:0 22px 65px rgba(7,15,9,.12);
+        --am-radius:22px;
+      }
+      html{scroll-behavior:smooth;scroll-padding-top:96px}
+      body{font-feature-settings:"ss01" on,"cv11" on;-webkit-font-smoothing:antialiased}
+      ::selection{background:rgba(217,164,59,.35);color:var(--am-ink)}
+      :focus-visible{outline:3px solid rgba(217,164,59,.9)!important;outline-offset:3px!important}
+      header{box-shadow:0 8px 35px rgba(0,0,0,.12);border-bottom-color:rgba(247,246,242,.12)!important}
+      header>div{min-height:76px}
+      header nav button,.nav-link{transition:color .2s ease,background .2s ease,transform .2s ease}
+      header nav button:active,.cinematic-btn:active{transform:scale(.98)}
+      #app-content{min-height:60vh;isolation:isolate}
+      #app-content>section{scroll-margin-top:100px}
+      .hero-cinematic{min-height:min(850px,calc(100svh - 76px));display:flex;align-items:center}
+      .hero-cinematic .max-w-7xl{width:100%}
+      .hero-title{max-width:980px;text-wrap:balance}
+      .hero-copy{max-width:590px}
+      .hero-system{filter:drop-shadow(0 25px 45px rgba(0,0,0,.22))}
+      .cinematic-btn{min-height:48px;padding-inline:1.45rem}
+      .cinematic-btn-primary{box-shadow:0 10px 25px rgba(247,246,242,.08)}
+      .cinematic-section{position:relative;overflow:hidden}
+      .statement-section:before,.discovery-cinematic:before,.products-cinematic:before{
+        content:"";position:absolute;inset:0;pointer-events:none;opacity:.18;
+        background-image:radial-gradient(rgba(255,255,255,.18) .65px,transparent .65px);
+        background-size:22px 22px;mask-image:linear-gradient(to bottom,black,transparent 75%)
+      }
+      .statement-section>* ,.discovery-cinematic>* ,.products-cinematic>*{position:relative}
+      .discovery-grid{border-color:rgba(247,246,242,.14)}
+      .discover-card{min-height:320px;padding:clamp(20px,2.4vw,34px)}
+      .discover-card:hover{transform:translateY(-4px);background:linear-gradient(145deg,rgba(40,80,64,.24),rgba(40,80,64,.05))}
+      .discover-card>svg{margin-top:clamp(55px,7vw,90px)}
+      .products-cinematic{background:var(--am-paper);color:var(--am-ink)}
+      .products-cinematic:before{opacity:.32;background-image:radial-gradient(rgba(28,48,31,.16) .65px,transparent .65px)}
+      .products-cinematic .section-title{letter-spacing:-.065em}
+      .products-cinematic .glass-card,.products-cinematic [class*="rounded-2xl"][class*="bg-white"]{
+        border:1px solid rgba(28,48,31,.1)!important;border-radius:20px!important;
+        box-shadow:0 8px 28px rgba(28,48,31,.045);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease
+      }
+      .products-cinematic .glass-card:hover,.products-cinematic [class*="rounded-2xl"][class*="bg-white"]:hover{
+        transform:translateY(-5px);box-shadow:0 20px 45px rgba(28,48,31,.1);border-color:rgba(217,164,59,.55)!important
+      }
+      .venture-panel{border-top:1px solid rgba(247,246,242,.13)}
+      .closing-cinematic{background:radial-gradient(ellipse at 75% 25%,rgba(40,80,64,.3),transparent 42%),#080b09}
+      /* Dynamic catalogue, detail and service routes */
+      #app-content h1{letter-spacing:-.055em;line-height:1.02;text-wrap:balance}
+      #app-content h2{letter-spacing:-.04em}
+      #app-content .glass-card,#app-content .bg-white.rounded-xl,#app-content .bg-white.rounded-2xl,
+      #app-content [class*="shadow-sm"][class*="rounded"]{
+        border-color:rgba(28,48,31,.11)!important;box-shadow:0 8px 28px rgba(28,48,31,.045)
+      }
+      #app-content button:not(.cinematic-btn):not(.nav-link){
+        transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,background .18s ease
+      }
+      #app-content button:not(:disabled):active{transform:translateY(1px)}
+      #app-content input,#app-content select,#app-content textarea,
+      .net-wrap input,.net-wrap select,.net-wrap textarea,
+      .p3-wrap input,.p3-wrap select,.p3-wrap textarea{
+        border-radius:12px;min-height:44px;border-color:rgba(28,48,31,.18);
+        transition:border-color .18s ease,box-shadow .18s ease
+      }
+      #app-content input:focus,#app-content select:focus,#app-content textarea:focus,
+      .net-wrap input:focus,.net-wrap select:focus,.net-wrap textarea:focus{
+        border-color:var(--am-green);box-shadow:0 0 0 4px rgba(40,80,64,.1);outline:none
+      }
+      /* Member, opportunity, messaging and account workspaces */
+      #net-phase3,#net-phase4,#net-phase5,#net-phase6,#net-phase7,#net-phase7-2,#net-connect{
+        scroll-margin-top:100px
+      }
+      .p3-wrap,.p4-wrap,.p5-wrap,.p6-wrap,.p7-wrap,.p72-wrap{
+        border-radius:24px;overflow:hidden
+      }
+      .p3-card,.p4-card,.p5-card,.p6-box,.p7-card,.p72-card,.mc-card{
+        border-radius:18px!important;box-shadow:0 8px 28px rgba(28,48,31,.055)
+      }
+      .p3-tab,.p4-tab,.p5-tab,.p7-tab,.net-btn,.p72-filter{
+        min-height:40px;border-radius:999px;transition:all .2s ease
+      }
+      .p3-tab:hover,.p4-tab:hover,.p5-tab:hover,.p7-tab:hover{border-color:rgba(217,164,59,.7)}
+      .p3-panel,.p4-panel,.p5-panel,.p6-panel,.p7-panel{animation:amFadeUp .28s ease both}
+      .mc-modal{z-index:10020}
+      .mc-dialog{border-radius:24px}
+      footer{position:relative}
+      footer:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(217,164,59,.65),transparent)}
+      @keyframes amFadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+      @media(max-width:900px){
+        .hero-cinematic{min-height:auto;padding-top:5.5rem;padding-bottom:6rem}
+        .hero-title{font-size:clamp(3.1rem,10vw,6.2rem)}
+        .hero-system{width:min(70vw,360px);height:min(70vw,360px);margin:2.5rem auto 0}
+        .statement-grid{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:48px}
+        .statement-grid>div:nth-child(2){border-right:0}
+        .statement-grid>div:nth-child(3){padding-left:0}
+        .discovery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      }
+      @media(max-width:600px){
+        header>div{min-height:66px}
+        .hero-cinematic{padding-top:4.25rem;padding-bottom:5rem}
+        .hero-title{font-size:clamp(2.8rem,13vw,4.6rem);line-height:.92}
+        .hero-copy{font-size:.98rem;line-height:1.7}
+        .hero-bottom-label{font-size:.5rem;letter-spacing:.1em;bottom:14px}
+        .hero-orbit-one{width:100vw;height:100vw;right:-38vw;top:-15vw}
+        .hero-orbit-two{width:72vw;height:72vw;right:-22vw;top:-1vw}
+        .statement-grid{grid-template-columns:1fr 1fr;margin-top:36px}
+        .statement-grid>div{min-height:145px;padding:18px 12px 12px 0}
+        .statement-grid>div+div{padding-left:12px}
+        .statement-grid>div:nth-child(3){padding-left:0}
+        .statement-grid h3{margin-top:24px;font-size:.95rem}
+        .discovery-grid{grid-template-columns:1fr 1fr}
+        .discover-card{min-height:255px;padding:17px}
+        .discover-card>svg{margin-top:45px}
+        .discover-card h3{font-size:1.08rem}
+        .discover-card p{font-size:.73rem}
+        .discover-card b{bottom:17px;font-size:.65rem}
+        .cinematic-btn{width:100%;min-height:48px}
+        .hero-contact-row{gap:.8rem;font-size:.68rem}
+        #app-content{overflow-wrap:anywhere}
+        .p3-tabs,.p4-tabs,.p5-tabs{overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px}
+        .p3-tab,.p4-tab,.p5-tab{white-space:nowrap}
+        .mc-wrap{padding:48px 16px}
+        .mc-card{padding:16px}
+      }
+      @media(prefers-reduced-motion:reduce){
+        html{scroll-behavior:auto}
+        *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+      }
+    </style>
+
 </head>
 <body class="min-h-screen flex flex-col selection:bg-atsfy-gold selection:text-atsfy-dark">
     <div id="atsfy-splash" role="status" aria-live="polite" aria-label="Loading ATSFY Marketplace">
