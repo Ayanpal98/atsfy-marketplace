@@ -22,7 +22,8 @@
         "Recruiters",
         "HR Teams",
         "Universities"
-      ]
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/atsfy-core-career-intelligence/"
     },
     {
       "id": "gymos",
@@ -39,7 +40,8 @@
         "Fitness Trainers",
         "Health Club Managers",
         "Members"
-      ]
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/gymos/"
     },
     {
       "id": "savoros",
@@ -56,7 +58,8 @@
         "Cafes",
         "Hospitality Groups",
         "Diners"
-      ]
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/savoros/"
     },
     {
       "id": "atsfy-hotel-management-pms",
@@ -72,7 +75,8 @@
         "Hotel Owners",
         "Resort Managers",
         "Boutique Stays"
-      ]
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/atsfy-hotel-management-pms/"
     },
     {
       "id": "orderhub",
@@ -89,7 +93,8 @@
         "MSMEs",
         "Retail Stores",
         "Wholesalers"
-      ]
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/orderhub/"
     },
     {
       "id": "clinicos",
@@ -106,7 +111,8 @@
         "Clinics",
         "Healthcare Practitioners",
         "Patients"
-      ]
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/clinicos/"
     },
     {
       "id": "student-erp",
@@ -123,7 +129,8 @@
         "Schools",
         "Training Academies",
         "Educators"
-      ]
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/student-erp/"
     },
     {
       "id": "lexora-legal-tech",
@@ -142,7 +149,8 @@
         "Businesses",
         "Individuals"
       ],
-      "note": "Demonstration page; verify all professional credentials and numerical claims before relying on them."
+      "note": "Demonstration page; verify all professional credentials and numerical claims before relying on them.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/lexora-legal-tech/"
     },
     {
       "id": "atsfy-learn",
@@ -159,7 +167,8 @@
         "Professionals",
         "Lifelong Learners",
         "Institutions"
-      ]
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/atsfy-learn/"
     },
     {
       "id": "easyreport",
@@ -177,7 +186,8 @@
         "Data Teams",
         "Operations Teams",
         "Enterprises"
-      ]
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/easyreport/"
     },
     {
       "id": "atsfy-incubate",
@@ -193,7 +203,8 @@
         "Startup Founders",
         "Entrepreneurs",
         "Innovators"
-      ]
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/atsfy-incubate/"
     },
     {
       "id": "green-to-gold",
@@ -209,7 +220,8 @@
         "Agri-businesses",
         "Eco-Manufacturers",
         "Sustainability Enterprises"
-      ]
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/green-to-gold/"
     },
     {
       "id": "rubberos",
@@ -226,7 +238,8 @@
         "Rubber Processors",
         "Rubber Traders",
         "Rubber Industry Businesses"
-      ]
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/rubberos/"
     },
     {
       "id": "construction-platform",
@@ -244,7 +257,8 @@
         "Contractors",
         "Project Teams",
         "Infrastructure Businesses"
-      ]
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/construction-platform/"
     }
   ]
 }
