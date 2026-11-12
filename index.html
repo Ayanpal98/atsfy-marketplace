@@ -27,8 +27,8 @@
     ====================================================== -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="ATSFY Marketplace">
-    <meta property="og:title" content="ATSFY Marketplace | Find Services, Clients & Business">
-    <meta property="og:description" content="Find trusted service providers, discover clients, post requirements, send proposals and build business through ATSFY Marketplace.">
+    <meta property="og:title" content="ATSFY Marketplace | AI Products, SaaS & Digital Services">
+    <meta property="og:description" content="Explore ATSFY software products, digital services and industry solutions from Tripura, India.">
     <meta property="og:url" content="https://atsfymarketplace.atsfy.tech/">
     <meta property="og:locale" content="en_IN">
 
@@ -36,7 +36,7 @@
         X / TWITTER
     ====================================================== -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="ATSFY Marketplace | Services, Clients & Business">
+    <meta name="twitter:title" content="ATSFY Marketplace | AI Products & Digital Solutions">
     <meta name="twitter:description" content="Find services, clients, projects and business opportunities through ATSFY Marketplace.">
 
     <!-- =====================================================
@@ -156,9 +156,9 @@
             }
         }
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="https://unpkg.com/lucide@latest" onload="window.lucide&&window.lucide.createIcons()"></script>
     <style>
         body {
             background-color: #F7F6F2;
@@ -727,8 +727,16 @@ body.marketplace-route footer{display:none!important}
 
     <!-- Main Content Container -->
     <main id="app-content" class="flex-grow">
-        <!-- Dynamic views will be mounted here -->
-    </main>
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" aria-label="ATSFY Marketplace overview">
+<p class="text-xs font-bold tracking-widest uppercase text-atsfy-olive">ATSFY Technologies · Tripura, India</p>
+<h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-atsfy-dark mt-3">AI products, software platforms and digital services</h1>
+<p class="text-lg text-gray-600 mt-5 max-w-3xl">ATSFY Marketplace is the product and services directory of ATSFY Technologies. Explore software for career and hiring, fitness, hospitality, healthcare, education, retail, business intelligence, industrial operations and construction, alongside custom software, AI integration and digital services.</p>
+<nav class="flex flex-wrap gap-4 mt-8" aria-label="Explore ATSFY">
+<a class="underline font-semibold text-atsfy-green" href="/products/">Explore ATSFY products</a>
+<a class="underline font-semibold text-atsfy-green" href="/services/">Explore digital services</a>
+<a class="underline font-semibold text-atsfy-green" href="/industries/">Browse industry solutions</a>
+<a class="underline font-semibold text-atsfy-green" href="https://atsfy.tech/">About ATSFY Technologies</a>
+</nav></section></main>
 
     <!-- Footer -->
     <footer class="bg-atsfy-dark text-white pt-16 pb-12 mt-20 border-t border-atsfy-green/20">
@@ -759,9 +767,9 @@ body.marketplace-route footer{display:none!important}
                     <h4 class="font-semibold text-sm tracking-wider uppercase text-atsfy-gold">Marketplace</h4>
                     <ul class="space-y-2 text-sm text-gray-300">
                         <li><a href="#" onclick="router.navigate('home'); return false;" class="hover:text-atsfy-gold transition-colors">Ecosystem Home</a></li>
-                        <li><a href="#" onclick="router.navigate('products'); return false;" class="hover:text-atsfy-gold transition-colors">All Products</a></li>
-                        <li><a href="#" onclick="router.navigate('services'); return false;" class="hover:text-atsfy-gold transition-colors">Digital Services</a></li>
-                        <li><a href="#" onclick="router.navigate('industries'); return false;" class="hover:text-atsfy-gold transition-colors">Industry Solutions</a></li>
+                        <li><a href="/products/" class="hover:text-atsfy-gold transition-colors">All Products</a></li>
+                        <li><a href="/services/" class="hover:text-atsfy-gold transition-colors">Digital Services</a></li>
+                        <li><a href="/industries/" class="hover:text-atsfy-gold transition-colors">Industry Solutions</a></li>
                     </ul>
                 </div>
 
@@ -1964,9 +1972,8 @@ body.marketplace-route footer{display:none!important}
                                     <p class="text-sm text-gray-600 mt-3 leading-relaxed">${s.solution}</p>
                                 </div>
                                 <div class="pt-6 mt-6 border-t border-atsfy-green/10 flex items-center justify-between">
-                                    <button onclick="router.navigate('service-detail', { slug: '${s.slug}' })" class="text-sm font-semibold text-atsfy-dark hover:text-atsfy-green inline-flex items-center gap-1 transition-colors">
-                                        View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                                    </button>
+                                    <a href="/services/${s.slug}/" class="text-sm font-semibold text-atsfy-dark hover:text-atsfy-green inline-flex items-center gap-1 transition-colors">View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                    </a>
                                     <button onclick="router.navigate('contact')" class="px-4 py-2 rounded-xl bg-atsfy-dark text-white text-xs font-medium hover:bg-atsfy-green shadow transition-all">
                                         Request Quote
                                     </button>
@@ -2062,9 +2069,8 @@ body.marketplace-route footer{display:none!important}
                                     <p class="text-sm text-gray-600 mt-2 leading-relaxed">${ind.desc}</p>
                                 </div>
                                 <div class="pt-6 mt-6 border-t border-atsfy-green/10">
-                                    <button onclick="router.navigate('products')" class="text-sm font-semibold text-atsfy-dark hover:text-atsfy-green inline-flex items-center gap-1 transition-colors">
-                                        View Solutions <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                                    </button>
+                                    <a href="/industries/${ind.id}/" class="text-sm font-semibold text-atsfy-dark hover:text-atsfy-green inline-flex items-center gap-1 transition-colors">View Solutions <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                    </a>
                                 </div>
                             </div>
                         `).join('')}

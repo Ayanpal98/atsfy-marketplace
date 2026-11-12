@@ -260,5 +260,439 @@
       ],
       "catalog_page": "https://atsfymarketplace.atsfy.tech/products/construction-platform/"
     }
-  ]
+  ],
+  "services": [
+    {
+      "id": "whatsapp-automation",
+      "name": "WhatsApp Automation System",
+      "slug": "whatsapp-automation",
+      "category": "AI & Messaging Solutions",
+      "tagline": "Stop losing leads on WhatsApp. Automate your sales & support.",
+      "problem": "Manual WhatsApp replies result in missed customer inquiries, delayed follow-ups, and lost revenue.",
+      "description": "Turn WhatsApp into an automated 24/7 sales & customer-support system with instant replies, lead capture, AI FAQ chatbots, and broadcast promotions.",
+      "deliverables": [
+        "Instant automated customer replies",
+        "Lead capture & qualification workflows",
+        "AI FAQ chatbot trained on your business",
+        "Product/service enquiries, orders & follow-ups",
+        "Promotions & bulk broadcasts",
+        "Reports & analytics dashboard"
+      ],
+      "pricing_note": "Starting from ₹4,000 One-time setup | Custom plans available",
+      "intended_audience": "E-commerce, Local Businesses, Services, Education, Clinics, Startups.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/whatsapp-automation/"
+    },
+    {
+      "id": "website-development",
+      "name": "Website Development",
+      "slug": "website-development",
+      "category": "Digital Solutions",
+      "tagline": "High-performance, modern websites engineered for growth.",
+      "problem": "Outdated, slow websites fail to convert visitors and damage brand credibility.",
+      "description": "We build lightning-fast, highly responsive websites with modern design systems and bulletproof performance.",
+      "deliverables": [
+        "Custom UI/UX Design",
+        "Responsive Frontend Development",
+        "CMS Integration",
+        "SEO & Speed Optimization"
+      ],
+      "pricing_note": null,
+      "intended_audience": "Startups, growing brands, and established businesses seeking high-end web presence.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/website-development/"
+    },
+    {
+      "id": "branding-logo-design",
+      "name": "Branding & Logo Design",
+      "slug": "branding-logo-design",
+      "category": "Design & Creative",
+      "tagline": "Distinctive brand identities that command attention.",
+      "problem": "Generic branding fails to differentiate companies in competitive digital markets.",
+      "description": "Crafting cohesive brand identities, visual guidelines, and memorable logos that resonate with your target audience.",
+      "deliverables": [
+        "Logo Suite & Guidelines",
+        "Color Palettes & Typography",
+        "Brand Voice & Messaging",
+        "Marketing Collateral Templates"
+      ],
+      "pricing_note": null,
+      "intended_audience": "New ventures, rebranding companies, and product teams.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/branding-logo-design/"
+    },
+    {
+      "id": "social-media-management",
+      "name": "Social Media Management",
+      "slug": "social-media-management",
+      "category": "Marketing",
+      "tagline": "Consistent, engaging social presence across platforms.",
+      "problem": "Inconsistent posting and lack of strategy lead to low audience engagement and stagnant growth.",
+      "description": "Strategic content planning, professional asset creation, and community engagement to build loyal brand followers.",
+      "deliverables": [
+        "Content Calendars",
+        "Graphic & Video Assets",
+        "Caption Writing & Hashtag Strategy",
+        "Monthly Analytics Reports"
+      ],
+      "pricing_note": null,
+      "intended_audience": "B2C brands, local businesses, and growing startups.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/social-media-management/"
+    },
+    {
+      "id": "ai-chatbots",
+      "name": "AI Chatbots",
+      "slug": "ai-chatbots",
+      "category": "AI Solutions",
+      "tagline": "Intelligent conversational assistants for 24/7 customer support.",
+      "problem": "Customer support teams are overwhelmed with repetitive inquiries outside business hours.",
+      "description": "Deploying state-of-the-art AI chatbots trained on your business data to answer queries instantly.",
+      "deliverables": [
+        "Custom LLM Chatbot Integration",
+        "Knowledge Base Training",
+        "Website & App Widget",
+        "Lead Qualification Workflows"
+      ],
+      "pricing_note": null,
+      "intended_audience": "E-commerce stores, SaaS companies, and service providers.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/ai-chatbots/"
+    },
+    {
+      "id": "marketing-automation",
+      "name": "Marketing Automation",
+      "slug": "marketing-automation",
+      "category": "Marketing",
+      "tagline": "Convert leads on autopilot with smart workflows.",
+      "problem": "Manual lead follow-up results in missed opportunities and lost revenue.",
+      "description": "Setting up automated email sequences, CRM pipelines, and behavioral triggers to nurture prospects.",
+      "deliverables": [
+        "Email Funnel Setup",
+        "CRM Integration",
+        "Automated Lead Scoring",
+        "Drip Campaigns"
+      ],
+      "pricing_note": null,
+      "intended_audience": "B2B companies, agencies, and online businesses.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/marketing-automation/"
+    },
+    {
+      "id": "local-seo",
+      "name": "Local SEO",
+      "slug": "local-seo",
+      "category": "Digital Marketing",
+      "tagline": "Dominate local search results and attract nearby customers.",
+      "problem": "Potential customers searching nearby cannot find your physical storefront or local business.",
+      "description": "Optimizing Google Business Profiles, local citations, and geo-targeted keywords.",
+      "deliverables": [
+        "Google Business Profile Optimization",
+        "Local Citation Building",
+        "Review Management Strategy",
+        "Local Keyword Ranking"
+      ],
+      "pricing_note": null,
+      "intended_audience": "Retail shops, clinics, local services, and restaurants.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/local-seo/"
+    },
+    {
+      "id": "digital-marketing",
+      "name": "Digital Marketing",
+      "slug": "digital-marketing",
+      "category": "Digital Marketing",
+      "tagline": "Data-driven campaigns to drive traffic and scale revenue.",
+      "problem": "Ad spend is wasted without clear targeting or proven ROI strategies.",
+      "description": "Comprehensive digital campaigns across search, social, and display networks optimized for conversions.",
+      "deliverables": [
+        "PPC Campaign Management",
+        "Social Ads Setup",
+        "Conversion Rate Optimization",
+        "ROI Performance Reports"
+      ],
+      "pricing_note": null,
+      "intended_audience": "E-commerce brands, growing service firms, and enterprises.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/digital-marketing/"
+    },
+    {
+      "id": "custom-saas-development",
+      "name": "Custom SaaS Development",
+      "slug": "custom-saas-development",
+      "category": "Engineering",
+      "tagline": "Scalable cloud software built to your exact specifications.",
+      "problem": "Off-the-shelf software lacks crucial features required for unique business workflows.",
+      "description": "Architecting and developing secure, scalable multi-tenant SaaS products from scratch.",
+      "deliverables": [
+        "Full-stack Web Application",
+        "Cloud Infrastructure Setup",
+        "Secure Payment Gateway",
+        "API Integrations"
+      ],
+      "pricing_note": null,
+      "intended_audience": "Entrepreneurs with product ideas and enterprises needing custom tools.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/custom-saas-development/"
+    },
+    {
+      "id": "ai-integration",
+      "name": "AI Integration",
+      "slug": "ai-integration",
+      "category": "AI Solutions",
+      "tagline": "Infuse artificial intelligence into existing business systems.",
+      "problem": "Legacy systems lack modern intelligence, making data processing slow and manual.",
+      "description": "Integrating advanced machine learning models and LLMs into your current software stack.",
+      "deliverables": [
+        "AI Model Integration",
+        "Data Pipeline Setup",
+        "Workflow Automation",
+        "Custom Prompt Engineering"
+      ],
+      "pricing_note": null,
+      "intended_audience": "Established businesses looking to upgrade their technology.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/ai-integration/"
+    },
+    {
+      "id": "business-automation",
+      "name": "Business Automation",
+      "slug": "business-automation",
+      "category": "Operations",
+      "tagline": "Eliminate manual busywork with intelligent workflows.",
+      "problem": "Teams waste countless hours on repetitive data entry and administrative tasks.",
+      "description": "Connecting your business apps with custom automation tools to streamline operations.",
+      "deliverables": [
+        "Workflow Mapping",
+        "App Integrations (Zapier/Custom)",
+        "Automated Data Sync",
+        "Standard Operating Procedures"
+      ],
+      "pricing_note": null,
+      "intended_audience": "Growing teams and operational managers.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/business-automation/"
+    },
+    {
+      "id": "custom-dashboards",
+      "name": "Custom Dashboards",
+      "slug": "custom-dashboards",
+      "category": "Data & Analytics",
+      "tagline": "Real-time visibility into your key business metrics.",
+      "problem": "Data is scattered across multiple spreadsheets and tools, obscuring key insights.",
+      "description": "Building centralized, real-time analytics dashboards tailored to your KPIs.",
+      "deliverables": [
+        "KPI Dashboard Design",
+        "Data Source Integration",
+        "Interactive Visualizations",
+        "Automated Reports"
+      ],
+      "pricing_note": null,
+      "intended_audience": "Founders, executives, and department heads.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/custom-dashboards/"
+    },
+    {
+      "id": "pitch-deck-development",
+      "name": "Pitch Deck Development",
+      "slug": "pitch-deck-development",
+      "category": "StartupTech",
+      "tagline": "Investor-grade pitch decks that secure funding.",
+      "problem": "Founders struggle to articulate their vision and business model clearly to investors.",
+      "description": "Crafting compelling narratives, financial structure outlines, and stunning slide designs.",
+      "deliverables": [
+        "Narrative & Storyboarding",
+        "Professional Deck Design",
+        "Financial Model Review",
+        "Investor Q&A Prep"
+      ],
+      "pricing_note": null,
+      "intended_audience": "Seed and Series A startup founders.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/pitch-deck-development/"
+    },
+    {
+      "id": "startup-collateral",
+      "name": "Startup Collateral",
+      "slug": "startup-collateral",
+      "category": "StartupTech",
+      "tagline": "Everything you need to launch your brand professionally.",
+      "problem": "New startups lack professional marketing materials and foundational assets.",
+      "description": "Producing executive summaries, one-pagers, business cards, and digital assets.",
+      "deliverables": [
+        "One-Pager Design",
+        "Executive Summary",
+        "Business Cards & Stationery",
+        "Digital Social Kit"
+      ],
+      "pricing_note": null,
+      "intended_audience": "Early-stage founders and new ventures.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/startup-collateral/"
+    },
+    {
+      "id": "mvp-development",
+      "name": "MVP Development",
+      "slug": "mvp-development",
+      "category": "StartupTech",
+      "tagline": "Build and launch your product in weeks, not months.",
+      "problem": "Spending months and huge budgets building unvalidated product features.",
+      "description": "Rapidly prototyping and launching core-feature Minimum Viable Products to test the market.",
+      "deliverables": [
+        "Core Feature Specification",
+        "Rapid Prototyping & Build",
+        "User Testing Setup",
+        "Launch Readiness"
+      ],
+      "pricing_note": null,
+      "intended_audience": "Startup founders and innovators.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/mvp-development/"
+    },
+    {
+      "id": "startup-guidance",
+      "name": "Startup Guidance",
+      "slug": "startup-guidance",
+      "category": "StartupTech",
+      "tagline": "Strategic mentorship from experienced founders and technologists.",
+      "problem": "Navigating early-stage startup pitfalls without guidance leads to costly mistakes.",
+      "description": "One-on-one advisory sessions covering product-market fit, go-to-market, and scaling.",
+      "deliverables": [
+        "Strategic Roadmap Sessions",
+        "Product-Market Fit Review",
+        "Go-to-Market Strategy",
+        "Growth Advisory"
+      ],
+      "pricing_note": null,
+      "intended_audience": "Early-stage entrepreneurs.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/startup-guidance/"
+    },
+    {
+      "id": "institution-website-development",
+      "name": "Institution Website Development",
+      "slug": "institution-website-development",
+      "category": "EdTech / Enterprise",
+      "tagline": "Robust, secure digital portals for schools and universities.",
+      "problem": "Educational institutions suffer from outdated websites with poor student portals and mobile experience.",
+      "description": "Creating secure, accessible, and feature-rich portals tailored for educational institutions.",
+      "deliverables": [
+        "Institutional Web Portal",
+        "Student/Faculty Dashboard UI",
+        "Admission Workflow",
+        "Mobile-Responsive Design"
+      ],
+      "pricing_note": null,
+      "intended_audience": "Schools, colleges, coaching institutes, and universities.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/institution-website-development/"
+    },
+    {
+      "id": "education-digitalization",
+      "name": "Education Digitalization",
+      "slug": "education-digitalization",
+      "category": "EdTech",
+      "tagline": "Transform traditional classrooms into modern digital learning ecosystems.",
+      "problem": "Manual administrative tasks and offline materials limit student reach and operational efficiency.",
+      "description": "Implementing learning management systems, digital assessments, and virtual classroom tools.",
+      "deliverables": [
+        "LMS Setup & Migration",
+        "Digital Assessment Tools",
+        "Faculty Training",
+        "Student Engagement Workflows"
+      ],
+      "pricing_note": null,
+      "intended_audience": "Educational institutions and training academies.",
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/services/education-digitalization/"
+    }
+  ],
+  "industries": [
+    {
+      "id": "career-hr",
+      "name": "Career & HR",
+      "description": "AI-powered recruitment intelligence, resume optimization, job matching and career readiness platforms.",
+      "products": [
+        "atsfy-core-career-intelligence"
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/industries/career-hr/"
+    },
+    {
+      "id": "healthcare",
+      "name": "Healthcare",
+      "description": "Digital healthcare workflows including clinic appointments, patient records and prescription management.",
+      "products": [
+        "clinicos"
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/industries/healthcare/"
+    },
+    {
+      "id": "education",
+      "name": "Education",
+      "description": "Digital learning and institutional management solutions covering student administration, attendance, fees, examinations and practical AI learning.",
+      "products": [
+        "student-erp",
+        "atsfy-learn"
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/industries/education/"
+    },
+    {
+      "id": "hospitality",
+      "name": "Hospitality",
+      "description": "Restaurant and hotel software covering digital menus, reservations, kitchen operations, room management and billing.",
+      "products": [
+        "savoros",
+        "atsfy-hotel-management-pms"
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/industries/hospitality/"
+    },
+    {
+      "id": "fitness",
+      "name": "Fitness",
+      "description": "Gym operations software for membership management, attendance, payments and day-to-day administration.",
+      "products": [
+        "gymos"
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/industries/fitness/"
+    },
+    {
+      "id": "retail-msme",
+      "name": "Retail & MSME",
+      "description": "Digital storefronts, product catalogues and order-management workflows for merchants and small businesses.",
+      "products": [
+        "orderhub"
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/industries/retail-msme/"
+    },
+    {
+      "id": "agriculture",
+      "name": "Agriculture",
+      "description": "Sustainability and biomaterial initiatives connected to agricultural waste and value-added material development.",
+      "products": [
+        "green-to-gold"
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/industries/agriculture/"
+    },
+    {
+      "id": "sustainability",
+      "name": "Sustainability",
+      "description": "Technology-led sustainability initiatives exploring agricultural waste and biomaterial manufacturing.",
+      "products": [
+        "green-to-gold"
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/industries/sustainability/"
+    },
+    {
+      "id": "startups",
+      "name": "Startups",
+      "description": "Startup support covering validation, MVP development, pitch preparation and venture-building guidance.",
+      "products": [
+        "atsfy-incubate"
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/industries/startups/"
+    },
+    {
+      "id": "business-technology",
+      "name": "Business Technology",
+      "description": "Business software and digital services for reporting, workflow automation, custom SaaS and online operations.",
+      "products": [
+        "easyreport",
+        "orderhub"
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/industries/business-technology/"
+    },
+    {
+      "id": "construction",
+      "name": "Construction & Infrastructure",
+      "description": "Construction technology and digital workflow platforms for builders, contractors, project teams and infrastructure businesses.",
+      "products": [
+        "construction-platform"
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/industries/construction/"
+    }
+  ],
+  "service_count": 18,
+  "industry_count": 11
 }
