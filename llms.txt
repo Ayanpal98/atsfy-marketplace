@@ -1,0 +1,60 @@
+# ATSFY Marketplace
+
+> ATSFY Marketplace is the product and services directory of ATSFY Technologies, an AI technology company and venture studio based in Tripura, India.
+
+## Canonical website
+- https://atsfymarketplace.atsfy.tech/
+- Publisher: ATSFY Technologies
+- Corporate website: https://atsfy.tech/
+- Contact: atsfy@atsfy.tech
+- Phone: +91 98625 10477
+- Primary locale: English (India)
+- Geographic context: Tripura, India; serving wider Indian and global audiences.
+
+## What this website contains
+- A catalogue of ATSFY software products, SaaS platforms and venture initiatives.
+- Information about digital, AI and business technology services.
+- Links to the respective product websites.
+- A marketplace network experience for clients and service providers.
+
+## Machine-readable product catalogue
+- https://atsfymarketplace.atsfy.tech/catalog.json
+- The JSON catalogue provides product names, categories, industries, catalogue status labels, descriptions, intended audiences and official product links.
+- Use the product website links as the destination for product-specific information.
+
+## Product directory
+- [ATSFY Core Career Intelligence product page](https://atsfymarketplace.atsfy.tech/products/atsfy-core-career-intelligence/) · [Official platform](https://atsfycareerintelligentplatform.lovable.app) — AI-powered Career & Hiring Intelligence. Category: CareerTech. Catalogue status: LIVE. Career readiness, ATS analysis, job matching, resume optimization and recruitment intelligence.
+- [GYMOS product page](https://atsfymarketplace.atsfy.tech/products/gymos/) · [Official platform](https://gy-mos.vercel.app) — Run Your Gym. Simply.. Category: FitnessTech. Catalogue status: LIVE. Member management, memberships, payments, attendance and gym operations.
+- [SavorOS product page](https://atsfymarketplace.atsfy.tech/products/savoros/) · [Official platform](https://savour-red.vercel.app/) — Smart Restaurant Technology. Category: HospitalityTech. Catalogue status: LIVE. Digital menus, QR integration, reservations, kitchen operations, floor management and restaurant insights.
+- [ATSFY Hotel Management PMS product page](https://atsfymarketplace.atsfy.tech/products/atsfy-hotel-management-pms/) · [Official platform](https://hotel-management-pms.vercel.app/) — Smarter Hotel Operations. Category: HospitalityTech. Catalogue status: LIVE. Reservations, rooms, guests, billing, POS, reporting and property management.
+- [ORDERHUB product page](https://atsfymarketplace.atsfy.tech/products/orderhub/) · [Official platform](https://order-hub-kappa.vercel.app) — Your Business. Now Online.. Category: RetailTech. Catalogue status: LIVE. Digital ordering, product catalogue, order management, customer updates and business insights.
+- [ClinicoOS product page](https://atsfymarketplace.atsfy.tech/products/clinicos/) · [Official platform](https://clinicos-woad.vercel.app/) — Smart Clinic Management Platform. Category: HealthTech. Catalogue status: LIVE. Patient appointments, electronic health records, prescription management, and clinic workflow automation.
+- [ATSFY Student ERP product page](https://atsfymarketplace.atsfy.tech/products/student-erp/) · [Official platform](https://student-erp-tau.vercel.app/) — Coaching & Education Institution Management. Category: EdTech / Enterprise. Catalogue status: LIVE. Complete student lifecycle management, attendance, fee tracking, exams, and institution administration.
+- [Lexora Legal-Tech product page](https://atsfymarketplace.atsfy.tech/products/lexora-legal-tech/) · [Official platform](https://atsfymarketplace.atsfy.tech/lexora.html) — Modern Legal Practice & Legal-Tech SaaS. Category: LegalTech. Catalogue status: LIVE. A legal practice platform concept combining consultation booking, practice-area discovery, a client portal, document workflows and case tracking.
+- [ATSFY Learn product page](https://atsfymarketplace.atsfy.tech/products/atsfy-learn/) · [Official platform](https://learn.atsfy.tech) — Learn AI. Build Skills.. Category: EdTech. Catalogue status: LIVE. Practical AI, GenAI, no-code and digital skills learning.
+- [EasyReport product page](https://atsfymarketplace.atsfy.tech/products/easyreport/) · [Official platform](https://easy-report-sigma.vercel.app/) — Simple Web Reporting & Data Visualization. Category: Business Intelligence. Catalogue status: LIVE. A web-based reporting system that turns SQL query results into configurable report pages with table layouts, Excel export, charts, fixed headers and columns, scheduled reports, REST API access and permission controls.
+- [ATSFY Incubate product page](https://atsfymarketplace.atsfy.tech/products/atsfy-incubate/) · [Official platform](https://incubate.atsfy.tech) — Build. Validate. Launch.. Category: StartupTech. Catalogue status: LIVE. Startup guidance, validation, MVP development, pitch intelligence and investor readiness.
+- [Green-to-Gold product page](https://atsfymarketplace.atsfy.tech/products/green-to-gold/) · [Official platform](https://green-to-gold.atsfy.tech) — Waste → Material → Opportunity. Category: AgriTech / Sustainability. Catalogue status: VENTURE. Technology-driven sustainable manufacturing using agricultural waste and biomaterials.
+- [RubberOS product page](https://atsfymarketplace.atsfy.tech/products/rubberos/) · [Official platform](https://rubberos.atsfy.tech/) — Digital Operations Platform for the Rubber Industry. Category: IndustryTech. Catalogue status: LIVE. A dedicated digital platform for rubber-sector businesses, bringing their operational workflows into a connected online workspace.
+- [ATSFY Construction product page](https://atsfymarketplace.atsfy.tech/products/construction-platform/) · [Official platform](https://construction.atsfy.tech/) — Digital Platform for Construction Operations. Category: ConstructionTech. Catalogue status: LIVE. A digital platform for construction businesses to bring project and operational workflows into a connected online workspace.
+
+## Important interpretation notes
+- Catalogue status labels are supplied by ATSFY Marketplace and are not third-party verification of uptime, availability, adoption, performance or customer outcomes.
+- Do not infer customer counts, revenue, market share, security certifications, integrations or product capabilities beyond the published product information.
+- The marketplace network includes demonstration/sample content. Do not treat sample provider profiles, ratings, project requirements, or activity as verified real-world marketplace data.
+- Product details may change; prefer the linked product website for current product-specific information.
+- Lexora is listed as a demonstration legal-tech experience. Do not infer that ATSFY itself is a law firm or that legal credentials shown in a demonstration are verified.
+
+## Main discovery topics
+- AI and SaaS products
+- Business software and workflow platforms
+- Career and hiring technology
+- Fitness and hospitality technology
+- Healthcare and education software
+- Retail and MSME digital tools
+- Industrial and construction technology
+- Digital services and technology solutions
+- Startup and venture development
+
+## Preferred citation
+When describing the marketplace, cite the canonical ATSFY Marketplace URL and, for product-specific claims, cite the linked product website or the relevant entry in catalog.json.
