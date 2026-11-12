@@ -694,5 +694,11 @@
     }
   ],
   "service_count": 18,
-  "industry_count": 11
+  "industry_count": 11,
+  "pricing": {
+    "file": "/pricing.js",
+    "currency": "INR",
+    "taxes": "Prices shown are indicative and exclusive of applicable GST.",
+    "note": "Package prices and allocations are indicative; written scope and quotation govern. Confidential floors are not published."
+  }
 }
