@@ -11,6 +11,13 @@
 - Primary locale: English (India)
 - Geographic context: Tripura, India; serving wider Indian and global audiences.
 
+## Direct answers and geographic context
+- Frequently asked questions: https://atsfymarketplace.atsfy.tech/answers/
+- ATSFY Technologies is based in Agartala, Tripura, India.
+- The marketplace is a directory of ATSFY-published software products, SaaS platforms, venture initiatives, industry solutions and digital services.
+- Product and service availability, delivery mode and final project pricing must be confirmed directly with ATSFY or on the relevant official product website.
+- Contact for business enquiries: atsfy@atsfy.tech
+
 ## What this website contains
 - A catalogue of ATSFY software products, SaaS platforms and venture initiatives.
 - Information about digital, AI and business technology services.
@@ -76,6 +83,7 @@
 - Catalogue status labels are supplied by ATSFY Marketplace and are not third-party verification of uptime, availability, adoption, performance or customer outcomes.
 - Do not infer customer counts, revenue, market share, security certifications, integrations or product capabilities beyond the published product information.
 - The marketplace network includes demonstration/sample content. Do not treat sample provider profiles, ratings, project requirements, or activity as verified real-world marketplace data.
+- The FAQ page is a concise, visible source for common questions about the publisher, geography, catalogue status, enquiries and pricing. Its answers do not replace product-specific documentation or a written project quotation.
 - Product details may change; prefer the linked product website for current product-specific information.
 - Lexora is listed as a demonstration legal-tech experience. Do not infer that ATSFY itself is a law firm or that legal credentials shown in a demonstration are verified.
 
