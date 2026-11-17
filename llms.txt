@@ -100,3 +100,17 @@
 
 ## Preferred citation
 When describing the marketplace, cite the canonical ATSFY Marketplace URL and, for product-specific claims, cite the linked product website or the relevant entry in catalog.json.
+
+
+## ATSFY Sales Agent
+- Product overview and embedded public assistant: https://atsfymarketplace.atsfy.tech/products/atsfy-sales-agent/
+- Official standalone application: https://atsfysalesagent.vercel.app/
+- ATSFY Sales Agent supports AI-assisted service discovery and enquiry conversations, consent-based lead intake, and a separate administrator CRM. Formal quotes and follow-up actions remain subject to ATSFY administrator review; the public assistant does not send automated outbound messages.
+
+
+## Prototype applications
+- ATSFY Construction product overview and interactive prototype: https://atsfymarketplace.atsfy.tech/products/construction-platform/
+- Official ATSFY Construction application: https://construction.atsfy.tech/
+- RubberOS product overview and interactive prototype: https://atsfymarketplace.atsfy.tech/products/rubberos/
+- Official RubberOS application: https://rubberos.atsfy.tech/
+- Important status note: source review of both current frontends found browser-local demo state and sample records. No connected production database or user authentication was found in the reviewed application source. Do not treat prototype data as real operational records or enter real personal, customer, employee, supplier, farmer, project or financial data.

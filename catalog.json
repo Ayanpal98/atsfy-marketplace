@@ -2,9 +2,9 @@
   "name": "ATSFY Marketplace Product Catalogue",
   "publisher": "ATSFY Technologies",
   "canonical_origin": "https://atsfymarketplace.atsfy.tech",
-  "updated_at": "2026-11-12",
-  "count": 14,
-  "source_of_truth_note": "Product names, descriptions, categories, status labels and audiences are transcribed from the marketplace catalogue. LIVE and VENTURE are catalogue labels and are not independent uptime, commercial availability or performance guarantees.",
+  "updated_at": "2026-11-17",
+  "count": 15,
+  "source_of_truth_note": "Product names, descriptions, categories, status labels and audiences are transcribed from the marketplace catalogue and reviewed source code. PROTOTYPE identifies an interactive front-end demonstration and is not a claim of production readiness, connected persistence, security certification, commercial availability or uptime. LIVE and VENTURE are catalogue labels and are not independent uptime, commercial availability or performance guarantees.",
   "products": [
     {
       "id": "atsfy-core-career-intelligence",
@@ -229,9 +229,9 @@
       "slug": "rubberos",
       "category": "IndustryTech",
       "industry": "Rubber & Industrial Operations",
-      "status": "LIVE",
+      "status": "PROTOTYPE",
       "tagline": "Digital Operations Platform for the Rubber Industry",
-      "description": "A dedicated digital platform for rubber-sector businesses, bringing their operational workflows into a connected online workspace.",
+      "description": "Interactive frontend prototype for rubber-sector workflows. Source review confirms browser-local demo state and seeded sample records; no connected production database or authentication was found.",
       "url": "https://rubberos.atsfy.tech/",
       "audience": [
         "Rubber Producers",
@@ -247,9 +247,9 @@
       "slug": "construction-platform",
       "category": "ConstructionTech",
       "industry": "Construction & Infrastructure",
-      "status": "LIVE",
+      "status": "PROTOTYPE",
       "tagline": "Digital Platform for Construction Operations",
-      "description": "A digital platform for construction businesses to bring project and operational workflows into a connected online workspace.",
+      "description": "Interactive construction site-operations prototype covering projects, tasks, reports, workforce, materials, expenses and safety. Source review confirms browser-local drafts and sample workspace data; no connected production database or authentication was found.",
       "url": "https://construction.atsfy.tech/",
       "audience": [
         "Construction Companies",
@@ -259,6 +259,25 @@
         "Infrastructure Businesses"
       ],
       "catalog_page": "https://atsfymarketplace.atsfy.tech/products/construction-platform/"
+    },
+    {
+      "id": "atsfy-sales-agent",
+      "name": "ATSFY Sales Agent",
+      "slug": "atsfy-sales-agent",
+      "category": "SalesTech",
+      "industry": "Business Technology",
+      "status": "LIVE",
+      "tagline": "AI-assisted sales conversations and lead management",
+      "description": "An AI-assisted enquiry and service-discovery workspace for discussing websites, e-commerce, mobile apps, AI assistants and business automation with ATSFY Technologies.",
+      "url": "https://atsfysalesagent.vercel.app/",
+      "audience": [
+        "Small Businesses",
+        "Service Providers",
+        "Startups",
+        "Institutions",
+        "Sales Teams"
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/atsfy-sales-agent/"
     }
   ],
   "services": [
