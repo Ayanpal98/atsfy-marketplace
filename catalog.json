@@ -2,8 +2,8 @@
   "name": "ATSFY Marketplace Product Catalogue",
   "publisher": "ATSFY Technologies",
   "canonical_origin": "https://atsfymarketplace.atsfy.tech",
-  "updated_at": "2026-11-12",
-  "count": 14,
+  "updated_at": "2026-11-17",
+  "count": 15,
   "source_of_truth_note": "Product names, descriptions, categories, status labels and audiences are transcribed from the marketplace catalogue. LIVE and VENTURE are catalogue labels and are not independent uptime, commercial availability or performance guarantees.",
   "products": [
     {
@@ -259,6 +259,25 @@
         "Infrastructure Businesses"
       ],
       "catalog_page": "https://atsfymarketplace.atsfy.tech/products/construction-platform/"
+    },
+    {
+      "id": "atsfy-sales-agent",
+      "name": "ATSFY Sales Agent",
+      "slug": "atsfy-sales-agent",
+      "category": "SalesTech",
+      "industry": "Business Technology",
+      "status": "LIVE",
+      "tagline": "AI-assisted sales conversations and lead management",
+      "description": "An AI-assisted enquiry and service-discovery workspace for discussing websites, e-commerce, mobile apps, AI assistants and business automation with ATSFY Technologies.",
+      "url": "https://atsfysalesagent.vercel.app/",
+      "audience": [
+        "Small Businesses",
+        "Service Providers",
+        "Startups",
+        "Institutions",
+        "Sales Teams"
+      ],
+      "catalog_page": "https://atsfymarketplace.atsfy.tech/products/atsfy-sales-agent/"
     }
   ],
   "services": [
