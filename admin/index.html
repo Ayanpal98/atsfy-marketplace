@@ -1,5 +1,29 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ATSFY Admin — Employee Revenue OS</title>
 <script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>body{font-family:Inter,system-ui,sans-serif}button,input,select,textarea{outline:none}button:focus,input:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px rgba(217,164,59,.25)}</style></head>
+<style>body{font-family:Inter,system-ui,sans-serif}button,input,select,textarea{outline:none}button:focus,input:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px rgba(217,164,59,.25)}
+:root{--admin-forest:#1c301f;--admin-green:#285040;--admin-olive:#657253;--admin-gold:#d9a43b;--admin-paper:#f7f6f2;--admin-line:rgba(28,48,31,.12)}
+body{background:var(--admin-paper);color:var(--admin-forest);-webkit-font-smoothing:antialiased}
+#login>div,#reset>div{border:1px solid var(--admin-line);box-shadow:0 24px 70px rgba(28,48,31,.1);padding:clamp(28px,5vw,42px)}
+#login h1,#reset h1{letter-spacing:-.045em}
+#login button[type=submit],#reset button[type=submit]{background:var(--admin-forest);transition:background .2s,transform .2s}
+#login button[type=submit]:hover,#reset button[type=submit]:hover{background:var(--admin-green);transform:translateY(-1px)}
+#app header{background:rgba(20,37,26,.97)!important;color:#f7f6f2;border-color:rgba(217,164,59,.28)!important;box-shadow:0 12px 34px rgba(20,37,26,.12)}
+#app header h1,#app header [class*="tracking"],#app header .text-gray-500{color:#f7f6f2!important}
+#app header [class*="tracking"]{color:var(--admin-gold)!important}
+#app header button{border-color:rgba(247,246,242,.2);background:rgba(255,255,255,.07);color:#fff}
+#app aside nav{border-color:var(--admin-line);box-shadow:0 12px 34px rgba(28,48,31,.045)}
+#app aside nav button{transition:background .2s,color .2s,transform .2s}
+#app aside nav button:hover{transform:translateX(2px)}
+#app main>div:first-child h2{letter-spacing:-.04em}
+#app #content>div{border-color:var(--admin-line)}
+#app #content .bg-white{box-shadow:0 8px 28px rgba(28,48,31,.04)}
+#app #content table thead{background:#eeede5}
+#app #content input,#app #content select,#app #content textarea{border-color:var(--admin-line);border-radius:11px;min-height:42px}
+#app #content button{transition:background .18s,border-color .18s,transform .18s}
+#app #content button:active{transform:translateY(1px)}
+@media(max-width:1023px){#app aside nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}#app aside nav button{white-space:normal}}
+@media(max-width:520px){#app aside nav{grid-template-columns:1fr 1fr}#app header > div{align-items:flex-start;flex-direction:column}}
+
+</style></head>
 <body class="min-h-screen bg-[#F7F6F2]"><div id="login" class="min-h-screen flex items-center justify-center p-5"><div class="bg-white border rounded-3xl p-8 w-full max-w-md shadow-sm"><div class="w-12 h-12 rounded-xl bg-[#1C301F] text-[#D9A43B] flex items-center justify-center font-black text-xl mb-5">A</div><h1 class="text-2xl font-bold text-[#1C301F]">ATSFY Admin</h1><p class="text-sm text-gray-500 mt-2">Private Employee Revenue OS. Only accounts with the admin role can access the data.</p><form id="loginForm" class="space-y-4 mt-6"><input id="email" type="email" required placeholder="Admin email" autocomplete="username" class="w-full border rounded-xl px-4 py-3"><input id="password" type="password" required placeholder="Password" autocomplete="current-password" class="w-full border rounded-xl px-4 py-3"><button class="w-full rounded-xl bg-[#1C301F] text-white py-3 font-semibold">Sign in as Admin</button><button type="button" onclick="requestPasswordReset()" class="w-full text-sm text-[#1C301F] font-semibold py-2 hover:underline">Forgot admin password?</button><p id="error" class="text-sm text-red-600 min-h-5"></p></form></div></div><div id="reset" class="hidden min-h-screen flex items-center justify-center p-5"><div class="bg-white border rounded-3xl p-8 w-full max-w-md shadow-sm"><div class="w-12 h-12 rounded-xl bg-[#1C301F] text-[#D9A43B] flex items-center justify-center font-black text-xl mb-5">A</div><h1 class="text-2xl font-bold text-[#1C301F]">Set New Admin Password</h1><p class="text-sm text-gray-500 mt-2">Choose a new password for the authenticated admin account.</p><form id="resetForm" class="space-y-4 mt-6"><input id="newPassword" type="password" minlength="8" required placeholder="New password" autocomplete="new-password" class="w-full border rounded-xl px-4 py-3"><input id="confirmPassword" type="password" minlength="8" required placeholder="Confirm new password" autocomplete="new-password" class="w-full border rounded-xl px-4 py-3"><button class="w-full rounded-xl bg-[#1C301F] text-white py-3 font-semibold">Update Admin Password</button><p id="resetError" class="text-sm text-red-600 min-h-5"></p></form></div></div><div id="app" class="hidden"></div><script src="/admin/app.js"></script></body></html>
